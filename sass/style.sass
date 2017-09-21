@@ -1,20 +1,30 @@
-$nav-height: 48px
+@import url('https://fonts.googleapis.com/css?family=Hind:300,400,600,700')
+$bkg: #25252D
+$header: #1d1e23
+$action: #2e5cfd
+$action-secondary: #ffcd05
+$text: #eaeaea
 
 body
-  background: blue
+  background: $bkg
+  color: $text
+  font-family: 'Hind', sans-serif
   margin: 0
   padding: 0
 
 nav
-  background: whitesmoke
-
   ul
-    justify-content: center
     display: flex
+    justify-content: center
     list-style: none
     margin: 0
     padding-left: 0
 
-  a
-    display: block
-    padding: 1em
+    li
+      text-transform: uppercase
+
+      a
+        color: $text
+        display: block
+        padding: 1em
+        text-decoration: none
