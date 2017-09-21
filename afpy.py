@@ -9,8 +9,8 @@ from flask import Flask, render_template, abort
 app = Flask(__name__)
 
 FEEDS = {
-    'news': 'https://www.afpy.org/rss-actualites/RSS',
-    'jobs': 'https://www.afpy.org/rss-jobs/RSS',
+    'actus': 'https://www.afpy.org/rss-actualites/RSS',
+    'emplois': 'https://www.afpy.org/rss-jobs/RSS',
     'planet': 'https://www.afpy.org/planet/rss.xml',
 }
 
