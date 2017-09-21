@@ -12,6 +12,7 @@ setup(
         'Flask',
         'libsass',
         'docutils',
+        'feedparser',
     ],
     scripts=['afpy.py'],
 )
