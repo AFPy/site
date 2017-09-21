@@ -1,0 +1,11 @@
+{% extends '_layout.jinja2' %}
+
+{% block main %}
+  {% for entry in entries %}
+    <article>
+      <h2>{{ entry.title }}</h2>
+      {{ entry.summary }}
+      <p><a href="{{ entry.link }}">Lire la suite…</a></p>
+    </article>
+  {% endfor %}
+{% endblock main %}
