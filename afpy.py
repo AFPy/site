@@ -4,7 +4,7 @@ import docutils.core
 import docutils.writers.html5_polyglot
 import feedparser
 from flask import Flask, render_template, abort
-
+from jinja2 import TemplateNotFound
 
 app = Flask(__name__)
 
@@ -19,9 +19,10 @@ MEETUPS = {
     'lyon': 'https://www.meetup.com/fr-FR/Python-AFPY-Lyon/events/rss/',
 }
 
-
 for city, url in MEETUPS.items():
     FEEDS[f'meetup_{city}'] = url
+
+BASE_DIR = Path(__file__).parent
 
 
 @app.errorhandler(404)
@@ -32,9 +33,10 @@ def page_not_found(e):
 @app.route('/')
 @app.route('/<template_name>')
 def pages(template_name='index'):
-    if Path(f'templates/{template_name}.html').exists():
+    try:
         return render_template(f'{template_name}.html', meetups=MEETUPS)
-    abort(404)
+    except TemplateNotFound:
+        abort(404)
 
 
 @app.route('/docs/<name>')
@@ -55,6 +57,8 @@ def feed(name):
 
 if __name__ == '__main__':
     from sassutils.wsgi import SassMiddleware
+
     app.wsgi_app = SassMiddleware(app.wsgi_app, {
-        'afpy': ('sass', 'static/css', '/static/css')})
+        'afpy': ('sass', 'static/css', '/static/css')
+    })
     app.run(debug=True)
