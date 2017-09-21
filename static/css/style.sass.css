@@ -1,18 +1,23 @@
+@import url("https://fonts.googleapis.com/css?family=Hind:300,400,600,700");
 body {
-  background: blue;
+  background: #25252D;
+  color: #eaeaea;
+  font-family: 'Hind', sans-serif;
   margin: 0;
   padding: 0; }
 
-nav {
-  background: whitesmoke; }
-  nav ul {
-    justify-content: center;
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding-left: 0; }
-  nav a {
-    display: block;
-    padding: 1em; }
+nav ul {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding-left: 0; }
+  nav ul li {
+    text-transform: uppercase; }
+    nav ul li a {
+      color: #eaeaea;
+      display: block;
+      padding: 1em;
+      text-decoration: none; }
 
 /*# sourceMappingURL=../static/css/style.sass.css.map */
