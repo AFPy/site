@@ -4,7 +4,7 @@
   {% for entry in entries %}
     <article>
       <h2>{{ entry.title }}</h2>
-      {{ entry.summary }}
+      {{ entry.summary | safe }}
       <p><a href="{{ entry.link }}">Lire la suite…</a></p>
     </article>
   {% endfor %}

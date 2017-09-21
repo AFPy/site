@@ -11,6 +11,15 @@ FEEDS = {
     'planet': 'https://www.afpy.org/planet/rss.xml',
 }
 
+MEETUPS = {
+    'nantes': 'http://nantes.afpy.org/feeds/all.atom.xml',
+    'lyon': 'https://www.meetup.com/fr-FR/Python-AFPY-Lyon/events/rss/',
+}
+
+
+for city, url in MEETUPS.items():
+    FEEDS[f'meetup_{city}'] = url
+
 
 @app.route('/')
 def index():
