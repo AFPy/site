@@ -1,4 +1,13 @@
 body {
-  background: blue; }
+  background: blue;
+  margin: 0;
+  padding: 0; }
+
+nav {
+  background: whitesmoke;
+  height: 48px;
+  display: flex; }
+  nav a {
+    margin: 1em; }
 
 /*# sourceMappingURL=../static/css/style.sass.css.map */
