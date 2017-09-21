@@ -34,7 +34,8 @@ def page_not_found(e):
 @app.route('/<template_name>')
 def pages(template_name='index'):
     try:
-        return render_template(f'{template_name}.html', meetups=MEETUPS)
+        return render_template(
+            f'{template_name}.html', body_id=template_name, meetups=MEETUPS)
     except TemplateNotFound:
         abort(404)
 
@@ -46,13 +47,13 @@ def rest(name):
             source=fd.read(),
             writer=docutils.writers.html5_polyglot.Writer(),
             settings_overrides={'initial_header_level': 2})['body']
-    return render_template('rst.html', html=html)
+    return render_template('rst.html', body_id=name, html=html)
 
 
 @app.route('/feed/<name>')
 def feed(name):
     feed = feedparser.parse(FEEDS[name])
-    return render_template('feed.html', entries=feed.entries)
+    return render_template('feed.html', body_id=name, entries=feed.entries)
 
 
 if __name__ == '__main__':
