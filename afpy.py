@@ -33,7 +33,7 @@ def page_not_found(e):
 @app.route('/<template_name>')
 def pages(template_name='index'):
     if Path(f'templates/{template_name}.html').exists():
-        return render_template(f'{template_name}.html')
+        return render_template(f'{template_name}.html', meetups=MEETUPS)
     abort(404)
 
 

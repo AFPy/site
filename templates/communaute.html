@@ -2,4 +2,10 @@
 
 {% block main %}
 communauté
+
+    {% for meetup in meetups %}
+      <li><a href="{{ url_for('feed', name='meetup_{}'.format(meetup)) }}"></a></li>
+    {% endfor %}
+
+
 {% endblock main %}
