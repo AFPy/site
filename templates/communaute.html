@@ -1,11 +1,15 @@
 {% extends "_layout.jinja2" %}
 
 {% block main %}
-communauté
+  <h2>Meetups</h2>
 
     {% for meetup in meetups %}
       <li><a href="{{ url_for('feed', name='meetup_{}'.format(meetup)) }}">{{ meetup }}</a></li>
     {% endfor %}
+
+  <h2>Pycon</h2>
+  <a href="https://www.pycon.fr/">Pyconfr</a>
+  <a href="http://april.org/campagne/">April</a>
 
 
 {% endblock main %}
