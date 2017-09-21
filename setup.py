@@ -11,6 +11,7 @@ setup(
     install_requires=[
         'Flask',
         'libsass',
+        'docutils',
     ],
     scripts=['afpy.py'],
 )
