@@ -1,9 +1,15 @@
-<html>
+<!doctype html>
+<html lang="fr">
   <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" />
+    <title>{% block title %} AFPY - Le site web de l'Association Francophone de Python {% endblock title %}</title>
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/style.sass.css') }}" />
   </head>
   <body>
     <nav>
+        <a href="{{ url_for('pages') }}">Accueil</a>
+        <a href="{{ url_for('pages', template_name='a-propos') }}">À propos</a>
     </nav>
     <main>
       {% block main %}{% endblock main %}

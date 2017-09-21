@@ -1,7 +1,10 @@
+from pathlib import Path
+
 import docutils.core
 import docutils.writers.html5_polyglot
 import feedparser
-from flask import Flask, render_template
+from flask import Flask, render_template, abort
+
 
 app = Flask(__name__)
 
@@ -21,9 +24,17 @@ for city, url in MEETUPS.items():
     FEEDS[f'meetup_{city}'] = url
 
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+
 @app.route('/')
-def index():
-    return render_template('index.html')
+@app.route('/<template_name>')
+def pages(template_name='index'):
+    if Path(f'templates/{template_name}.html').exists():
+        return render_template(f'{template_name}.html')
+    abort(404)
 
 
 @app.route('/docs/<name>')
