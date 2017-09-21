@@ -1,0 +1,6 @@
+docutils==0.14
+feedparser==5.2.1
+Flask==0.12.2
+libsass==0.13.2
+pytest==3.2.2
+pytest-flask==0.10.0
