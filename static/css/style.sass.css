@@ -4,10 +4,15 @@ body {
   padding: 0; }
 
 nav {
-  background: whitesmoke;
-  height: 48px;
-  display: flex; }
+  background: whitesmoke; }
+  nav ul {
+    justify-content: center;
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding-left: 0; }
   nav a {
-    margin: 1em; }
+    display: block;
+    padding: 1em; }
 
 /*# sourceMappingURL=../static/css/style.sass.css.map */
