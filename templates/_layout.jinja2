@@ -3,18 +3,21 @@
   <head>
     <meta charset="utf-8">
     <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" />
-    <title>{% block title %} AFPY - Le site web de l'Association Francophone de Python {% endblock title %}</title>
+    <title>AFPY - Le site web de l'Association Francophone de Python</title>
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/style.sass.css') }}" />
   </head>
-  <body>
+  <body id="{{ body_id }}">
+    <header>
+      {% block header %}{% endblock header %}
+    </header>
     <nav>
       <ul>
         <li><a href="{{ url_for('pages') }}">Accueil</a></li>
         <li><a href="{{ url_for('rest', name='a-propos') }}">Qui sommes-nous ?</a></li>
         <li><a href="{{ url_for('feed', name='actus') }}">Actualités</a></li>
         <li><a href="{{ url_for('feed', name='emplois') }}">Offres d'emplois</a></li>
-        <li><a href="{{ url_for('pages', template_name='communaute') }}">Communauté</a></li>
-        <li><a href="{{ url_for('pages', template_name='clavardage') }}">Clavardage</a></li>
+        <li><a href="{{ url_for('pages', name='communaute') }}">Communauté</a></li>
+        <li><a href="{{ url_for('pages', name='clavardage') }}">Clavardage</a></li>
         <li><a href="{{ url_for('rest', name='adhesions') }}">Adhésions</a></li>
       </ul>
     </nav>

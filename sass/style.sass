@@ -1,13 +1,58 @@
-$nav-height: 48px
+@import url('https://fonts.googleapis.com/css?family=Hind:300,400,600,700')
+$bkg: #25252D
+$header: #1d1e23
+$action: #2e5cfd
+$action-secondary: #ffcd05
+$text: #eaeaea
 
 body
-  background: blue
+  background: $bkg
+  color: $text
+  font-family: 'Hind', sans-serif
+  font-size: .9em
+  font-weight: 300
   margin: 0
   padding: 0
 
 nav
-  background: whitesmoke
-  height: $nav-height
+  ul
+    display: flex
+    justify-content: center
+    list-style: none
+    margin: 0
+    padding-left: 0
+
+    a
+      color: $text
+      display: block
+      font-weight: 600
+      padding: 1em
+      text-decoration: none
+
+main
+  margin: 0 auto
+  max-width: 1200px
+
+h2
+  font-size: 2em
+  font-weight: 400
+
+.simple
   display: flex
-  a
-    margin: 1em
+  flex-wrap: wrap
+
+  dt
+    box-sizing: border-box
+    display: flex
+    flex-direction: column
+    line-height: 50px
+    text-align: center
+    padding: 1em
+    width: 300px
+
+  dd
+    box-sizing: border-box
+    margin-left: -300px
+    padding: 3em 0 0
+    text-align: center
+    width: 300px

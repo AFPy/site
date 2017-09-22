@@ -1,10 +1,8 @@
-from pathlib import Path
-
 import docutils.core
 import docutils.writers.html5_polyglot
 import feedparser
-from flask import Flask, render_template, abort
-
+from flask import Flask, abort, render_template
+from jinja2 import TemplateNotFound
 
 app = Flask(__name__)
 
@@ -19,7 +17,6 @@ MEETUPS = {
     'lyon': 'https://www.meetup.com/fr-FR/Python-AFPY-Lyon/events/rss/',
 }
 
-
 for city, url in MEETUPS.items():
     FEEDS[f'meetup_{city}'] = url
 
@@ -30,31 +27,35 @@ def page_not_found(e):
 
 
 @app.route('/')
-@app.route('/<template_name>')
-def pages(template_name='index'):
-    if Path(f'templates/{template_name}.html').exists():
-        return render_template(f'{template_name}.html')
-    abort(404)
+@app.route('/<name>')
+def pages(name='index'):
+    try:
+        return render_template(f'{name}.html', body_id=name, meetups=MEETUPS)
+    except TemplateNotFound:
+        abort(404)
 
 
 @app.route('/docs/<name>')
 def rest(name):
     with open(f'templates/{name}.rst') as fd:
-        html = docutils.core.publish_parts(
+        parts = docutils.core.publish_parts(
             source=fd.read(),
             writer=docutils.writers.html5_polyglot.Writer(),
-            settings_overrides={'initial_header_level': 2})['body']
-    return render_template('rst.html', html=html)
+            settings_overrides={'initial_header_level': 2})
+    return render_template(
+        'rst.html', body_id=name, html=parts['body'], title=parts['title'])
 
 
 @app.route('/feed/<name>')
 def feed(name):
     feed = feedparser.parse(FEEDS[name])
-    return render_template('feed.html', entries=feed.entries)
+    return render_template(
+        'feed.html', body_id=name, entries=feed.entries,
+        title=feed.feed.get('title'))
 
 
 if __name__ == '__main__':
     from sassutils.wsgi import SassMiddleware
-    app.wsgi_app = SassMiddleware(app.wsgi_app, {
-        'afpy': ('sass', 'static/css', '/static/css')})
+    app.wsgi_app = SassMiddleware(
+        app.wsgi_app, {'afpy': ('sass', 'static/css', '/static/css')})
     app.run(debug=True)

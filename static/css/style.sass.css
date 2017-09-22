@@ -1,13 +1,50 @@
+@import url("https://fonts.googleapis.com/css?family=Hind:300,400,600,700");
 body {
-  background: blue;
+  background: #25252D;
+  color: #eaeaea;
+  font-family: 'Hind', sans-serif;
+  font-size: .9em;
+  font-weight: 300;
   margin: 0;
   padding: 0; }
 
-nav {
-  background: whitesmoke;
-  height: 48px;
-  display: flex; }
-  nav a {
-    margin: 1em; }
+nav ul {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding-left: 0; }
+  nav ul a {
+    color: #eaeaea;
+    display: block;
+    font-weight: 600;
+    padding: 1em;
+    text-decoration: none; }
+
+main {
+  margin: 0 auto;
+  max-width: 1200px; }
+
+h2 {
+  font-size: 2em;
+  font-weight: 400; }
+
+.simple {
+  display: flex;
+  flex-wrap: wrap; }
+  .simple dt {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    line-height: 50px;
+    text-align: center;
+    padding: 1em;
+    width: 300px; }
+  .simple dd {
+    box-sizing: border-box;
+    margin-left: -300px;
+    padding: 3em 0 0;
+    text-align: center;
+    width: 300px; }
 
 /*# sourceMappingURL=../static/css/style.sass.css.map */
