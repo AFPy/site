@@ -53,7 +53,13 @@ def rest(name):
 @app.route('/feed/<name>')
 def feed(name):
     feed = feedparser.parse(FEEDS[name])
-    return render_template('feed.html', body_id=name, entries=feed.entries)
+    return render_template('feed.html', body_id=name, entries=feed.entries )
+
+
+# @app.route('/detail/<name>/<article>')
+# def feed_details(name, article):
+#     feed = feedparser.parse(FEEDS[name])
+#     return render_template('details.html', entry=feed.entries[article])
 
 
 if __name__ == '__main__':
