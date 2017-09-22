@@ -9,6 +9,8 @@ body
   background: $bkg
   color: $text
   font-family: 'Hind', sans-serif
+  font-size: .9em
+  font-weight: 300
   margin: 0
   padding: 0
 
@@ -20,11 +22,37 @@ nav
     margin: 0
     padding-left: 0
 
-    li
-      text-transform: uppercase
+    a
+      color: $text
+      display: block
+      font-weight: 600
+      padding: 1em
+      text-decoration: none
 
-      a
-        color: $text
-        display: block
-        padding: 1em
-        text-decoration: none
+main
+  margin: 0 auto
+  max-width: 1200px
+
+h2
+  font-size: 2em
+  font-weight: 400
+
+.simple
+  display: flex
+  flex-wrap: wrap
+
+  dt
+    box-sizing: border-box
+    display: flex
+    flex-direction: column
+    line-height: 50px
+    text-align: center
+    padding: 1em
+    width: 300px
+
+  dd
+    box-sizing: border-box
+    margin-left: -300px
+    padding: 3em 0 0
+    text-align: center
+    width: 300px
