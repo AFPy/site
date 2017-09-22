@@ -7,7 +7,6 @@ from jinja2 import TemplateNotFound
 app = Flask(__name__)
 
 FEEDS = {
-    'actus': 'https://www.afpy.org/rss-actualites/RSS',
     'emplois': 'https://www.afpy.org/rss-jobs/RSS',
     'planet': 'https://www.afpy.org/planet/rss.xml',
 }
@@ -29,8 +28,12 @@ def page_not_found(e):
 @app.route('/')
 @app.route('/<name>')
 def pages(name='index'):
+    entries = ()
+    if name == 'index':
+        entries = feedparser.parse(FEEDS['planet']).entries
     try:
-        return render_template(f'{name}.html', body_id=name, meetups=MEETUPS)
+        return render_template(
+            f'{name}.html', body_id=name, meetups=MEETUPS, entries=entries)
     except TemplateNotFound:
         abort(404)
 

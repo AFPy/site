@@ -5,4 +5,21 @@
 {% endblock header %}
 
 {% block main %}
+  <h2>AFPy</h2>
+  <p>{{ lipsum(1) }}</p>
+
+  <h2>Adhérer</h2>
+  <p>{{ lipsum(1) }}</p>
+  <form>
+    <input type="submit" value="S'inscrire" />
+  </form>
+
+  <h2>Actualités</h2>
+  {% for entry in entries[:4] %}
+    <article>
+      <h3>{{ entry.title }}</h3>
+      {{ entry.summary | safe }}
+      <p><a href="{{ entry.link }}">Lire la suite…</a></p>
+    </article>
+  {% endfor %}
 {% endblock main %}

@@ -8,13 +8,23 @@ $text: #eaeaea
 body
   background: $bkg
   color: $text
+  display: flex
+  flex-wrap: wrap
   font-family: 'Hind', sans-serif
   font-size: .9em
   font-weight: 300
   margin: 0
   padding: 0
 
+header
+  background: $header
+  order: 1
+  width: 100%
+
 nav
+  flex: 1 100%
+  order: 0
+
   ul
     display: flex
     justify-content: center
@@ -32,6 +42,24 @@ nav
 main
   margin: 0 auto
   max-width: 1200px
+  order: 3
+
+h1
+  color: $action-secondary
+  flex: 1 100%
+  font-weight: 300
+  margin: 2em auto
+  max-width: 1200px
+
+  &::after
+    background: $action-secondary
+    content: ''
+    display: block
+    height: 3px
+    width: 30px
+
+  abbr
+    display: block
 
 h2
   font-size: 2em
