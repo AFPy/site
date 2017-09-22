@@ -1,8 +1,13 @@
+import datetime
+import locale
+
 import docutils.core
 import docutils.writers.html5_polyglot
 import feedparser
 from flask import Flask, abort, render_template
 from jinja2 import TemplateNotFound
+
+locale.setlocale(locale.LC_ALL, 'fr_FR')
 
 app = Flask(__name__)
 
@@ -67,6 +72,11 @@ def feed(name):
     return render_template(
         'feed.html', body_id=name, entries=feed.entries,
         title=feed.feed.get('title'))
+
+
+@app.template_filter('datetime')
+def format_datetime(time_struct, format_):
+    return datetime.datetime(*time_struct[:6]).strftime(format_)
 
 
 if __name__ == '__main__':  # pragma: no cover
