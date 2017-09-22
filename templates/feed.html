@@ -6,7 +6,6 @@
 
 {% block main %}
   {% for entry in entries %}
-    {{ entry }}
     <article>
       <h2>{{ entry.title }}</h2>
       {{ entry.summary | safe }}
