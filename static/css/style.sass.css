@@ -67,7 +67,7 @@ nav {
 
 main {
   flex-grow: 1;
-  margin: 0 auto;
+  margin: 1em auto 0;
   max-width: 1200px;
   order: 3;
   width: 100%; }
