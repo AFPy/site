@@ -64,6 +64,8 @@ nav {
       font-weight: 600;
       padding: 1em;
       text-decoration: none; }
+    nav ul .active a {
+      color: #ffcd05; }
 
 main {
   flex-grow: 1;
