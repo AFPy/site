@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css?family=Hind:300,400,600,700");
 a {
   color: #ffcd05;
@@ -27,6 +28,11 @@ code {
   border-bottom: 1px solid #ffcd05;
   display: block;
   padding: 2em; }
+
+iframe {
+  border: 0;
+  height: 450px;
+  width: 100%; }
 
 body {
   background: #25252D;
@@ -97,23 +103,11 @@ h1 {
 h2 {
   font-weight: 400; }
 
-dl {
-  display: flex;
-  flex-wrap: wrap; }
-  dl dt {
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    line-height: 50px;
-    text-align: center;
-    padding: 1em;
-    width: 300px; }
-  dl dd {
-    box-sizing: border-box;
-    margin-left: -300px;
-    padding: 3em 0 0;
-    text-align: center;
-    width: 300px; }
+dd {
+  margin-left: 1em; }
+  dd p:before {
+    content: '→ ';
+    display: inline; }
 
 #planet main, #emplois main, #index-news {
   box-sizing: border-box;

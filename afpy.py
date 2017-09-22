@@ -12,6 +12,9 @@ FEEDS = {
 }
 
 MEETUPS = {
+    'bruxelles': (
+        'https://www.meetup.com/fr-FR/'
+        'Belgium-Python-Meetup-aka-AperoPythonBe/events/rss/'),
     'nantes': 'http://nantes.afpy.org/feeds/all.atom.xml',
     'lyon': 'https://www.meetup.com/fr-FR/Python-AFPY-Lyon/events/rss/',
 }
