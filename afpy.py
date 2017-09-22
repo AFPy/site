@@ -38,17 +38,20 @@ def pages(name='index'):
 @app.route('/docs/<name>')
 def rest(name):
     with open(f'templates/{name}.rst') as fd:
-        html = docutils.core.publish_parts(
+        parts = docutils.core.publish_parts(
             source=fd.read(),
             writer=docutils.writers.html5_polyglot.Writer(),
-            settings_overrides={'initial_header_level': 2})['body']
-    return render_template('rst.html', body_id=name, html=html)
+            settings_overrides={'initial_header_level': 2})
+    return render_template(
+        'rst.html', body_id=name, html=parts['body'], title=parts['title'])
 
 
 @app.route('/feed/<name>')
 def feed(name):
     feed = feedparser.parse(FEEDS[name])
-    return render_template('feed.html', body_id=name, entries=feed.entries)
+    return render_template(
+        'feed.html', body_id=name, entries=feed.entries,
+        title=feed.feed.get('title'))
 
 
 if __name__ == '__main__':

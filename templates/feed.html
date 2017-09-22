@@ -1,5 +1,9 @@
 {% extends '_layout.jinja2' %}
 
+{% block header %}
+  <h1>{{ title }}</h1>
+{% endblock header %}
+
 {% block main %}
   {% for entry in entries %}
     <article>

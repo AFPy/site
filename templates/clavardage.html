@@ -1,8 +1,10 @@
 {% extends "_layout.jinja2" %}
 
-{% block main %}
-<h2>Clavardage</h2>
+{% block header %}
+  <h1>Clavardage</h1>
+{% endblock header %}
 
+{% block main %}
 <p>Depuis cette page web vous pouvez</p>
 
 <ul>
@@ -10,7 +12,7 @@
   <li>parler Python en français sur le canal <a href="#tchatpython">#python-fr</a></li>
 </ul>
 
-<h3>Bon à savoir</h3>
+<h2>Bon à savoir</h2>
 
 <p>
   IRC (Internet Relay Chat) permet d'utiliser plusieurs canaux de discussion en simultané. Si vous vous trouvez sur #afpy et souhaitez rejoindre #python-fr, rien de plus simple, tapez : <br/>
@@ -22,7 +24,7 @@
   <code>/nick nouveaunom</code>
 </p>
 
-<h3 id="tchatafpy">Discuter avec l'AFPy (organisation de la communauté)</h3>
+<h2 id="tchatafpy">Discuter avec l'AFPy (organisation de la communauté)</h2>
 
 <iframe src="https://kiwiirc.com/client/irc.freenode.net/?nick=afpy_user|?&theme=basic#afpy" style="border:0; width:100%; height:450px;"></iframe>
 
@@ -31,7 +33,7 @@
   Les archives irc du canal #afpy sont disponibles <a href="http://logs.afpy.org/">ici</a>.
 </p>
 
-<h3 id="tchatpython">Clavarder autour de Python</h3>
+<h2 id="tchatpython">Clavarder autour de Python</h2>
 
 <iframe src="https://kiwiirc.com/client/irc.freenode.net/?nick=afpy_user|?&theme=basic#python-fr" style="border:0; width:100%; height:450px;"></iframe>
 
