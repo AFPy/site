@@ -84,3 +84,34 @@ h2
     padding: 3em 0 0
     text-align: center
     width: 300px
+
+#planet, #emplois, #index
+  main
+    box-sizing: border-box
+    display: flex
+    flex-wrap: wrap
+
+    h2
+      flex: 1 100%
+
+    article
+      background: lighten($bkg, 5%)
+      border: 1px solid $bkg
+      box-sizing: border-box
+      flex: 1 50%
+      padding: 2em
+
+      a
+        color: $action-secondary
+        font-size: .8em
+        font-weight: 700
+        text-decoration: none
+        text-transform: uppercase
+        transition: color 250ms
+
+        &:hover
+          color: lighten($action-secondary, 10%)
+
+      h2
+        font-size: 1.2em
+        font-weight: 600

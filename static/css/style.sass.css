@@ -73,4 +73,29 @@ h2 {
     text-align: center;
     width: 300px; }
 
+#planet main, #emplois main, #index main {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap; }
+  #planet main h2, #emplois main h2, #index main h2 {
+    flex: 1 100%; }
+  #planet main article, #emplois main article, #index main article {
+    background: #31313b;
+    border: 1px solid #25252D;
+    box-sizing: border-box;
+    flex: 1 50%;
+    padding: 2em; }
+    #planet main article a, #emplois main article a, #index main article a {
+      color: #ffcd05;
+      font-size: .8em;
+      font-weight: 700;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 250ms; }
+      #planet main article a:hover, #emplois main article a:hover, #index main article a:hover {
+        color: #ffd738; }
+    #planet main article h2, #emplois main article h2, #index main article h2 {
+      font-size: 1.2em;
+      font-weight: 600; }
+
 /*# sourceMappingURL=../static/css/style.sass.css.map */
