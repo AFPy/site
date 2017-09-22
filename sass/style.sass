@@ -5,6 +5,31 @@ $action: #2e5cfd
 $action-secondary: #ffcd05
 $text: #eaeaea
 
+a
+  color: $action-secondary
+  font-size: .8em
+  font-weight: 700
+  text-decoration: none
+  text-transform: uppercase
+  transition: color 250ms
+
+  &:hover
+    color: lighten($action-secondary, 10%)
+
+input[type="submit"]
+  background: $action
+  border: 0
+  color: #fff
+  cursor: pointer
+  font-family: 'Hind', sans-serif
+  outline: transparent
+  padding: 1em 2em
+  text-transform: uppercase
+  transition: background 250ms
+
+  &:hover
+    background: lighten($action, 5%)
+
 body
   background: $bkg
   color: $text
@@ -43,6 +68,7 @@ main
   margin: 0 auto
   max-width: 1200px
   order: 3
+  width: 100%
 
 h1
   color: $action-secondary
@@ -100,17 +126,6 @@ h2
       box-sizing: border-box
       flex: 1 50%
       padding: 2em
-
-      a
-        color: $action-secondary
-        font-size: .8em
-        font-weight: 700
-        text-decoration: none
-        text-transform: uppercase
-        transition: color 250ms
-
-        &:hover
-          color: lighten($action-secondary, 10%)
 
       h2
         font-size: 1.2em

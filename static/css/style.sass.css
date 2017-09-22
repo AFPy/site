@@ -1,4 +1,27 @@
 @import url("https://fonts.googleapis.com/css?family=Hind:300,400,600,700");
+a {
+  color: #ffcd05;
+  font-size: .8em;
+  font-weight: 700;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 250ms; }
+  a:hover {
+    color: #ffd738; }
+
+input[type="submit"] {
+  background: #2e5cfd;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+  font-family: 'Hind', sans-serif;
+  outline: transparent;
+  padding: 1em 2em;
+  text-transform: uppercase;
+  transition: background 250ms; }
+  input[type="submit"]:hover {
+    background: #4770fd; }
+
 body {
   background: #25252D;
   color: #eaeaea;
@@ -34,7 +57,8 @@ nav {
 main {
   margin: 0 auto;
   max-width: 1200px;
-  order: 3; }
+  order: 3;
+  width: 100%; }
 
 h1 {
   color: #ffcd05;
@@ -85,15 +109,6 @@ h2 {
     box-sizing: border-box;
     flex: 1 50%;
     padding: 2em; }
-    #planet main article a, #emplois main article a, #index main article a {
-      color: #ffcd05;
-      font-size: .8em;
-      font-weight: 700;
-      text-decoration: none;
-      text-transform: uppercase;
-      transition: color 250ms; }
-      #planet main article a:hover, #emplois main article a:hover, #index main article a:hover {
-        color: #ffd738; }
     #planet main article h2, #emplois main article h2, #index main article h2 {
       font-size: 1.2em;
       font-weight: 600; }
