@@ -5,7 +5,7 @@
 {% endblock header %}
 
 {% block main %}
-  {% for entry in entries %}
+  {% for entry in entries[:12] %}
     <article>
       <h2>{{ entry.title }}</h2>
       <time pubdate datetime="{{ entry.updated_parsed | datetime('%Y-%m-%d') }}">
