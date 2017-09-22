@@ -6,6 +6,11 @@
 
 {% block main %}
   <h2>Meetups</h2>
+  <p>
+    Afin de partager autour du langage Python, de ses pratiques, de sa technique et de son écosystème,
+    des évènements sont organisés régulièrement dans divers lieux.
+    Vous pouvez retrouver ces évènements sur les groupes MeetUp :
+  </p>
   <ul>
     {% for meetup in meetups %}
       <li><a href="{{ url_for('feed', name='meetup_{}'.format(meetup)) }}">{{ meetup | capitalize }}</a></li>
@@ -13,8 +18,23 @@
   </ul>
 
   <h2>PyConFr</h2>
-  <ul>
-    <li><a href="https://www.pycon.fr/">PyConFr</a></li>
-    <li><a href="http://april.org/campagne/">April</a></li>
-  </ul>
+  <p>
+    La PyConFr est un évènement organisé chaque année depuis 10+ ans par l'AFPy.
+    Cette conférence est gratuite, entièrement organisée par des bénévoles et
+    regroupe développeu·ses·rs, chercheu·ses·rs, étudiant·e·s et amat·rices·eurs
+    autour d'une même passion pour le langage de programmation Python.
+  </p>
+  <p>
+    <a href="https://www.pycon.fr/">PyConFr</a>
+  </p>
+
+  <h2>April</h2>
+  <p>
+    Pionnière du logiciel libre en France, l'April  est depuis 1996 un acteur majeur de la démocratisation
+    et de la diffusion du logiciel libre et des standards ouverts auprès du grand public,
+    des professionnels et des institutions dans l'espace francophone.
+  </p>
+  <p>
+    <a href="http://april.org/campagne/">April</a>
+  </p>
 {% endblock main %}

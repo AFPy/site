@@ -91,10 +91,10 @@ h1 {
 h2 {
   font-weight: 400; }
 
-.simple {
+dl {
   display: flex;
   flex-wrap: wrap; }
-  .simple dt {
+  dl dt {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -102,7 +102,7 @@ h2 {
     text-align: center;
     padding: 1em;
     width: 300px; }
-  .simple dd {
+  dl dd {
     box-sizing: border-box;
     margin-left: -300px;
     padding: 3em 0 0;
