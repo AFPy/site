@@ -23,6 +23,12 @@ input[type="submit"] {
   input[type="submit"]:hover {
     background: #4770fd; }
 
+code {
+  background: #1d1e23;
+  border-bottom: 1px solid #ffcd05;
+  display: block;
+  padding: 2em; }
+
 body {
   background: #25252D;
   color: #eaeaea;
