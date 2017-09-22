@@ -15,8 +15,11 @@ MEETUPS = {
     'bruxelles': (
         'https://www.meetup.com/fr-FR/'
         'Belgium-Python-Meetup-aka-AperoPythonBe/events/rss/'),
-    'nantes': 'http://nantes.afpy.org/feeds/all.atom.xml',
+    'grenoble': (
+        'https://www.meetup.com/fr-FR/'
+        'Groupe-dutilisateurs-Python-Grenoble/events/rss/'),
     'lyon': 'https://www.meetup.com/fr-FR/Python-AFPY-Lyon/events/rss/',
+    'nantes': 'http://nantes.afpy.org/feeds/all.atom.xml',
 }
 
 for city, url in MEETUPS.items():
