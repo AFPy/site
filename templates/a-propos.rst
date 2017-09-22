@@ -15,10 +15,10 @@ Cette rubrique contient toutes les informations concernant l’association, ses
 moyens, ses ambitions et ses résultats.
 
 
-Bureau 2013
+Bureau 2016
 ===========
 
-Les membres du bureau 2016 sont:
+Les membres du bureau 2016 sont :
 
 Président (president at afpy dot org)
   Jean-Philippe Camguilhem
