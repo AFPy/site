@@ -10,7 +10,7 @@
 
   <h2>Adhérer</h2>
   <p>{{ lipsum(1) }}</p>
-  <form>
+  <form action="{{ url_for('pages', name='adhesions') }}">
     <input type="submit" value="S'inscrire" />
   </form>
 
