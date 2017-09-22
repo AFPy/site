@@ -6,14 +6,15 @@
 
 {% block main %}
   <h2>Meetups</h2>
-
+  <ul>
     {% for meetup in meetups %}
-      <li><a href="{{ url_for('feed', name='meetup_{}'.format(meetup)) }}">{{ meetup }}</a></li>
+      <li><a href="{{ url_for('feed', name='meetup_{}'.format(meetup)) }}">{{ meetup | capitalize }}</a></li>
     {% endfor %}
+  </ul>
 
-  <h2>Pycon</h2>
-  <a href="https://www.pycon.fr/">Pyconfr</a>
-  <a href="http://april.org/campagne/">April</a>
-
-
+  <h2>PyConFr</h2>
+  <ul>
+    <li><a href="https://www.pycon.fr/">PyConFr</a></li>
+    <li><a href="http://april.org/campagne/">April</a></li>
+  </ul>
 {% endblock main %}
