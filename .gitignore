@@ -1,3 +1,6 @@
+.cache
+.coverage
+.eggs
 .env
 __pycache__
 afpy.egg-info

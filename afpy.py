@@ -1,9 +1,7 @@
-from pathlib import Path
-
 import docutils.core
 import docutils.writers.html5_polyglot
 import feedparser
-from flask import Flask, render_template, abort
+from flask import Flask, abort, render_template
 from jinja2 import TemplateNotFound
 
 app = Flask(__name__)
@@ -29,11 +27,10 @@ def page_not_found(e):
 
 
 @app.route('/')
-@app.route('/<template_name>')
-def pages(template_name='index'):
+@app.route('/<name>')
+def pages(name='index'):
     try:
-        return render_template(
-            f'{template_name}.html', body_id=template_name, meetups=MEETUPS)
+        return render_template(f'{name}.html', body_id=name, meetups=MEETUPS)
     except TemplateNotFound:
         abort(404)
 
@@ -56,8 +53,6 @@ def feed(name):
 
 if __name__ == '__main__':
     from sassutils.wsgi import SassMiddleware
-
-    app.wsgi_app = SassMiddleware(app.wsgi_app, {
-        'afpy': ('sass', 'static/css', '/static/css')
-    })
+    app.wsgi_app = SassMiddleware(
+        app.wsgi_app, {'afpy': ('sass', 'static/css', '/static/css')})
     app.run(debug=True)
