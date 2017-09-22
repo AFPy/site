@@ -15,11 +15,13 @@
   </form>
 
   <h2>Actualités</h2>
-  {% for entry in entries[:4] %}
-    <article>
-      <h3>{{ entry.title }}</h3>
-      {{ entry.summary | safe }}
-      <p><a href="{{ entry.link }}">Lire la suite…</a></p>
-    </article>
-  {% endfor %}
+  <section id="index-news">
+    {% for entry in entries[:4] %}
+      <article>
+        <h3>{{ entry.title }}</h3>
+        {{ entry.summary | safe }}
+        <p><a href="{{ entry.link }}">Lire la suite…</a></p>
+      </article>
+    {% endfor %}
+  </section>
 {% endblock main %}

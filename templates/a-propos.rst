@@ -20,13 +20,13 @@ Bureau 2016
 
 Les membres du bureau 2016 sont :
 
-Président (president at afpy dot org)
+Président (president@afpy.org)
   Jean-Philippe Camguilhem
-Secrétaire (secretaire at afpy dot org)
+Secrétaire (secretaire@afpy.org)
   ?
 Vice-Secrétaire
   ?
-Trésorier (tresorerie at afpy dot org)
+Trésorier (tresorerie@afpy.org)
   Arthur Vuillard
 Vice-Trésorier
   ?
@@ -147,4 +147,4 @@ vous craignez la survenue d'un incident, contactez sans attendre un membre
 organisateur (dans le cas d'un évènement) ou un membre du comité directeur de
 l'AFPy.
 
-Contact : diversite at afpy dot org.
+Vous pouvez également écrire à l'adresse diversite@afpy.org.

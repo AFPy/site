@@ -1,22 +1,44 @@
 @import url("https://fonts.googleapis.com/css?family=Hind:300,400,600,700");
+a {
+  color: #ffcd05;
+  font-size: .8em;
+  font-weight: 700;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 250ms; }
+  a:hover {
+    color: #ffd738; }
+
+input[type="submit"] {
+  background: #2e5cfd;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+  font-family: 'Hind', sans-serif;
+  outline: transparent;
+  padding: 1em 2em;
+  text-transform: uppercase;
+  transition: background 250ms; }
+  input[type="submit"]:hover {
+    background: #4770fd; }
+
 body {
   background: #25252D;
   color: #eaeaea;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   font-family: 'Hind', sans-serif;
   font-size: .9em;
   font-weight: 300;
   margin: 0;
+  min-height: 100vh;
   padding: 0; }
 
 header {
   background: #1d1e23;
-  order: 1;
-  width: 100%; }
+  order: 1; }
 
 nav {
-  flex: 1 100%;
   order: 0; }
   nav ul {
     display: flex;
@@ -32,13 +54,28 @@ nav {
       text-decoration: none; }
 
 main {
+  flex-grow: 1;
   margin: 0 auto;
   max-width: 1200px;
-  order: 3; }
+  order: 3;
+  width: 100%; }
+
+footer {
+  background: #1d1e23;
+  margin-top: 2em;
+  order: 4; }
+  footer ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0; }
+    footer ul a {
+      color: inherit;
+      text-decoration: inherit;
+      padding: 1em; }
 
 h1 {
   color: #ffcd05;
-  flex: 1 100%;
   font-weight: 300;
   margin: 2em auto;
   max-width: 1200px; }
@@ -55,10 +92,10 @@ h2 {
   font-size: 2em;
   font-weight: 400; }
 
-.simple {
+dl {
   display: flex;
   flex-wrap: wrap; }
-  .simple dt {
+  dl dt {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -66,36 +103,42 @@ h2 {
     text-align: center;
     padding: 1em;
     width: 300px; }
-  .simple dd {
+  dl dd {
     box-sizing: border-box;
     margin-left: -300px;
     padding: 3em 0 0;
     text-align: center;
     width: 300px; }
 
-#planet main, #emplois main, #index main {
+#planet main, #emplois main, #index-news {
   box-sizing: border-box;
   display: flex;
   flex-wrap: wrap; }
-  #planet main h2, #emplois main h2, #index main h2 {
-    flex: 1 100%; }
-  #planet main article, #emplois main article, #index main article {
+  #planet main article, #emplois main article, #index-news article {
     background: #31313b;
     border: 1px solid #25252D;
     box-sizing: border-box;
     flex: 1 50%;
     padding: 2em; }
-    #planet main article a, #emplois main article a, #index main article a {
+    #planet main article a, #emplois main article a, #index-news article a {
       color: #ffcd05;
       font-size: .8em;
       font-weight: 700;
       text-decoration: none;
       text-transform: uppercase;
       transition: color 250ms; }
-      #planet main article a:hover, #emplois main article a:hover, #index main article a:hover {
+      #planet main article a:hover, #emplois main article a:hover, #index-news article a:hover {
         color: #ffd738; }
-    #planet main article h2, #emplois main article h2, #index main article h2 {
-      font-size: 1.2em;
-      font-weight: 600; }
+    #planet main article h2, #emplois main article h2, #index-news article h2 {
+      flex: 1 100%; }
+    #planet main article article, #emplois main article article, #index-news article article {
+      background: #31313b;
+      border: 1px solid #25252D;
+      box-sizing: border-box;
+      flex: 1 50%;
+      padding: 2em; }
+      #planet main article article h2, #emplois main article article h2, #index-news article article h2 {
+        font-size: 1.2em;
+        font-weight: 600; }
 
 /*# sourceMappingURL=../static/css/style.sass.css.map */

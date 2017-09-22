@@ -24,5 +24,15 @@
     <main>
       {% block main %}{% endblock main %}
     </main>
+    <footer>
+      <ul>
+        <li>
+          <a href="{{ url_for('rest', name='contact') }}">Contact</a>
+        </li>
+        <li>
+          <a href="{{ url_for('rest', name='legal') }}">Mentions légales</a>
+        </li>
+      </ul>
+    </footer>
   </body>
 </html>
