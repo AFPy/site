@@ -6,20 +6,27 @@
 
 {% block main %}
   <h2>AFPy</h2>
-  <p>{{ lipsum(1) }}</p>
+  <p>
+    Créée en décembre 2004, l'AFPy (Association Francophone Python) a pour but de promouvoir le langage Python, que ce soit auprès d'un public averti ou débutant.
+    Pour ce faire, des <a href="{{ url_for('pages', name='communaute') }}">évènements</a> sont organisés régulièrement au niveau local et d'autres évènements à un niveau plus général.
+  </p>
 
   <h2>Adhérer</h2>
-  <p>{{ lipsum(1) }}</p>
-  <form>
+  <p>
+    Il est possible de soutenir le développement de l'AFPy en cotisant ou en effectuant un don. Une cotisation = un panda roux sauvé.
+  </p>
+  <form action="{{ url_for('pages', name='adhesions') }}">
     <input type="submit" value="S'inscrire" />
   </form>
 
   <h2>Actualités</h2>
-  {% for entry in entries[:4] %}
-    <article>
-      <h3>{{ entry.title }}</h3>
-      {{ entry.summary | safe }}
-      <p><a href="{{ entry.link }}">Lire la suite…</a></p>
-    </article>
-  {% endfor %}
+  <section id="index-news">
+    {% for entry in entries[:4] %}
+      <article>
+        <h3>{{ entry.title }}</h3>
+        {{ entry.summary | safe }}
+        <p><a href="{{ entry.link }}">Lire la suite…</a></p>
+      </article>
+    {% endfor %}
+  </section>
 {% endblock main %}

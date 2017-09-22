@@ -1,44 +1,103 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css?family=Hind:300,400,600,700");
+a {
+  color: #ffcd05;
+  font-size: .8em;
+  font-weight: 700;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 250ms; }
+  a:hover {
+    color: #ffd738; }
+
+input[type="submit"] {
+  background: #2e5cfd;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+  font-family: 'Hind', sans-serif;
+  outline: transparent;
+  padding: 1em 2em;
+  text-transform: uppercase;
+  transition: background 250ms; }
+  input[type="submit"]:hover {
+    background: #4770fd; }
+
+code {
+  background: #1d1e23;
+  border-bottom: 1px solid #ffcd05;
+  display: block;
+  padding: 2em; }
+
+iframe {
+  border: 0;
+  height: 450px;
+  width: 100%; }
+
 body {
   background: #25252D;
   color: #eaeaea;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   font-family: 'Hind', sans-serif;
   font-size: .9em;
   font-weight: 300;
   margin: 0;
+  min-height: 100vh;
   padding: 0; }
 
 header {
   background: #1d1e23;
-  order: 1;
-  width: 100%; }
+  order: 1; }
 
 nav {
-  flex: 1 100%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  min-height: 70px;
   order: 0; }
   nav ul {
     display: flex;
-    justify-content: center;
     list-style: none;
     margin: 0;
     padding-left: 0; }
+    nav ul li:first-child a::before {
+      content: url(../images/logo.svg);
+      left: 3em;
+      position: absolute;
+      top: 10px; }
     nav ul a {
       color: #eaeaea;
       display: block;
       font-weight: 600;
       padding: 1em;
       text-decoration: none; }
+    nav ul .active a {
+      color: #ffcd05; }
 
 main {
-  margin: 0 auto;
+  flex-grow: 1;
+  margin: 1em auto 0;
   max-width: 1200px;
-  order: 3; }
+  order: 3;
+  width: 100%; }
+
+footer {
+  background: #1d1e23;
+  margin-top: 2em;
+  order: 4; }
+  footer ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0; }
+    footer ul a {
+      color: inherit;
+      text-decoration: inherit;
+      padding: 1em; }
 
 h1 {
   color: #ffcd05;
-  flex: 1 100%;
   font-weight: 300;
   margin: 2em auto;
   max-width: 1200px; }
@@ -52,25 +111,46 @@ h1 {
     display: block; }
 
 h2 {
-  font-size: 2em;
   font-weight: 400; }
 
-.simple {
+dd {
+  margin-left: 1em; }
+  dd p:before {
+    content: '→ ';
+    display: inline; }
+
+time {
+  display: block; }
+
+#planet main, #emplois main, #index-news {
+  box-sizing: border-box;
   display: flex;
   flex-wrap: wrap; }
-  .simple dt {
+  #planet main article, #emplois main article, #index-news article {
+    background: #31313b;
+    border: 1px solid #25252D;
     box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    line-height: 50px;
-    text-align: center;
-    padding: 1em;
-    width: 300px; }
-  .simple dd {
-    box-sizing: border-box;
-    margin-left: -300px;
-    padding: 3em 0 0;
-    text-align: center;
-    width: 300px; }
+    flex: 1 50%;
+    padding: 2em; }
+    #planet main article a, #emplois main article a, #index-news article a {
+      color: #ffcd05;
+      font-size: .8em;
+      font-weight: 700;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 250ms; }
+      #planet main article a:hover, #emplois main article a:hover, #index-news article a:hover {
+        color: #ffd738; }
+    #planet main article h2, #emplois main article h2, #index-news article h2 {
+      flex: 1 100%; }
+    #planet main article article, #emplois main article article, #index-news article article {
+      background: #31313b;
+      border: 1px solid #25252D;
+      box-sizing: border-box;
+      flex: 1 50%;
+      padding: 2em; }
+      #planet main article article h2, #emplois main article article h2, #index-news article article h2 {
+        font-size: 1.2em;
+        font-weight: 600; }
 
 /*# sourceMappingURL=../static/css/style.sass.css.map */

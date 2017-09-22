@@ -1,8 +1,13 @@
+import datetime
+import locale
+
 import docutils.core
 import docutils.writers.html5_polyglot
 import feedparser
 from flask import Flask, abort, render_template
 from jinja2 import TemplateNotFound
+
+locale.setlocale(locale.LC_ALL, 'fr_FR')
 
 app = Flask(__name__)
 
@@ -12,8 +17,14 @@ FEEDS = {
 }
 
 MEETUPS = {
-    'nantes': 'http://nantes.afpy.org/feeds/all.atom.xml',
+    'bruxelles': (
+        'https://www.meetup.com/fr-FR/'
+        'Belgium-Python-Meetup-aka-AperoPythonBe/events/rss/'),
+    'grenoble': (
+        'https://www.meetup.com/fr-FR/'
+        'Groupe-dutilisateurs-Python-Grenoble/events/rss/'),
     'lyon': 'https://www.meetup.com/fr-FR/Python-AFPY-Lyon/events/rss/',
+    'nantes': 'http://nantes.afpy.org/feeds/all.atom.xml',
 }
 
 for city, url in MEETUPS.items():
@@ -40,24 +51,35 @@ def pages(name='index'):
 
 @app.route('/docs/<name>')
 def rest(name):
-    with open(f'templates/{name}.rst') as fd:
-        parts = docutils.core.publish_parts(
-            source=fd.read(),
-            writer=docutils.writers.html5_polyglot.Writer(),
-            settings_overrides={'initial_header_level': 2})
+    try:
+        with open(f'templates/{name}.rst') as fd:
+            parts = docutils.core.publish_parts(
+                source=fd.read(),
+                writer=docutils.writers.html5_polyglot.Writer(),
+                settings_overrides={'initial_header_level': 2})
+    except FileNotFoundError:
+        abort(404)
     return render_template(
         'rst.html', body_id=name, html=parts['body'], title=parts['title'])
 
 
 @app.route('/feed/<name>')
 def feed(name):
-    feed = feedparser.parse(FEEDS[name])
+    try:
+        feed = feedparser.parse(FEEDS[name])
+    except KeyError:
+        abort(404)
     return render_template(
         'feed.html', body_id=name, entries=feed.entries,
         title=feed.feed.get('title'))
 
 
-if __name__ == '__main__':
+@app.template_filter('datetime')
+def format_datetime(time_struct, format_):
+    return datetime.datetime(*time_struct[:6]).strftime(format_)
+
+
+if __name__ == '__main__':  # pragma: no cover
     from sassutils.wsgi import SassMiddleware
     app.wsgi_app = SassMiddleware(
         app.wsgi_app, {'afpy': ('sass', 'static/css', '/static/css')})

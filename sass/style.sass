@@ -5,32 +5,79 @@ $action: #2e5cfd
 $action-secondary: #ffcd05
 $text: #eaeaea
 
+a
+  color: $action-secondary
+  font-size: .8em
+  font-weight: 700
+  text-decoration: none
+  text-transform: uppercase
+  transition: color 250ms
+
+  &:hover
+    color: lighten($action-secondary, 10%)
+
+input[type="submit"]
+  background: $action
+  border: 0
+  color: #fff
+  cursor: pointer
+  font-family: 'Hind', sans-serif
+  outline: transparent
+  padding: 1em 2em
+  text-transform: uppercase
+  transition: background 250ms
+
+  &:hover
+    background: lighten($action, 5%)
+
+code
+  background: $header
+  border-bottom: 1px solid $action-secondary
+  display: block
+  padding: 2em
+
+iframe
+   border: 0
+   height: 450px
+   width: 100%
+
 body
   background: $bkg
   color: $text
   display: flex
-  flex-wrap: wrap
+  flex-direction: column
   font-family: 'Hind', sans-serif
   font-size: .9em
   font-weight: 300
   margin: 0
+  min-height: 100vh
   padding: 0
 
 header
   background: $header
   order: 1
-  width: 100%
 
 nav
-  flex: 1 100%
+  align-items: center
+  display: flex
+  justify-content: center
+  min-height: 70px
   order: 0
 
   ul
     display: flex
-    justify-content: center
     list-style: none
     margin: 0
     padding-left: 0
+
+    li
+      &:first-child
+        a::before
+          content: url(../images/logo.svg)
+          left: 3em
+          position: absolute
+          top: 10px
+
 
     a
       color: $text
@@ -39,14 +86,34 @@ nav
       padding: 1em
       text-decoration: none
 
+    .active a
+      color: $action-secondary
+
 main
-  margin: 0 auto
+  flex-grow: 1
+  margin: 1em auto 0
   max-width: 1200px
   order: 3
+  width: 100%
+
+footer
+  background: $header
+  margin-top: 2em
+  order: 4
+
+  ul
+    display: flex
+    justify-content: center
+    list-style: none
+    padding: 0
+
+    a
+      color: inherit
+      text-decoration: inherit
+      padding: 1em
 
 h1
   color: $action-secondary
-  flex: 1 100%
   font-weight: 300
   margin: 2em auto
   max-width: 1200px
@@ -62,25 +129,51 @@ h1
     display: block
 
 h2
-  font-size: 2em
   font-weight: 400
 
-.simple
+dd
+  margin-left: 1em
+
+  p:before
+    content: '→ '
+    display: inline
+
+time
+  display: block
+
+#planet main, #emplois main, #index-news
+  box-sizing: border-box
   display: flex
   flex-wrap: wrap
 
-  dt
+  article
+    background: lighten($bkg, 5%)
+    border: 1px solid $bkg
     box-sizing: border-box
-    display: flex
-    flex-direction: column
-    line-height: 50px
-    text-align: center
-    padding: 1em
-    width: 300px
+    flex: 1 50%
+    padding: 2em
 
-  dd
-    box-sizing: border-box
-    margin-left: -300px
-    padding: 3em 0 0
-    text-align: center
-    width: 300px
+    a
+      color: $action-secondary
+      font-size: .8em
+      font-weight: 700
+      text-decoration: none
+      text-transform: uppercase
+      transition: color 250ms
+
+      &:hover
+        color: lighten($action-secondary, 10%)
+
+    h2
+      flex: 1 100%
+
+    article
+      background: lighten($bkg, 5%)
+      border: 1px solid $bkg
+      box-sizing: border-box
+      flex: 1 50%
+      padding: 2em
+
+      h2
+        font-size: 1.2em
+        font-weight: 600
