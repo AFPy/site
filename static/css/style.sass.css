@@ -29,6 +29,11 @@ code {
   display: block;
   padding: 2em; }
 
+iframe {
+  border: 0;
+  height: 450px;
+  width: 100%; }
+
 body {
   background: #25252D;
   color: #eaeaea;
