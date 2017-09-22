@@ -22,8 +22,6 @@ MEETUPS = {
 for city, url in MEETUPS.items():
     FEEDS[f'meetup_{city}'] = url
 
-BASE_DIR = Path(__file__).parent
-
 
 @app.errorhandler(404)
 def page_not_found(e):
