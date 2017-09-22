@@ -19,7 +19,7 @@ check-outdated:
 	$(PIP) list --outdated --format=columns
 
 test:
-	$(PYTEST) tests.py --flake8 --isort --cov=afpy --cov=tests
+	$(PYTEST) tests.py --flake8 --isort --cov=afpy --cov=tests --cov-report=term-missing
 
 serve:
 	$(VENV)/bin/afpy.py
