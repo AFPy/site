@@ -8,6 +8,9 @@
   {% for entry in entries %}
     <article>
       <h2>{{ entry.title }}</h2>
+      <time pubdate datetime="{{ entry.updated_parsed | datetime('%Y-%m-%d') }}">
+        {{ entry.updated_parsed | datetime('%x') }}
+      </time>
       {{ entry.summary | safe }}
       <p><a href="{{ entry.link }}">Lire la suite…</a></p>
     </article>

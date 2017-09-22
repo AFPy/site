@@ -12,17 +12,44 @@
     </header>
     <nav>
       <ul>
-        <li><a href="{{ url_for('pages') }}">Accueil</a></li>
-        <li><a href="{{ url_for('rest', name='a-propos') }}">Qui sommes-nous ?</a></li>
-        <li><a href="{{ url_for('feed', name='planet') }}">Actualités</a></li>
-        <li><a href="{{ url_for('feed', name='emplois') }}">Offres d'emplois</a></li>
-        <li><a href="{{ url_for('pages', name='communaute') }}">Communauté</a></li>
-        <li><a href="{{ url_for('pages', name='clavardage') }}">Clavardage</a></li>
-        <li><a href="{{ url_for('pages', name='adhesions') }}">Adhésions</a></li>
+        <li{% if body_id == 'index' %} class="active"{% endif %}>
+          <a href="{{ url_for('pages') }}">Accueil</a>
+        </li>
+        <li{% if body_id == 'a-propos' %} class="active"{% endif %}>
+          <a href="{{ url_for('rest', name='a-propos') }}">Qui sommes-nous ?</a>
+        </li>
+        <li{% if body_id == 'planet' %} class="active"{% endif %}>
+          <a href="{{ url_for('feed', name='planet') }}">Actualités</a>
+        </li>
+        <li{% if body_id == 'emplois' %} class="active"{% endif %}>
+          <a href="{{ url_for('feed', name='emplois') }}">Offres d'emplois</a>
+        </li>
+        <li{% if body_id == 'communaute' %} class="active"{% endif %}>
+          <a href="{{ url_for('pages', name='communaute') }}">Communauté</a>
+        </li>
+        <li{% if body_id == 'clavardage' %} class="active"{% endif %}>
+          <a href="{{ url_for('pages', name='clavardage') }}">Clavardage</a>
+        </li>
+        <li{% if body_id == 'adhesions' %} class="active"{% endif %}>
+          <a href="{{ url_for('pages', name='adhesions') }}">Adhésions</a>
+        </li>
       </ul>
     </nav>
     <main>
       {% block main %}{% endblock main %}
     </main>
+    <footer>
+      <ul>
+        <li>
+          <a href="{{ url_for('rest', name='contact') }}">Contact</a>
+        </li>
+        <li>
+          <a href="{{ url_for('rest', name='charte') }}">Charte</a>
+        </li>
+        <li>
+          <a href="{{ url_for('rest', name='legal') }}">Mentions légales</a>
+        </li>
+      </ul>
+    </footer>
   </body>
 </html>
