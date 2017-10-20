@@ -12,18 +12,14 @@ vulgarisation auprès d’un public francophone du langage de programmation pyth
 et de ses applications.
 
 
-Bureau 2016
+Bureau 2017
 ===========
 
-Les membres du bureau 2016 sont :
+Les membres du bureau 2017 sont :
 
 Président (president@afpy.org)
-  Jean-Philippe Camguilhem
-Secrétaire (secretaire@afpy.org)
-  ?
-Vice-Secrétaire
-  ?
-Trésorier (tresorerie@afpy.org)
   Arthur Vuillard
-Vice-Trésorier
-  ?
+Secrétaire (secretaire@afpy.org)
+  Xavier Ordoquy
+Trésorier (tresorerie@afpy.org)
+  Guillaume Ayoub
