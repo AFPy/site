@@ -25,7 +25,7 @@ MEETUPS = {
         'Groupe-dutilisateurs-Python-Grenoble/events/rss/'),
     'lille': 'https://www.meetup.com/fr-FR/Lille-py/events/rss/',
     'lyon': 'https://www.meetup.com/fr-FR/Python-AFPY-Lyon/events/rss/',
-    'nantes': 'http://nantes.afpy.org/feeds/all.atom.xml',
+    'nantes': 'https://www.meetup.com/fr-FR/Nantes-Python-Meetup/events/rss/',
 }
 
 for city, url in MEETUPS.items():
