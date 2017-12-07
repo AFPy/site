@@ -7,7 +7,7 @@ import feedparser
 from flask import Flask, abort, render_template
 from jinja2 import TemplateNotFound
 
-locale.setlocale(locale.LC_ALL, 'fr_FR.utf8')
+locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
 
 app = Flask(__name__)
 
