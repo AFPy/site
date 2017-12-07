@@ -26,6 +26,8 @@ MEETUPS = {
     'lille': 'https://www.meetup.com/fr-FR/Lille-py/events/rss/',
     'lyon': 'https://www.meetup.com/fr-FR/Python-AFPY-Lyon/events/rss/',
     'nantes': 'https://www.meetup.com/fr-FR/Nantes-Python-Meetup/events/rss/',
+    'montpellier': (
+        'https://www.meetup.com/fr-FR/Meetup-Python-Montpellier/events/rss/'),
 }
 
 for city, url in MEETUPS.items():
