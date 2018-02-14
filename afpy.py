@@ -12,8 +12,8 @@ locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
 app = Flask(__name__)
 
 FEEDS = {
-    'emplois': 'https://www.afpy.org/rss-jobs/RSS',
-    'planet': 'https://www.afpy.org/planet/rss.xml',
+    'emplois': 'https://plone.afpy.org/rss-jobs/RSS',
+    'planet': 'https://plone.afpy.org/planet/rss.xml',
 }
 
 MEETUPS = {
