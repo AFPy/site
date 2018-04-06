@@ -19,19 +19,14 @@ FEEDS = {
 MEETUPS = {
     'bruxelles': (
         'https://www.meetup.com/fr-FR/'
-        'Belgium-Python-Meetup-aka-AperoPythonBe/events/rss/'),
+        'Belgium-Python-Meetup-aka-AperoPythonBe/'),
     'grenoble': (
-        'https://www.meetup.com/fr-FR/'
-        'Groupe-dutilisateurs-Python-Grenoble/events/rss/'),
-    'lille': 'https://www.meetup.com/fr-FR/Lille-py/events/rss/',
-    'lyon': 'https://www.meetup.com/fr-FR/Python-AFPY-Lyon/events/rss/',
-    'nantes': 'https://www.meetup.com/fr-FR/Nantes-Python-Meetup/events/rss/',
-    'montpellier': (
-        'https://www.meetup.com/fr-FR/Meetup-Python-Montpellier/events/rss/'),
+        'https://www.meetup.com/fr-FR/Groupe-dutilisateurs-Python-Grenoble/'),
+    'lille': 'https://www.meetup.com/fr-FR/Lille-py/',
+    'lyon': 'https://www.meetup.com/fr-FR/Python-AFPY-Lyon/',
+    'nantes': 'https://www.meetup.com/fr-FR/Nantes-Python-Meetup/',
+    'montpellier': 'https://www.meetup.com/fr-FR/Meetup-Python-Montpellier/',
 }
-
-for city, url in MEETUPS.items():
-    FEEDS[f'meetup_{city}'] = url
 
 
 @app.errorhandler(404)
