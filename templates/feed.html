@@ -5,6 +5,15 @@
 {% endblock header %}
 
 {% block main %}
+  {# TODO: change this when the new website for news is available #}
+  {% if body_id == 'emplois' %}
+    <p>
+      Vous souhaitez publier une offre d'emploi ? Merci de vous rendre sur
+      la <a href="https://plone.afpy.org/doc/afpy/faq.html">Foire aux
+      Questions</a> et de suivre les indications qui y sont détaillées.
+    </p>
+  {% endif %}
+
   {% for entry in entries[:12] %}
     <article>
       <h2>{{ entry.title }}</h2>
