@@ -1,2 +1,3 @@
-# site
-Future version d'afpy.org
+# AFPy.org
+
+Site Web de l'AFPy.
