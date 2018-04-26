@@ -4,7 +4,7 @@ import locale
 import docutils.core
 import docutils.writers.html5_polyglot
 import feedparser
-from flask import Flask, abort, render_template
+from flask import Flask, abort, redirect, render_template
 from jinja2 import TemplateNotFound
 
 locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
@@ -70,6 +70,16 @@ def feed(name):
     return render_template(
         'feed.html', body_id=name, entries=feed.entries,
         title=feed.feed.get('title'))
+
+
+@app.route('/planet/rss.xml')
+def planet():
+    return redirect('https://zope.afpy.org/planet/rss.xml', code=307)
+
+
+@app.route('/rss-jobs/RSS')
+def jobs():
+    return redirect('https://plone.afpy.org/rss-jobs/RSS', code=307)
 
 
 @app.template_filter('datetime')
