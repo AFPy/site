@@ -88,7 +88,7 @@ def feed(name):
 
 @app.route('/planet/')
 @app.route('/planet/rss.xml')
-@cache.cached(timeout=50)
+@cache.cached()
 def planet():
     entries = []
     for name, url in PLANET.items():
