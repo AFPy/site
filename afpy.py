@@ -1,19 +1,33 @@
 import datetime
+import email
 import locale
+import time
 
 import docutils.core
 import docutils.writers.html5_polyglot
 import feedparser
 from flask import Flask, abort, redirect, render_template
+from flask_cache import Cache
 from jinja2 import TemplateNotFound
 
 locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
 
+cache = Cache(config={'CACHE_TYPE': 'simple', 'CACHE_DEFAULT_TIMEOUT': 600})
 app = Flask(__name__)
+cache.init_app(app)
 
 FEEDS = {
     'emplois': 'https://plone.afpy.org/rss-jobs/RSS',
     'planet': 'https://plone.afpy.org/planet/rss.xml',
+}
+
+PLANET = {
+    'Emplois AFPy': 'https://plone.afpy.org/rss-jobs/RSS',
+    'Nouvelles AFPy': 'https://plone.afpy.org/planet/rss.xml',
+    'Anybox': 'https://anybox.fr/site-feed/RSS?set_language=fr',
+    'Ascendances': 'https://ascendances.wordpress.com/feed/',
+    'Code en Seine': 'https://codeenseine.fr/feeds/all.atom.xml',
+    'Yaal': 'https://www.yaal.fr/blog/feeds/all.atom.xml'
 }
 
 MEETUPS = {
@@ -72,9 +86,17 @@ def feed(name):
         title=feed.feed.get('title'))
 
 
+@app.route('/planet/')
 @app.route('/planet/rss.xml')
+@cache.cached(timeout=50)
 def planet():
-    return redirect('https://zope.afpy.org/planet/rss.xml', code=307)
+    entries = []
+    for name, url in PLANET.items():
+        for entry in feedparser.parse(url).entries:
+            entries.append({'feed': name, 'content': entry})
+    entries.sort(reverse=True, key=lambda entry: getattr(
+        entry['content'], 'published_parsed', entry['content'].updated_parsed))
+    return render_template('rss.xml', entries=entries)
 
 
 @app.route('/rss-jobs/RSS')
@@ -85,6 +107,12 @@ def jobs():
 @app.template_filter('datetime')
 def format_datetime(time_struct, format_):
     return datetime.datetime(*time_struct[:6]).strftime(format_)
+
+
+@app.template_filter('rfc822_datetime')
+def format_rfc822_datetime(datetime_tuple):
+    timestamp = time.mktime(datetime_tuple)
+    return email.utils.formatdate(timestamp)
 
 
 if __name__ == '__main__':  # pragma: no cover
