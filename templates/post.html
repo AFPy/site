@@ -1,0 +1,19 @@
+{% extends '_layout.jinja2' %}
+
+{% block header %}
+  <h1>{{ post.title }}</h1>
+{% endblock header %}
+
+{% block main %}
+  <article>
+    <time pubdate datetime="{{ post.pubDate | parse_rfc822_datetime | datetime('%Y-%m-%d') }}">
+      Posté le {{ post.pubDate | parse_rfc822_datetime | datetime('%x') }}
+    </time>
+    <p>
+      <em>
+        {{ post.description | safe }}
+      </em>
+    </p>
+    {{ post.content | safe }}
+  </article>
+{% endblock main %}

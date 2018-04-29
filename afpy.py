@@ -2,6 +2,8 @@ import datetime
 import email
 import locale
 import time
+from pathlib import Path
+from xml.etree import ElementTree
 
 import docutils.core
 import docutils.writers.html5_polyglot
@@ -15,11 +17,6 @@ locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
 cache = Cache(config={'CACHE_TYPE': 'simple', 'CACHE_DEFAULT_TIMEOUT': 600})
 app = Flask(__name__)
 cache.init_app(app)
-
-FEEDS = {
-    'emplois': 'https://plone.afpy.org/rss-jobs/RSS',
-    'planet': 'https://plone.afpy.org/planet/rss.xml',
-}
 
 PLANET = {
     'Emplois AFPy': 'https://plone.afpy.org/rss-jobs/RSS',
@@ -42,6 +39,17 @@ MEETUPS = {
     'montpellier': 'https://www.meetup.com/fr-FR/Meetup-Python-Montpellier/',
 }
 
+POSTS = {
+    'actualites': 'Actualités',
+    'emplois': 'Emplois',
+}
+
+
+root = Path(__file__).parent / 'posts'
+for category in POSTS:
+    for status in ('waiting', 'published'):
+        (root / category / status).mkdir(parents=True, exist_ok=True)
+
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -51,12 +59,16 @@ def page_not_found(e):
 @app.route('/')
 @app.route('/<name>')
 def pages(name='index'):
-    entries = ()
+    posts = {}
     if name == 'index':
-        entries = feedparser.parse(FEEDS['planet']).entries
+        path = root / 'actualites' / 'published'
+        timestamps = sorted(path.iterdir(), reverse=True)[:4]
+        for timestamp in timestamps:
+            tree = ElementTree.parse(timestamp / 'post.xml')
+            posts[timestamp] = {item.tag: item.text for item in tree.iter()}
     try:
         return render_template(
-            f'{name}.html', body_id=name, meetups=MEETUPS, entries=entries)
+            f'{name}.html', body_id=name, meetups=MEETUPS, posts=posts)
     except TemplateNotFound:
         abort(404)
 
@@ -75,15 +87,31 @@ def rest(name):
         'rst.html', body_id=name, html=parts['body'], title=parts['title'])
 
 
-@app.route('/feed/<name>')
-def feed(name):
-    try:
-        feed = feedparser.parse(FEEDS[name])
-    except KeyError:
+@app.route('/posts/<name>')
+def posts(name):
+    if name not in POSTS:
         abort(404)
+    path = root / name / 'published'
+    timestamps = sorted(path.iterdir(), reverse=True)[:12]
+    posts = {}
+    for timestamp in timestamps:
+        tree = ElementTree.parse(timestamp / 'post.xml')
+        posts[timestamp] = {item.tag: item.text for item in tree.iter()}
     return render_template(
-        'feed.html', body_id=name, entries=feed.entries,
-        title=feed.feed.get('title'))
+        'posts.html', body_id=name, posts=posts, title=POSTS[name], name=name)
+
+
+@app.route('/posts/<name>/<timestamp>')
+def post(name, timestamp):
+    if name not in POSTS:
+        abort(404)
+    try:
+        tree = ElementTree.parse(
+            root / name / 'published' / timestamp / 'post.xml')
+    except Exception:
+        abort(404)
+    post = {item.tag: item.text for item in tree.iter()}
+    return render_template('post.html', body_id='post', post=post)
 
 
 @app.route('/planet/')
@@ -102,6 +130,11 @@ def planet():
 @app.route('/rss-jobs/RSS')
 def jobs():
     return redirect('https://plone.afpy.org/rss-jobs/RSS', code=307)
+
+
+@app.template_filter('parse_rfc822_datetime')
+def parse_rfc822_datetime(rfc822_datetime):
+    return email.utils.parsedate_tz(rfc822_datetime)
 
 
 @app.template_filter('datetime')

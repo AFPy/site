@@ -21,11 +21,14 @@
 
   <h2>Actualités</h2>
   <section id="index-news">
-    {% for entry in entries[:4] %}
+    {% for timestamp, post in posts.items() %}
       <article>
-        <h3>{{ entry.title }}</h3>
-        {{ entry.summary | safe }}
-        <p><a href="{{ entry.link }}">Lire la suite…</a></p>
+        <h3>{{ post.title }}</h3>
+        <time pubdate datetime="{{ post.pubDate | parse_rfc822_datetime | datetime('%Y-%m-%d') }}">
+          {{ post.pubDate | parse_rfc822_datetime | datetime('%x') }}
+        </time>
+        {{ post.description | safe }}
+        <p><a href="{{ url_for('post', name=name, timestamp=timestamp) }}">Lire la suite…</a></p>
       </article>
     {% endfor %}
   </section>

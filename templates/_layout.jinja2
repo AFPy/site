@@ -18,11 +18,11 @@
         <li{% if body_id == 'a-propos' %} class="active"{% endif %}>
           <a href="{{ url_for('rest', name='a-propos') }}">Qui sommes-nous ?</a>
         </li>
-        <li{% if body_id == 'planet' %} class="active"{% endif %}>
-          <a href="{{ url_for('feed', name='planet') }}">Actualités</a>
+        <li{% if body_id == 'actualites' %} class="active"{% endif %}>
+          <a href="{{ url_for('posts', name='actualites') }}">Actualités</a>
         </li>
         <li{% if body_id == 'emplois' %} class="active"{% endif %}>
-          <a href="{{ url_for('feed', name='emplois') }}">Offres d'emplois</a>
+          <a href="{{ url_for('posts', name='emplois') }}">Offres d'emplois</a>
         </li>
         <li{% if body_id == 'communaute' %} class="active"{% endif %}>
           <a href="{{ url_for('pages', name='communaute') }}">Communauté</a>

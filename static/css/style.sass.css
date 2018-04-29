@@ -36,7 +36,7 @@ iframe {
   width: 100%; }
 
 body {
-  background: #25252D;
+  background: #25252d;
   color: #eaeaea;
   display: flex;
   flex-direction: column;
@@ -130,39 +130,39 @@ dd {
 time {
   display: block; }
 
-#planet main, #emplois main, #index-news {
+#actualites main, #emplois main, #index-news {
   box-sizing: border-box;
   display: flex;
   flex-wrap: wrap; }
-  #planet main article, #emplois main article, #index-news article {
+  #actualites main article, #emplois main article, #index-news article {
     background: #31313b;
-    border: 1px solid #25252D;
+    border: 1px solid #25252d;
     box-sizing: border-box;
     flex: 1 50%;
     padding: 2em; }
-    #planet main article a, #emplois main article a, #index-news article a {
+    #actualites main article a, #emplois main article a, #index-news article a {
       color: #ffcd05;
       font-size: .8em;
       font-weight: 700;
       text-decoration: none;
       text-transform: uppercase;
       transition: color 250ms; }
-      #planet main article a:hover, #emplois main article a:hover, #index-news article a:hover {
+      #actualites main article a:hover, #emplois main article a:hover, #index-news article a:hover {
         color: #ffd738; }
-    #planet main article h2, #emplois main article h2, #index-news article h2 {
+    #actualites main article h2, #emplois main article h2, #index-news article h2 {
       flex: 1 100%; }
-    #planet main article article, #emplois main article article, #index-news article article {
+    #actualites main article article, #emplois main article article, #index-news article article {
       background: #31313b;
-      border: 1px solid #25252D;
+      border: 1px solid #25252d;
       box-sizing: border-box;
       flex: 1 50%;
       padding: 2em; }
-      #planet main article article h2, #emplois main article article h2, #index-news article article h2 {
+      #actualites main article article h2, #emplois main article article h2, #index-news article article h2 {
         font-size: 1.2em;
         font-weight: 600; }
 
 @media screen and (max-width: 640px) {
-  #planet main article, #emplois main article, #index-news article {
+  #actualites main article, #emplois main article, #index-news article {
     flex: 1 100%; } }
 
 /*# sourceMappingURL=../static/css/style.sass.css.map */

@@ -5,6 +5,7 @@
 __pycache__
 afpy.egg-info
 static/css/*.map
+posts
 
 # PyCharm project files
 .idea
