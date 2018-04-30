@@ -178,6 +178,27 @@ def post(name, timestamp):
     return render_template('post.html', body_id='post', post=post)
 
 
+@app.route('/feed/<name>/rss.xml')
+@cache.cached()
+def feed(name):
+    if name not in POSTS:
+        abort(404)
+    path = root / name / 'published'
+    timestamps = sorted(path.iterdir(), reverse=True)[:12]
+    entries = []
+    for timestamp in timestamps:
+        tree = ElementTree.parse(timestamp / 'post.xml')
+        entry = {item.tag: item.text for item in tree.iter()}
+        entry['timestamp'] = int(timestamp.name)
+        entry['link'] = url_for(
+            'post', name=name, timestamp=timestamp.name, _external=True)
+        entries.append({'content': entry})
+    title = f'{POSTS[name]} AFPy.org'
+    return render_template(
+        'rss.xml', entries=entries, title=title, description=title,
+        link=url_for('feed', name=name, _external=True))
+
+
 @app.route('/planet/')
 @app.route('/planet/rss.xml')
 @cache.cached()
@@ -185,10 +206,14 @@ def planet():
     entries = []
     for name, url in PLANET.items():
         for entry in feedparser.parse(url).entries:
+            date = getattr(entry, 'published_parsed', entry.updated_parsed)
+            entry['timestamp'] = time.mktime(date)
             entries.append({'feed': name, 'content': entry})
-    entries.sort(reverse=True, key=lambda entry: getattr(
-        entry['content'], 'published_parsed', entry['content'].updated_parsed))
-    return render_template('rss.xml', entries=entries)
+    entries.sort(reverse=True, key=lambda entry: entry['content']['timestamp'])
+    return render_template(
+        'rss.xml', entries=entries, title='Planet Python francophone',
+        description='Nouvelles autour de Python en français',
+        link=url_for('planet', _external=True))
 
 
 @app.route('/rss-jobs/RSS')
@@ -207,8 +232,8 @@ def format_datetime(time_struct, format_):
 
 
 @app.template_filter('rfc822_datetime')
-def format_rfc822_datetime(datetime_tuple):
-    return email.utils.formatdate(time.mktime(datetime_tuple))
+def format_rfc822_datetime(timestamp):
+    return email.utils.formatdate(timestamp)
 
 
 if app.env == 'development':  # pragma: no cover

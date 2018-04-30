@@ -1,17 +1,13 @@
 <rss xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" version="2.0">
   <channel>
-    <title>
-      <![CDATA[ Planet Python francophone ]]>
-    </title>
-    <description>
-      <![CDATA[ Nouvelles autour de Python en français ]]>
-    </description>
-    <link>http://www.afpy.org/planet/</link>
+    <title>{{ title }}</title>
+    <description>{{ description }}</description>
+    <link>{{ link }}</link>
     <language>fr</language>
     {% for entry in entries %}
       <item>
         <title>
-          <![CDATA[ [{{ entry.feed | safe }}] {{ entry.content.title | safe }} ]]>
+          <![CDATA[ {% if entry.feed %}[{{ entry.feed | safe }}]{% endif %} {{ entry.content.title | safe }} ]]>
         </title>
         <description>
           <![CDATA[ {{ entry.content.description | safe }} ]]>
@@ -20,7 +16,7 @@
           <![CDATA[ {{ entry.content.link | safe }} ]]>
         </link>
         <pubDate>
-          {{ (entry.content.published_parsed or entry.content.updated_parsed) | rfc822_datetime }}
+          {{ entry.content.timestamp | rfc822_datetime }}
         </pubDate>
       </item>
     {% endfor %}
