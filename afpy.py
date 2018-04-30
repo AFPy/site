@@ -117,6 +117,7 @@ def edit_post(name, timestamp=None):
 @app.route('/post/edit/<name>', methods=['post'])
 @app.route('/post/edit/<name>/<timestamp>', methods=['post'])
 def save_post(name, timestamp=None):
+    original_timestamp = timestamp
     if name not in POSTS:
         abort(404)
     if timestamp is None:
@@ -146,7 +147,8 @@ def save_post(name, timestamp=None):
     elif 'unpublish' in request.form and status == 'published':
         (root / name / 'published' / timestamp).rename(
             root / name / 'waiting' / timestamp)
-    return redirect('/')
+    return redirect(
+        '/' if original_timestamp else url_for('rest', name='confirmation'))
 
 
 @app.route('/posts/<name>')
