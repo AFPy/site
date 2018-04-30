@@ -209,8 +209,7 @@ def format_rfc822_datetime(datetime_tuple):
     return email.utils.formatdate(time.mktime(datetime_tuple))
 
 
-if __name__ == '__main__':  # pragma: no cover
+if app.env == 'development':  # pragma: no cover
     from sassutils.wsgi import SassMiddleware
     app.wsgi_app = SassMiddleware(
         app.wsgi_app, {'afpy': ('sass', 'static/css', '/static/css')})
-    app.run(debug=True)

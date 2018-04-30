@@ -22,4 +22,4 @@ test:
 	$(PYTEST) tests.py --flake8 --isort --cov=afpy --cov=tests --cov-report=term-missing
 
 serve:
-	$(VENV)/bin/afpy.py
+	env FLASK_APP=afpy.py FLASK_ENV=development $(VENV)/bin/flask run
