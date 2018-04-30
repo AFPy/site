@@ -93,7 +93,7 @@ def rest(name):
 
 
 @app.route('/post/edit/<name>')
-@app.route('/post/edit/<name>/<timestamp>')
+@app.route('/admin/post/edit/<name>/<timestamp>')
 def edit_post(name, timestamp=None):
     if name not in POSTS:
         abort(404)
@@ -115,7 +115,7 @@ def edit_post(name, timestamp=None):
 
 
 @app.route('/post/edit/<name>', methods=['post'])
-@app.route('/post/edit/<name>/<timestamp>', methods=['post'])
+@app.route('/admin/post/edit/<name>/<timestamp>', methods=['post'])
 def save_post(name, timestamp=None):
     original_timestamp = timestamp
     if name not in POSTS:
@@ -141,14 +141,15 @@ def save_post(name, timestamp=None):
     element.text = email.utils.formatdate(
         int(timestamp) if timestamp else time.time())
     ElementTree.ElementTree(tree).write(post)
-    if 'publish' in request.form and status == 'waiting':
-        (root / name / 'waiting' / timestamp).rename(
-            root / name / 'published' / timestamp)
-    elif 'unpublish' in request.form and status == 'published':
-        (root / name / 'published' / timestamp).rename(
-            root / name / 'waiting' / timestamp)
-    return redirect(
-        '/' if original_timestamp else url_for('rest', name='confirmation'))
+    if original_timestamp:
+        if 'publish' in request.form and status == 'waiting':
+            (root / name / 'waiting' / timestamp).rename(
+                root / name / 'published' / timestamp)
+        elif 'unpublish' in request.form and status == 'published':
+            (root / name / 'published' / timestamp).rename(
+                root / name / 'waiting' / timestamp)
+        return redirect(url_for('admin'))
+    return redirect(url_for('rest', name='confirmation'))
 
 
 @app.route('/posts/<name>')
@@ -163,6 +164,21 @@ def posts(name):
         posts[timestamp.name] = {item.tag: item.text for item in tree.iter()}
     return render_template(
         'posts.html', body_id=name, posts=posts, title=POSTS[name], name=name)
+
+
+@app.route('/admin/posts')
+def admin():
+    posts = {}
+    for name, label in POSTS.items():
+        posts[(name, label)] = name_posts = {}
+        for state in ('waiting', 'published'):
+            name_posts[state] = state_posts = {}
+            timestamps = sorted((root / name / state).iterdir(), reverse=True)
+            for timestamp in timestamps:
+                tree = ElementTree.parse(timestamp / 'post.xml')
+                state_posts[timestamp.name] = {
+                    item.tag: item.text for item in tree.iter()}
+    return render_template('admin.html', body_id='admin', posts=posts)
 
 
 @app.route('/posts/<name>/<timestamp>')

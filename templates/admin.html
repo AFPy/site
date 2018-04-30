@@ -1,0 +1,39 @@
+{% extends '_layout.jinja2' %}
+
+{% block header %}
+  <h1>Administration</h1>
+{% endblock header %}
+
+{% block main %}
+  {% for (name, label), states in posts.items() %}
+    <article>
+      <h2>{{ label }}</h2>
+      {% for state, timestamps in states.items() %}
+        {% set state_label = 'En attente' if state == 'waiting' else 'Publiés' %}
+        <h3>{{ state_label }}</h3>
+        {% if timestamps %}
+          <table>
+            <thead>
+              <tr>
+                <th>Titre</th>
+                <th>Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for timestamp, post in timestamps.items() %}
+                <tr>
+                  <td>{{ post.title }}</td>
+                  <td>{{ post.pubDate | parse_rfc822_datetime | datetime('%x') }}</td>
+                  <td><a href="{{ url_for('edit_post', name=name, timestamp=timestamp) }}">Éditer</a></td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          <p>Aucun article dans la catégorie « {{ label }} / {{ state_label }} »</p>
+        {% endif %}
+      {% endfor %}
+    </article>
+  {% endfor %}
+{% endblock main %}

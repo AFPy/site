@@ -63,11 +63,21 @@ code
   display: block
   padding: 2em
 
+table
+  border-collapse: collapse
+  margin: 1em 0
+
+  thead, tr:nth-child(even)
+    background: $header
+
+  td, th
+    padding: 0.3em 1em
+
 iframe
-   background: $text
-   border: 0
-   height: 55em
-   width: 100%
+  background: $text
+  border: 0
+  height: 55em
+  width: 100%
 
 body
   background: $bkg
@@ -126,6 +136,9 @@ main
   max-width: 1200px
   order: 3
   padding: 0 1em
+  width: 100%
+
+aside
   width: 100%
 
 footer
