@@ -8,7 +8,7 @@ def test_home():
     assert response.status_code == 200
 
 
-@pytest.mark.parametrize('name', ['index', 'communaute'])
+@pytest.mark.parametrize('name', ['', 'communaute'])
 def test_html(name):
     response = app.test_client().get(f'/{name}')
     assert response.status_code == 200
@@ -20,9 +20,8 @@ def test_rest(name):
     assert response.status_code == 200
 
 
-@pytest.mark.parametrize('name', ['planet', 'meetup_lyon'])
-def test_feed(name):
-    response = app.test_client().get(f'/feed/{name}')
+def test_planet():
+    response = app.test_client().get(f'/planet/')
     assert response.status_code == 200
 
 
