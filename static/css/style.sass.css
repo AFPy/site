@@ -10,18 +10,42 @@ a {
   a:hover {
     color: #ffd738; }
 
+label {
+  display: block;
+  margin: 1em 0;
+  max-width: 40em;
+  width: 80%; }
+  label input, label select, label textarea {
+    background: #25252d;
+    border: 1px solid;
+    color: #eaeaea;
+    display: block;
+    padding: 0.2em;
+    width: 100%; }
+    label input:focus, label select:focus, label textarea:focus {
+      border-color: #ffcd05; }
+
+textarea {
+  height: 5em; }
+
 input[type="submit"] {
   background: #2e5cfd;
   border: 0;
-  color: #fff;
+  color: #eaeaea;
   cursor: pointer;
   font-family: 'Hind', sans-serif;
   outline: transparent;
   padding: 1em 2em;
   text-transform: uppercase;
-  transition: background 250ms; }
+  transition: background 250ms;
+  width: auto; }
   input[type="submit"]:hover {
     background: #4770fd; }
+
+.nicEdit-panelContain, .nicEdit-pane {
+  color: black; }
+  .nicEdit-panelContain input[type="submit"], .nicEdit-pane input[type="submit"] {
+    color: black; }
 
 code {
   background: #1d1e23;

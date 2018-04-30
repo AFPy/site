@@ -1,0 +1,53 @@
+{% extends '_layout.jinja2' %}
+
+{% block script %}
+  <script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
+  <script type="text/javascript">
+    bkLib.onDomLoaded(function() {
+      new nicEditor({
+        buttonList : ['fontFormat','bold','italic','underline','strikeThrough','subscript','superscript','link','unlink','xhtml']
+      }).panelInstance('content');
+    });
+  </script>
+{% endblock script %}
+
+{% block header %}
+  <h1>
+    {% if post %}
+      Modification d'un article
+    {% else %}
+      Création d'un article
+    {% endif %}
+  </h1>
+{% endblock header %}
+
+{% block main %}
+  <article>
+    <form method="post">
+      <label>Titre
+        <input name="title" value="{{ post.title }}" />
+      </label>
+      <label>Description
+        <textarea name="description">{{ post.description }}</textarea>
+      </label>
+      <label>Contenu de l'article
+        <textarea name="content" id="content">{{ post.content }}</textarea>
+      </label>
+      <label>Adresse e-mail
+        <input name="email" type="email" value="{{ post.email }}" />
+      </label>
+      <input type="submit" value="Enregistrer" />
+      {% if post %}
+        {% if state == 'waiting' %}
+          <input type="submit" name="publish" value="Publier" />
+        {% else %}
+          <input type="submit" name="unpublish" value="Dépublier" />
+        {% endif %}
+      {% endif %}
+    </form>
+    <p>
+      L'adresse e-mail n'est pas rendue publique, elle est uniquement utilisée
+      par les modérateurs pour vous contacter si nécessaire.
+    </p>
+  </article>
+{% endblock main %}

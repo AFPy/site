@@ -8,7 +8,7 @@ from xml.etree import ElementTree
 import docutils.core
 import docutils.writers.html5_polyglot
 import feedparser
-from flask import Flask, abort, redirect, render_template
+from flask import Flask, abort, redirect, render_template, request, url_for
 from flask_cache import Cache
 from jinja2 import TemplateNotFound
 
@@ -41,7 +41,7 @@ MEETUPS = {
 
 POSTS = {
     'actualites': 'Actualités',
-    'emplois': 'Emplois',
+    'emplois': 'Offres d’emploi',
 }
 
 
@@ -57,18 +57,23 @@ def page_not_found(e):
 
 
 @app.route('/')
-@app.route('/<name>')
-def pages(name='index'):
+def index():
     posts = {}
+    path = root / 'actualites' / 'published'
+    timestamps = sorted(path.iterdir(), reverse=True)[:4]
+    for timestamp in timestamps:
+        tree = ElementTree.parse(timestamp / 'post.xml')
+        posts[timestamp.name] = {item.tag: item.text for item in tree.iter()}
+    return render_template(
+        'index.html', body_id='index', name='actualites', posts=posts)
+
+
+@app.route('/<name>')
+def pages(name):
     if name == 'index':
-        path = root / 'actualites' / 'published'
-        timestamps = sorted(path.iterdir(), reverse=True)[:4]
-        for timestamp in timestamps:
-            tree = ElementTree.parse(timestamp / 'post.xml')
-            posts[timestamp] = {item.tag: item.text for item in tree.iter()}
+        return redirect(url_for('index'))
     try:
-        return render_template(
-            f'{name}.html', body_id=name, meetups=MEETUPS, posts=posts)
+        return render_template(f'{name}.html', body_id=name, meetups=MEETUPS)
     except TemplateNotFound:
         abort(404)
 
@@ -87,6 +92,63 @@ def rest(name):
         'rst.html', body_id=name, html=parts['body'], title=parts['title'])
 
 
+@app.route('/post/edit/<name>')
+@app.route('/post/edit/<name>/<timestamp>')
+def edit_post(name, timestamp=None):
+    if name not in POSTS:
+        abort(404)
+    if timestamp is None:
+        state = 'waiting'
+        post = {}
+    else:
+        for state in ('published', 'waiting'):
+            if (root / name / state / timestamp / 'post.xml').is_file():
+                path = (root / name / state / timestamp / 'post.xml')
+                break
+        else:
+            abort(404)
+        tree = ElementTree.parse(path)
+        post = {item.tag: (item.text or '').strip() for item in tree.iter()}
+    return render_template(
+        'edit_post.html', body_id='edit-post', post=post, name=name,
+        state=state)
+
+
+@app.route('/post/edit/<name>', methods=['post'])
+@app.route('/post/edit/<name>/<timestamp>', methods=['post'])
+def save_post(name, timestamp=None):
+    if name not in POSTS:
+        abort(404)
+    if timestamp is None:
+        timestamp = str(int(time.time()))
+        status = 'waiting'
+        folder = root / name / 'waiting' / timestamp
+        folder.mkdir()
+        post = folder / 'post.xml'
+    elif (root / name / 'waiting' / timestamp / 'post.xml').is_file():
+        status = 'waiting'
+    elif (root / name / 'published' / timestamp / 'post.xml').is_file():
+        status = 'published'
+    else:
+        abort(404)
+    post = root / name / status / timestamp / 'post.xml'
+    tree = ElementTree.Element('item')
+    for key in ('title', 'description', 'content', 'email'):
+        element = ElementTree.SubElement(tree, key)
+        element.text = request.form[key]
+    element = ElementTree.SubElement(tree, 'pubDate')
+    element.text = email.utils.formatdate(
+        int(timestamp) if timestamp else time.time())
+    ElementTree.ElementTree(tree).write(post)
+    if 'publish' in request.form and status == 'waiting':
+        (root / name / 'waiting' / timestamp).rename(
+            root / name / 'published' / timestamp)
+    elif 'unpublish' in request.form and status == 'published':
+        (root / name / 'published' / timestamp).rename(
+            root / name / 'waiting' / timestamp)
+    return redirect('/')
+
+
 @app.route('/posts/<name>')
 def posts(name):
     if name not in POSTS:
@@ -96,7 +158,7 @@ def posts(name):
     posts = {}
     for timestamp in timestamps:
         tree = ElementTree.parse(timestamp / 'post.xml')
-        posts[timestamp] = {item.tag: item.text for item in tree.iter()}
+        posts[timestamp.name] = {item.tag: item.text for item in tree.iter()}
     return render_template(
         'posts.html', body_id=name, posts=posts, title=POSTS[name], name=name)
 
@@ -144,8 +206,7 @@ def format_datetime(time_struct, format_):
 
 @app.template_filter('rfc822_datetime')
 def format_rfc822_datetime(datetime_tuple):
-    timestamp = time.mktime(datetime_tuple)
-    return email.utils.formatdate(timestamp)
+    return email.utils.formatdate(time.mktime(datetime_tuple))
 
 
 if __name__ == '__main__':  # pragma: no cover

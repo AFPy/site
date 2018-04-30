@@ -5,6 +5,7 @@
     <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" />
     <title>AFPY - Le site web de l'Association Francophone de Python</title>
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/style.sass.css') }}" />
+    {% block script %}{% endblock script %}
   </head>
   <body id="{{ body_id }}">
     <header>
@@ -13,7 +14,7 @@
     <nav>
       <ul>
         <li{% if body_id == 'index' %} class="active"{% endif %}>
-          <a href="{{ url_for('pages') }}">Accueil</a>
+          <a href="{{ url_for('index') }}">Accueil</a>
         </li>
         <li{% if body_id == 'a-propos' %} class="active"{% endif %}>
           <a href="{{ url_for('rest', name='a-propos') }}">Qui sommes-nous ?</a>

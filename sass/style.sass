@@ -16,19 +16,46 @@ a
   &:hover
     color: lighten($action-secondary, 10%)
 
+label
+  display: block
+  margin: 1em 0
+  max-width: 40em
+  width: 80%
+
+  input, select, textarea
+    background: $bkg
+    border: 1px solid
+    color: $text
+    display: block
+    padding: 0.2em
+    width: 100%
+
+    &:focus
+      border-color: $action-secondary
+
+textarea
+  height: 5em
+
 input[type="submit"]
   background: $action
   border: 0
-  color: #fff
+  color: $text
   cursor: pointer
   font-family: 'Hind', sans-serif
   outline: transparent
   padding: 1em 2em
   text-transform: uppercase
   transition: background 250ms
+  width: auto
 
   &:hover
     background: lighten($action, 5%)
+
+.nicEdit-panelContain, .nicEdit-pane
+  color: black
+
+  input[type="submit"]
+    color: black
 
 code
   background: $header
