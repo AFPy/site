@@ -10,7 +10,7 @@
           <![CDATA[ {% if entry.feed %}[{{ entry.feed | safe }}]{% endif %} {{ entry.content.title | safe }} ]]>
         </title>
         <description>
-          <![CDATA[ {{ entry.content.description | safe }} ]]>
+          <![CDATA[ {{ (entry.content.description or entry.content.summary) | safe }} ]]>
         </description>
         <link>
           <![CDATA[ {{ entry.content.link | safe }} ]]>

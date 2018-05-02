@@ -28,11 +28,25 @@
         <input name="title" value="{{ post.title }}" />
       </label>
       <label>Description
-        <textarea name="description">{{ post.description }}</textarea>
+        <textarea name="summary">{{ post.summary }}</textarea>
       </label>
       <label>Contenu de l'article
         <textarea name="content" id="content">{{ post.content }}</textarea>
       </label>
+      {% if name == 'emplois' %}
+        <label>Entreprise
+          <input name="company" value="{{ post.company }}" />
+        </label>
+        <label>Adresse
+          <input name="address" value="{{ post.address }}" />
+        </label>
+        <label>Personne à contacter
+          <input name="contact" value="{{ post.contact }}" />
+        </label>
+        <label>Téléphone
+          <input name="phone" value="{{ post.phone }}" />
+        </label>
+      {% endif %}
       <label>Adresse e-mail
         <input name="email" type="email" value="{{ post.email }}" />
       </label>
@@ -45,9 +59,11 @@
         {% endif %}
       {% endif %}
     </form>
-    <p>
-      L'adresse e-mail n'est pas rendue publique, elle est uniquement utilisée
-      par les modérateurs pour vous contacter si nécessaire.
-    </p>
+    {% if name == 'actualites' %}
+      <p>
+        L'adresse e-mail n'est pas rendue publique, elle est uniquement
+        utilisée par les modérateurs pour vous contacter si nécessaire.
+      </p>
+    {% endif %}
   </article>
 {% endblock main %}

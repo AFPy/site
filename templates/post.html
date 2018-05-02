@@ -6,14 +6,37 @@
 
 {% block main %}
   <article>
-    <time pubdate datetime="{{ post.pubDate | parse_rfc822_datetime | datetime('%Y-%m-%d') }}">
-      Posté le {{ post.pubDate | parse_rfc822_datetime | datetime('%x') }}
+    <time pubdate datetime="{{ post.published }}">
+      Posté le {{ post.published | parse_iso_datetime('%x') }}
     </time>
     <p>
       <em>
-        {{ post.description | safe }}
+        {{ post.summary | safe }}
       </em>
     </p>
     {{ post.content | safe }}
   </article>
+  {% if name == 'emplois' %}
+    <aside>
+      <h2>{{ post.company }}</h2>
+      <dl>
+        {% if post.address %}
+          <dt>Adresse</dt>
+          <dd>{{ post.address }}</dd>
+        {% endif %}
+        {% if post.contact %}
+          <dt>Personne à contacter</dt>
+          <dd>{{ post.contact }}</dd>
+        {% endif %}
+        {% if post.phone %}
+          <dt>Téléphone</dt>
+          <dd><a href="tel:{{ post.phone }}">{{ post.phone }}</a></dd>
+        {% endif %}
+        {% if post.email %}
+          <dt>Adresse e-mail</dt>
+          <dd><a href="mailto:{{ post.email }}">{{ post.email }}</a></dd>
+        {% endif %}
+      </dl>
+    </aside>
+  {% endif %}
 {% endblock main %}

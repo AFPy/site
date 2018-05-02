@@ -21,6 +21,7 @@ setup(
         'libsass',
         'docutils',
         'feedparser',
+        'python-dateutil',
     ],
     scripts=['afpy.py'],
     setup_requires=['pytest-runner'],

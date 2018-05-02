@@ -12,10 +12,10 @@
   {% for timestamp, post in posts.items() %}
     <article>
       <h2>{{ post.title }}</h2>
-      <time pubdate datetime="{{ post.pubDate | parse_rfc822_datetime | datetime('%Y-%m-%d') }}">
-        {{ post.pubDate | parse_rfc822_datetime | datetime('%x') }}
+      <time pubdate datetime="{{ post.published }}">
+        {{ post.published | parse_iso_datetime('%x') }}
       </time>
-      {{ post.description | safe }}
+      {{ post.summary | safe }}
       <p><a href="{{ url_for('post', name=name, timestamp=timestamp) }}">Lire la suite…</a></p>
     </article>
   {% endfor %}

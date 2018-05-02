@@ -1,4 +1,3 @@
-import datetime
 import email
 import locale
 import time
@@ -8,6 +7,7 @@ from xml.etree import ElementTree
 import docutils.core
 import docutils.writers.html5_polyglot
 import feedparser
+from dateutil.parser import parse
 from flask import Flask, abort, redirect, render_template, request, url_for
 from flask_cache import Cache
 from jinja2 import TemplateNotFound
@@ -102,8 +102,8 @@ def edit_post(name, timestamp=None):
         post = {}
     else:
         for state in ('published', 'waiting'):
-            if (root / name / state / timestamp / 'post.xml').is_file():
-                path = (root / name / state / timestamp / 'post.xml')
+            path = (root / name / state / timestamp / 'post.xml')
+            if path.is_file():
                 break
         else:
             abort(404)
@@ -134,10 +134,10 @@ def save_post(name, timestamp=None):
         abort(404)
     post = root / name / status / timestamp / 'post.xml'
     tree = ElementTree.Element('item')
-    for key in ('title', 'description', 'content', 'email'):
+    for key, value in request.form.items():
         element = ElementTree.SubElement(tree, key)
-        element.text = request.form[key]
-    element = ElementTree.SubElement(tree, 'pubDate')
+        element.text = value
+    element = ElementTree.SubElement(tree, 'published')
     element.text = email.utils.formatdate(
         int(timestamp) if timestamp else time.time())
     ElementTree.ElementTree(tree).write(post)
@@ -148,7 +148,7 @@ def save_post(name, timestamp=None):
         elif 'unpublish' in request.form and status == 'published':
             (root / name / 'published' / timestamp).rename(
                 root / name / 'waiting' / timestamp)
-        return redirect(url_for('admin'))
+        return redirect(url_for('admin', name=name))
     return redirect(url_for('rest', name='confirmation'))
 
 
@@ -166,19 +166,21 @@ def posts(name):
         'posts.html', body_id=name, posts=posts, title=POSTS[name], name=name)
 
 
-@app.route('/admin/posts')
-def admin():
+@app.route('/admin/posts/<name>')
+def admin(name):
+    if name not in POSTS:
+        abort(404)
     posts = {}
-    for name, label in POSTS.items():
-        posts[(name, label)] = name_posts = {}
-        for state in ('waiting', 'published'):
-            name_posts[state] = state_posts = {}
-            timestamps = sorted((root / name / state).iterdir(), reverse=True)
-            for timestamp in timestamps:
-                tree = ElementTree.parse(timestamp / 'post.xml')
-                state_posts[timestamp.name] = {
-                    item.tag: item.text for item in tree.iter()}
-    return render_template('admin.html', body_id='admin', posts=posts)
+    for state in ('waiting', 'published'):
+        posts[state] = state_posts = {}
+        timestamps = sorted((root / name / state).iterdir(), reverse=True)
+        for timestamp in timestamps:
+            tree = ElementTree.parse(timestamp / 'post.xml')
+            state_posts[timestamp.name] = {
+                item.tag: item.text for item in tree.iter()}
+    return render_template(
+        'admin.html', body_id='admin', posts=posts, title=POSTS[name],
+        name=name)
 
 
 @app.route('/posts/<name>/<timestamp>')
@@ -191,7 +193,7 @@ def post(name, timestamp):
     except Exception:
         abort(404)
     post = {item.tag: item.text for item in tree.iter()}
-    return render_template('post.html', body_id='post', post=post)
+    return render_template('post.html', body_id='post', post=post, name=name)
 
 
 @app.route('/feed/<name>/rss.xml')
@@ -200,7 +202,7 @@ def feed(name):
     if name not in POSTS:
         abort(404)
     path = root / name / 'published'
-    timestamps = sorted(path.iterdir(), reverse=True)[:12]
+    timestamps = sorted(path.iterdir(), reverse=True)[:50]
     entries = []
     for timestamp in timestamps:
         tree = ElementTree.parse(timestamp / 'post.xml')
@@ -237,19 +239,14 @@ def jobs():
     return redirect('https://plone.afpy.org/rss-jobs/RSS', code=307)
 
 
-@app.template_filter('parse_rfc822_datetime')
-def parse_rfc822_datetime(rfc822_datetime):
-    return email.utils.parsedate_tz(rfc822_datetime)
-
-
-@app.template_filter('datetime')
-def format_datetime(time_struct, format_):
-    return datetime.datetime(*time_struct[:6]).strftime(format_)
-
-
 @app.template_filter('rfc822_datetime')
 def format_rfc822_datetime(timestamp):
     return email.utils.formatdate(timestamp)
+
+
+@app.template_filter('parse_iso_datetime')
+def parse_iso_datetime(iso_datetime, format_):
+    return parse(iso_datetime).strftime(format_)
 
 
 if app.env == 'development':  # pragma: no cover

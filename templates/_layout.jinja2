@@ -54,7 +54,10 @@
           <a href="{{ url_for('rest', name='rss') }}">Flux RSS</a>
         </li>
         <li>
-          <a href="{{ url_for('admin') }}">Administration</a>
+          <a href="{{ url_for('admin', name='actualites') }}">Admin actualités</a>
+        </li>
+        <li>
+          <a href="{{ url_for('admin', name='emplois') }}">Admin offres d'emploi</a>
         </li>
       </ul>
     </footer>
