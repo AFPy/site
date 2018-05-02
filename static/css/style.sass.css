@@ -121,7 +121,10 @@ main {
   width: 100%; }
 
 aside {
-  width: 100%; }
+  background: #1d1e23;
+  margin: 1em auto;
+  padding: 1em 2em;
+  width: 80%; }
 
 footer {
   background: #1d1e23;
