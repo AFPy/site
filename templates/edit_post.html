@@ -1,7 +1,7 @@
 {% extends '_layout.jinja2' %}
 
 {% block script %}
-  <script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/nicEdit.js') }}"></script>
   <script type="text/javascript">
     bkLib.onDomLoaded(function() {
       new nicEditor({
