@@ -67,6 +67,13 @@ iframe {
   height: 55em;
   width: 100%; }
 
+img {
+  display: block;
+  float: left;
+  margin: 0.5em 1em 1em 0;
+  max-height: 10em;
+  max-width: 80%; }
+
 body {
   background: #25252d;
   color: #eaeaea;

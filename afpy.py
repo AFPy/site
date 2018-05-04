@@ -8,7 +8,9 @@ import docutils.core
 import docutils.writers.html5_polyglot
 import feedparser
 from dateutil.parser import parse
-from flask import Flask, abort, redirect, render_template, request, url_for
+from flask import (
+    Flask, abort, redirect, render_template, request, send_from_directory,
+    url_for)
 from flask_cache import Cache
 from jinja2 import TemplateNotFound
 
@@ -64,6 +66,9 @@ def index():
     for timestamp in timestamps:
         tree = ElementTree.parse(timestamp / 'post.xml')
         posts[timestamp.name] = {item.tag: item.text for item in tree.iter()}
+        if (timestamp / 'post.jpg').is_file():
+            posts[timestamp.name]['image'] = '/'.join((
+                'actualites', 'published', timestamp.name))
     return render_template(
         'index.html', body_id='index', name='actualites', posts=posts)
 
@@ -162,6 +167,9 @@ def posts(name):
     for timestamp in timestamps:
         tree = ElementTree.parse(timestamp / 'post.xml')
         posts[timestamp.name] = {item.tag: item.text for item in tree.iter()}
+        if (timestamp / 'post.jpg').is_file():
+            posts[timestamp.name]['image'] = '/'.join((
+                name, 'published', timestamp.name))
     return render_template(
         'posts.html', body_id=name, posts=posts, title=POSTS[name], name=name)
 
@@ -188,12 +196,26 @@ def post(name, timestamp):
     if name not in POSTS:
         abort(404)
     try:
-        tree = ElementTree.parse(
-            root / name / 'published' / timestamp / 'post.xml')
+        path = root / name / 'published' / timestamp
+        tree = ElementTree.parse(path / 'post.xml')
     except Exception:
         abort(404)
     post = {item.tag: item.text for item in tree.iter()}
+    if (path / 'post.jpg').is_file():
+        post['image'] = '/'.join((name, 'published', timestamp))
     return render_template('post.html', body_id='post', post=post, name=name)
+
+
+@app.route('/post_image/<path:path>/post.jpg')
+def post_image(path):
+    if path.count('/') != 2:
+        abort(404)
+    name, status, timestamp = path.split('/')
+    if name not in POSTS:
+        abort(404)
+    if status not in ('published', 'waiting'):
+        abort(404)
+    return send_from_directory(root / path, 'post.jpg')
 
 
 @app.route('/feed/<name>/rss.xml')

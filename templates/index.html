@@ -27,6 +27,9 @@
         <time pubdate datetime="{{ post.published }}">
           {{ post.published | parse_iso_datetime('%x') }}
         </time>
+        {% if post.image %}
+          <img src="{{ url_for('post_image', path=post.image) }}" alt="{{ post.title }}" />
+        {% endif %}
         {{ post.summary | safe }}
         <p><a href="{{ url_for('post', name=name, timestamp=timestamp) }}">Lire la suite…</a></p>
       </article>
