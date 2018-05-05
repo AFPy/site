@@ -21,8 +21,8 @@ app = Flask(__name__)
 cache.init_app(app)
 
 PLANET = {
-    'Emplois AFPy': 'https://plone.afpy.org/rss-jobs/RSS',
-    'Nouvelles AFPy': 'https://plone.afpy.org/rss-actualites/RSS',
+    'Emplois AFPy': 'https://www.afpy.org/feed/emplois/rss.xml',
+    'Nouvelles AFPy': 'https://www.afpy.org/feed/actualites/rss.xml',
     'Anybox': 'https://anybox.fr/site-feed/RSS?set_language=fr',
     'Ascendances': 'https://ascendances.wordpress.com/feed/',
     'Code en Seine': 'https://codeenseine.fr/feeds/all.atom.xml',
