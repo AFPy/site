@@ -19,8 +19,6 @@ locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
 cache = Cache(config={'CACHE_TYPE': 'simple', 'CACHE_DEFAULT_TIMEOUT': 600})
 app = Flask(__name__)
 cache.init_app(app)
-app.config['SERVER_NAME'] = 'www.afpy.org'
-app.config['PREFERRED_URL_SCHEME'] = 'https'
 
 PLANET = {
     'Emplois AFPy': 'https://www.afpy.org/feed/emplois/rss.xml',
