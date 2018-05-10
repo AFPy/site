@@ -138,7 +138,7 @@ def save_post(name, timestamp=None):
     else:
         abort(404)
     post = root / name / status / timestamp / 'post.xml'
-    tree = ElementTree.Element('item')
+    tree = ElementTree.Element('entry')
     for key, value in request.form.items():
         element = ElementTree.SubElement(tree, key)
         element.text = value
