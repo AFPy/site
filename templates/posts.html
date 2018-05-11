@@ -22,4 +22,13 @@
       <p><a href="{{ url_for('post', name=name, timestamp=timestamp) }}">Lire la suite…</a></p>
     </article>
   {% endfor %}
+  <aside>
+  {% if page != 1 %}
+  <a href="{{ url_for('posts', name=name, page=page-1) }}">Précedente</a>
+  {% endif %}
+  Page {{ page }}/{{ total_pages }}
+  {% if page != total_pages %}
+  <a href="{{ url_for('posts', name=name, page=page+1) }}">Suivante</a>
+  {% endif %}
+  </aside>
 {% endblock main %}
