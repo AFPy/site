@@ -51,8 +51,8 @@
         <input name="email" type="email" value="{{ post.email }}" />
       </label>
       <input type="submit" value="Enregistrer" />
-      {% if post %}
-        {% if state == 'waiting' %}
+      {% if admin %}
+        {% if post.state == 'waiting' %}
           <input type="submit" name="publish" value="Publier" />
         {% else %}
           <input type="submit" name="unpublish" value="Dépublier" />
