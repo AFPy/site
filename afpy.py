@@ -20,6 +20,8 @@ cache = Cache(config={'CACHE_TYPE': 'simple', 'CACHE_DEFAULT_TIMEOUT': 600})
 app = Flask(__name__)
 cache.init_app(app)
 
+PAGINATION = 12
+
 PLANET = {
     'Emplois AFPy': 'https://www.afpy.org/feed/emplois/rss.xml',
     'Nouvelles AFPy': 'https://www.afpy.org/feed/actualites/rss.xml',
@@ -158,20 +160,25 @@ def save_post(name, timestamp=None):
 
 
 @app.route('/posts/<name>')
-def posts(name):
+@app.route('/posts/<name>/page/<int:page>')
+def posts(name, page=1):
     if name not in POSTS:
         abort(404)
     path = root / name / 'published'
-    timestamps = sorted(path.iterdir(), reverse=True)[:12]
+    timestamps = sorted(path.iterdir(), reverse=True)
+    end = page * PAGINATION
+    start = end - PAGINATION
+    total_pages = (len(timestamps) // PAGINATION) + 1
     posts = {}
-    for timestamp in timestamps:
+    for timestamp in timestamps[start:end]:
         tree = ElementTree.parse(timestamp / 'post.xml')
         posts[timestamp.name] = {item.tag: item.text for item in tree.iter()}
         if (timestamp / 'post.jpg').is_file():
             posts[timestamp.name]['image'] = '/'.join((
                 name, 'published', timestamp.name))
     return render_template(
-        'posts.html', body_id=name, posts=posts, title=POSTS[name], name=name)
+        'posts.html', body_id=name, posts=posts, title=POSTS[name], name=name,
+        page=page, total_pages=total_pages)
 
 
 @app.route('/admin/posts/<name>')
