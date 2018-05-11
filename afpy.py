@@ -1,19 +1,18 @@
-import os
 import email
 import locale
+import os
 import time
 from pathlib import Path
 from xml.etree import ElementTree
 
-from itsdangerous import BadSignature, URLSafeSerializer
 import docutils.core
 import docutils.writers.html5_polyglot
 import feedparser
 from dateutil.parser import parse
-from flask import (
-    Flask, abort, redirect, render_template, request, send_from_directory,
-    url_for)
+from flask import (Flask, abort, redirect, render_template, request,
+                   send_from_directory, url_for)
 from flask_cache import Cache
+from itsdangerous import BadSignature, URLSafeSerializer
 from jinja2 import TemplateNotFound
 
 locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
@@ -134,7 +133,8 @@ def edit_post(name, token=None):
     if post['state'] != 'waiting':
         return redirect(url_for('rest', name='already_published'))
     return render_template(
-        'edit_post.html', body_id='edit-post', post=post, name=name, admin=False)
+        'edit_post.html', body_id='edit-post', post=post, name=name,
+        admin=False)
 
 
 @app.route('/admin/post/edit/<name>/<timestamp>')
@@ -145,7 +145,8 @@ def edit_post_admin(name, timestamp):
     if not post:
         abort(404)
     return render_template(
-        'edit_post.html', body_id='edit-post', post=post, name=name, admin=True)
+        'edit_post.html', body_id='edit-post', post=post, name=name,
+        admin=True)
 
 
 def _save_post(name, timestamp, admin):
