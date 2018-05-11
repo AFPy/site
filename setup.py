@@ -16,7 +16,7 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
-        'Flask',
+        'Flask<1.0.1',  # https://github.com/thadeusb/flask-cache/issues/188
         'Flask-Cache',
         'libsass',
         'docutils',
