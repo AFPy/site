@@ -1,9 +1,11 @@
+import os
 import email
 import locale
 import time
 from pathlib import Path
 from xml.etree import ElementTree
 
+from itsdangerous import BadSignature, URLSafeSerializer
 import docutils.core
 import docutils.writers.html5_polyglot
 import feedparser
@@ -17,6 +19,7 @@ from jinja2 import TemplateNotFound
 locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
 
 cache = Cache(config={'CACHE_TYPE': 'simple', 'CACHE_DEFAULT_TIMEOUT': 600})
+signer = URLSafeSerializer(os.environ.get('SECRET', 'changeme!'))
 app = Flask(__name__)
 cache.init_app(app)
 
@@ -99,34 +102,53 @@ def rest(name):
         'rst.html', body_id=name, html=parts['body'], title=parts['title'])
 
 
-@app.route('/post/edit/<name>')
-@app.route('/admin/post/edit/<name>/<timestamp>')
-def edit_post(name, timestamp=None):
-    if name not in POSTS:
-        abort(404)
-    if timestamp is None:
-        state = 'waiting'
-        post = {}
+def _get_post(name, timestamp):
+    for state in ('waiting', 'published'):
+        path = (root / name / state / timestamp / 'post.xml')
+        if path.is_file():
+            break
     else:
-        for state in ('published', 'waiting'):
-            path = (root / name / state / timestamp / 'post.xml')
-            if path.is_file():
-                break
-        else:
-            abort(404)
-        tree = ElementTree.parse(path)
-        post = {item.tag: (item.text or '').strip() for item in tree.iter()}
-    return render_template(
-        'edit_post.html', body_id='edit-post', post=post, name=name,
-        state=state)
+        return None
+    tree = ElementTree.parse(path)
+    post = {item.tag: (item.text or '').strip() for item in tree.iter()}
+    post['state'] = state
+    post['timestamp'] = timestamp
+    return post
 
 
-@app.route('/post/edit/<name>', methods=['post'])
-@app.route('/admin/post/edit/<name>/<timestamp>', methods=['post'])
-def save_post(name, timestamp=None):
-    original_timestamp = timestamp
+@app.route('/post/edit/<name>')
+@app.route('/post/edit/<name>/token/<token>')
+def edit_post(name, token=None):
     if name not in POSTS:
         abort(404)
+    if token:
+        try:
+            timestamp = signer.loads(token)
+        except BadSignature:
+            abort(401)
+        post = _get_post(name, timestamp)
+        if not post:
+            abort(404)
+    else:
+        post = {'state': 'waiting'}
+    if post['state'] != 'waiting':
+        return redirect(url_for('rest', name='already_published'))
+    return render_template(
+        'edit_post.html', body_id='edit-post', post=post, name=name, admin=False)
+
+
+@app.route('/admin/post/edit/<name>/<timestamp>')
+def edit_post_admin(name, timestamp):
+    if name not in POSTS:
+        abort(404)
+    post = _get_post(name, timestamp)
+    if not post:
+        abort(404)
+    return render_template(
+        'edit_post.html', body_id='edit-post', post=post, name=name, admin=True)
+
+
+def _save_post(name, timestamp, admin):
     if timestamp is None:
         timestamp = str(int(time.time()))
         status = 'waiting'
@@ -139,6 +161,10 @@ def save_post(name, timestamp=None):
         status = 'published'
     else:
         abort(404)
+
+    if status == 'published' and not admin:
+        abort(401)
+
     post = root / name / status / timestamp / 'post.xml'
     tree = ElementTree.Element('entry')
     for key, value in request.form.items():
@@ -148,15 +174,42 @@ def save_post(name, timestamp=None):
     element.text = email.utils.formatdate(
         int(timestamp) if timestamp else time.time())
     ElementTree.ElementTree(tree).write(post)
-    if original_timestamp:
+
+    if admin:
         if 'publish' in request.form and status == 'waiting':
             (root / name / 'waiting' / timestamp).rename(
                 root / name / 'published' / timestamp)
         elif 'unpublish' in request.form and status == 'published':
             (root / name / 'published' / timestamp).rename(
                 root / name / 'waiting' / timestamp)
-        return redirect(url_for('admin', name=name))
-    return redirect(url_for('rest', name='confirmation'))
+
+    return _get_post(name, timestamp)
+
+
+@app.route('/post/edit/<name>', methods=['post'])
+@app.route('/post/edit/<name>/token/<token>', methods=['post'])
+def save_post(name, token=None):
+    if name not in POSTS:
+        abort(404)
+    if token:
+        try:
+            timestamp = signer.loads(token)
+        except BadSignature:
+            abort(401)
+    else:
+        timestamp = None
+    post = _save_post(name, timestamp=timestamp, admin=False)
+    edit_post_url = url_for(
+        'edit_post', name=name, token=signer.dumps(post['timestamp']))
+    return render_template('confirmation.html', edit_post_url=edit_post_url)
+
+
+@app.route('/admin/post/edit/<name>/<timestamp>', methods=['post'])
+def save_post_admin(name, timestamp):
+    if name not in POSTS:
+        abort(404)
+    _save_post(name, timestamp=timestamp, admin=True)
+    return redirect(url_for('admin', name=name))
 
 
 @app.route('/posts/<name>')
