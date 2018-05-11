@@ -6,7 +6,7 @@ FLASK = $(VENV)/bin/flask
 all: install serve
 
 install:
-	test -d $(VENV) || virtualenv $(VENV)
+	test -d $(VENV) || python -m virtualenv $(VENV)
 	$(PIP) install --upgrade --no-cache pip setuptools -e .[test]
 
 clean:
