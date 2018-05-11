@@ -6,7 +6,7 @@ FLASK = $(VENV)/bin/flask
 all: install serve
 
 install:
-	test -d $(VENV) || python -m virtualenv $(VENV)
+	test -d $(VENV) || virtualenv -p python $(VENV)
 	$(PIP) install --upgrade --no-cache pip setuptools -e .[test]
 
 clean:
@@ -21,4 +21,4 @@ test:
 	$(PYTHON) -m pytest tests.py --flake8 --isort --cov=afpy --cov=tests --cov-report=term-missing
 
 serve:
-	env FLASK_APP=afpy.py FLASK_ENV=development $(VENV)/bin/flask run
+	env FLASK_APP=afpy.py FLASK_ENV=development $(FLASK) run
