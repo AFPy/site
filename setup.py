@@ -22,6 +22,7 @@ setup(
         'docutils',
         'feedparser',
         'python-dateutil',
+        'itsdangerous',
     ],
     scripts=['afpy.py'],
     setup_requires=['pytest-runner'],
