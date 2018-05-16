@@ -18,7 +18,7 @@
       {% if post.image %}
         <img src="{{ url_for('post_image', path=post.image) }}" alt="{{ post.title }}" />
       {% endif %}
-      {{ post.summary | safe }}
+      {{ post.summary | safe if post.summary }}
       <p><a href="{{ url_for('post', name=name, timestamp=timestamp) }}">Lire la suite…</a></p>
     </article>
   {% endfor %}
