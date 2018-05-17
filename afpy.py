@@ -34,6 +34,7 @@ PLANET = {
 }
 
 MEETUPS = {
+    'amiens': 'https://www.meetup.com/fr-FR/Python-Amiens',
     'bruxelles': (
         'https://www.meetup.com/fr-FR/'
         'Belgium-Python-Meetup-aka-AperoPythonBe/'),
