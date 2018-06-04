@@ -10,7 +10,7 @@ import docutils.writers.html5_polyglot
 import feedparser
 from dateutil.parser import parse
 from flask import (Flask, abort, redirect, render_template, request,
-                   send_from_directory, url_for)
+                   send_from_directory, url_for, jsonify)
 from flask_cache import Cache
 from itsdangerous import BadSignature, URLSafeSerializer
 from jinja2 import TemplateNotFound
@@ -321,6 +321,30 @@ def planet():
 @app.route('/rss-jobs/RSS')
 def jobs():
     return redirect('https://plone.afpy.org/rss-jobs/RSS', code=307)
+
+
+def get_posts_stats():
+    stats = {}
+    for category in POSTS:
+        stats[category] = {}
+        for status in ('waiting', 'published'):
+            stats[category][status] = len(list((root / category / status).iterdir()))
+    return stats
+
+
+def get_system_stats():
+    st = os.statvfs(__file__)
+    return {
+        "disk_free": st.f_bavail * st.f_frsize,
+        "disk_total": st.f_blocks * st.f_frsize,
+        "load_avg": os.getloadavg(),
+    }
+
+
+@app.route('/status')
+def status():
+    stats = {**get_posts_stats(), **get_system_stats()}
+    return jsonify(stats)
 
 
 @app.template_filter('rfc822_datetime')
