@@ -328,7 +328,8 @@ def get_posts_stats():
     for category in POSTS:
         stats[category] = {}
         for status in ('waiting', 'published'):
-            stats[category][status] = len(list((root / category / status).iterdir()))
+            stats[category][status] = len(list(
+                (root / category / status).iterdir()))
     return stats
 
 
