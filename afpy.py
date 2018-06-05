@@ -9,8 +9,8 @@ import docutils.core
 import docutils.writers.html5_polyglot
 import feedparser
 from dateutil.parser import parse
-from flask import (Flask, abort, redirect, render_template, request,
-                   send_from_directory, url_for, jsonify)
+from flask import (Flask, abort, jsonify, redirect, render_template, request,
+                   send_from_directory, url_for)
 from flask_cache import Cache
 from itsdangerous import BadSignature, URLSafeSerializer
 from jinja2 import TemplateNotFound
