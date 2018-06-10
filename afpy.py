@@ -323,28 +323,20 @@ def jobs():
     return redirect('https://plone.afpy.org/rss-jobs/RSS', code=307)
 
 
-def get_posts_stats():
+@app.route('/status')
+def status():
     stats = {}
     for category in POSTS:
         stats[category] = {}
         for status in ('waiting', 'published'):
             stats[category][status] = len(list(
                 (root / category / status).iterdir()))
-    return stats
 
+    os_stats = os.statvfs(__file__)
+    stats['disk_free'] = os_stats.f_bavail * os_stats.f_frsize
+    stats['disk_total'] = os_stats.f_blocks * os_stats.f_frsize
+    stats['load_avg'] = os.getloadavg()
 
-def get_system_stats():
-    st = os.statvfs(__file__)
-    return {
-        "disk_free": st.f_bavail * st.f_frsize,
-        "disk_total": st.f_blocks * st.f_frsize,
-        "load_avg": os.getloadavg(),
-    }
-
-
-@app.route('/status')
-def status():
-    stats = {**get_posts_stats(), **get_system_stats()}
     return jsonify(stats)
 
 
