@@ -13,3 +13,9 @@ d'abord.
 
 Si vous avez votre propre venv, un `FLASK_APP=afpy.py
 FLASK_ENV=development flask run` vous suffira.
+
+## Déployer
+
+Pour publier lancez `make afpy`.
+
+Votre clé ssh publique doit être installée sur le serveur pour pouvoir déployer, et configurer la connexion ssh avec les informations fournies par les admins.
