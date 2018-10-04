@@ -89,7 +89,7 @@ def get_post(category, timestamp, states=None):
     return post
 
 
-def save_post(category, timestamp, admin, form):
+def save_post(category, timestamp, admin, form, files):
     if timestamp is None:
         status = STATE_WAITING
         timestamp = str(int(time.time()))

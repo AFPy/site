@@ -151,7 +151,8 @@ def save_post(name, token=None):
         timestamp = None
     try:
         post = data.save_post(
-            name, timestamp=timestamp, admin=False, form=request.form
+            name, timestamp=timestamp, admin=False,
+            form=request.form, files=request.files
         )
     except data.DataException as e:
         abort(e.http_code)
@@ -170,7 +171,8 @@ def save_post_admin(name, timestamp):
         abort(404)
     try:
         data.save_post(
-            name, timestamp=timestamp, admin=True, form=request.form
+            name, timestamp=timestamp, admin=True,
+            form=request.form, files=request.files
         )
     except data.DataException as e:
         abort(e.http_code)
