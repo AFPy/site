@@ -54,8 +54,10 @@
       {% if admin %}
         {% if post.state == 'waiting' %}
           <input type="submit" name="publish" value="Publier" />
-        {% else %}
+        {% elif post.state == 'published' %}
           <input type="submit" name="unpublish" value="Dépublier" />
+        {% else %}
+          <input type="submit" name="republish" value="Republier" />
         {% endif %}
       {% endif %}
     </form>
