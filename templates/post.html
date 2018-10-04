@@ -14,8 +14,8 @@
         {{ post.summary | safe if post.summary }}
       </em>
     </p>
-    {% if post.image %}
-      <img src="{{ url_for('post_image', path=post.image) }}" alt="{{ post.title }}" />
+    {% if post._image %}
+      <img src="{{ url_for('post_image', path=post._image) }}" alt="{{ post.title }}" />
     {% endif %}
     {{ post.content | safe }}
   </article>
