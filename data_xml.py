@@ -104,11 +104,15 @@ def save_post(category, timestamp, admin, form, files):
 
     post = get_path(category, status, timestamp, BASE_FILE, create_dir=True)
     tree = ElementTree.Element('entry')
+
     for key, value in form.items():
         if key.startswith('_'):
             continue
+        if key == 'image':
+            print(files)
         element = ElementTree.SubElement(tree, key)
         element.text = value
+
     element = ElementTree.SubElement(tree, STATE_PUBLISHED)
     element.text = email.utils.formatdate(
         int(timestamp) if timestamp else time.time()
