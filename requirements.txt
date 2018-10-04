@@ -1,0 +1,11 @@
+Flask<1.0.1
+Flask-Cache
+libsass
+docutils
+feedparser
+python-dateutil
+itsdangerous
+pytest
+pytest-isort
+pytest-flake8
+pytest-coverage
