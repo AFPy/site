@@ -7,10 +7,8 @@ $text: #eaeaea
 
 a
   color: $action-secondary
-  font-size: .8em
   font-weight: 700
   text-decoration: none
-  text-transform: uppercase
   transition: color 250ms
 
   &:hover
@@ -82,13 +80,6 @@ iframe
   height: 55em
   width: 100%
 
-img
-  display: block
-  float: left
-  margin: 0.5em 1em 1em 0
-  max-height: 10em
-  max-width: 80%
-
 body
   background: $bkg
   color: $text
@@ -108,26 +99,38 @@ header
   padding: 0 1em
 
 .menu
-  align-items: center
   display: flex
-  justify-content: center
+  flex-direction: column
+  justify-content: flex-start
+  align-items: flex-start
+  padding: 0 1em
   min-height: 70px
-  order: 0
 
+  @media screen and (min-width: 640px)
+    flex-direction: row
+    justify-content: center
+    align-items: center
+    
+  // Footer navigation
+  &--footer
+    background: $header
+    box-sizing: border-box
+    margin-top: 2em
+    order: 4
+
+  // ul element
   &__list
     display: flex
-    flex-wrap: wrap
+    flex-direction: column
     list-style: none
     margin: 0
-    padding: 0 calc(4em + 50px)
+    padding: 0
+    width: 100%
 
-    &__item
-      &:first-child
-        a::before
-          content: url(../images/logo.svg)
-          left: 3em
-          position: absolute
-          top: 10px
+    @media screen and (min-width: 640px)
+      flex-direction: row
+      justify-content: center
+      align-items: center
 
     a
       color: $text
@@ -138,6 +141,23 @@ header
 
     .active a
       color: $action-secondary
+
+  &__item
+    font-size: .8em
+    text-transform: uppercase
+
+    .brand
+      display: flex
+      flex-direction: row
+      justify-content: center
+      align-items: center
+      font-size: 1.5em
+      img 
+        padding-right: 1em
+      a
+        font-weight: normal
+        text-transform: none
+        padding: 0
 
 main
   box-sizing: border-box
@@ -155,12 +175,6 @@ aside
   width: 80%
 
 footer
-  background: $header
-  box-sizing: border-box
-  margin-top: 2em
-  order: 4
-  padding: 0 1em
-
   ul
     display: flex
     justify-content: center

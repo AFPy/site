@@ -12,7 +12,7 @@
     <header>
       {% block header %}{% endblock header %}
     </header>
-    <nav class="menu">
+    <nav class="menu menu--main">
       {% set navigation_bar = [
         (url_for('index'), 'index', 'Accueil'),
         (url_for('rest', name='a-propos'), 'a-propos', 'Qui sommes-nous ?'),
@@ -22,10 +22,15 @@
         (url_for('pages', name='discussion'), 'discussion', 'Discussion'),
         (url_for('pages', name='adhesions'), 'adhesions', 'Adhésions')
       ] -%}
-      {% set active_page = active_page|default('index') -%}
       <ul class="menu__list">
+        <li class="menu__item">
+          <a class="brand" href="{{ url_for('index') }}">
+            <img src="{{ url_for('static', filename='images/logo.svg') }}" title="Logo afpy" />
+            <span>AFPy</span>
+          </a>
+        </li>
       {% for href, id, caption in navigation_bar %}
-        <li class="menu__list__item{% if id == active_page %} active{% endif
+        <li class="menu__item{% if id == body_id %} active{% endif
         %}"><a href="{{ href|e }}">{{ caption|e }}</a></li>
       {% endfor %}
       </ul>
@@ -33,29 +38,20 @@
     <main>
       {% block main %}{% endblock main %}
     </main>
-    <footer>
-      <ul>
-        <li>
-          <a href="{{ url_for('rest', name='contact') }}">Contact</a>
-        </li>
-        <li>
-          <a href="{{ url_for('rest', name='charte') }}">Charte</a>
-        </li>
-        <li>
-          <a href="{{ url_for('rest', name='legal') }}">Mentions légales</a>
-        </li>
-        <li>
-          <a href="{{ url_for('rest', name='rss') }}">Flux RSS</a>
-        </li>
-        <li>
-          <a href="https://twitter.com/asso_python_fr">Twitter</a>
-        </li>
-        <li>
-          <a href="{{ url_for('admin', name='actualites') }}">Admin actualités</a>
-        </li>
-        <li>
-          <a href="{{ url_for('admin', name='emplois') }}">Admin offres d'emploi</a>
-        </li>
+    <footer class="menu menu--footer">
+      {% set navigation_bar = [
+        (url_for('rest', name='contact'), 'Contact'),
+        (url_for('rest', name='charte'), 'Charte'),
+        (url_for('rest', name='legal'), 'Offres \'Mentions légales'),
+        (url_for('rest', name='rss'), 'Flux RSS'),
+        ('https://twitter.com/asso_python_fr', 'Twitter'),
+        (url_for('admin', name='actualites'), 'Admin actualités'),
+        (url_for('admin', name='emplois'), 'Admin offres d\'emploi')
+      ] -%}
+      <ul class="menu__list">
+        {% for href, caption in navigation_bar %}
+          <li class="menu__item"><a href="{{ href|e }}">{{ caption|e }}</a></li>
+        {% endfor %}
       </ul>
     </footer>
   </body>
