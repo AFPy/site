@@ -122,6 +122,11 @@ def save_post(category, timestamp, admin, form):
     )
     ElementTree.ElementTree(tree).write(post)
 
+    if ACTION_TRASH in form and status == STATE_PUBLISHED:
+        (root / category / STATE_PUBLISHED / timestamp).rename(
+            root / category / STATE_TRASHED / timestamp
+        )
+
     if admin:
         if ACTION_PUBLISH in form and status == STATE_WAITING:
             (root / category / STATE_WAITING / timestamp).rename(
@@ -135,9 +140,6 @@ def save_post(category, timestamp, admin, form):
             (root / category / STATE_TRASHED / timestamp).rename(
                 root / category / STATE_PUBLISHED / timestamp
             )
-        elif ACTION_TRASH in form and status == STATE_PUBLISHED:
-            (root / category / STATE_PUBLISHED / timestamp).rename(
-                root / category / STATE_TRASHED / timestamp
-            )
+        
 
     return get_post(category, timestamp)
