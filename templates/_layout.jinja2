@@ -10,9 +10,11 @@
   </head>
   <body id="{{ body_id }}">
     <header>
-      {% block header %}{% endblock header %}
+      <div class="wrapper">
+        {% block header %}{% endblock header %}
+      </div>
     </header>
-    <nav class="menu menu--main">
+    <nav class="wrapper menu menu--main">
       {% set navigation_bar = [
         (url_for('index'), 'index', 'Accueil'),
         (url_for('rest', name='a-propos'), 'a-propos', 'Qui sommes-nous ?'),
@@ -22,8 +24,10 @@
         (url_for('pages', name='discussion'), 'discussion', 'Discussion'),
         (url_for('pages', name='adhesions'), 'adhesions', 'Adhésions')
       ] -%}
+      <label for="toggle" class="menu__toggle">Menu</label>
+      <input class="menu__checkbox" type="checkbox" name="toggle" id="toggle" checked>
       <ul class="menu__list">
-        <li class="menu__item">
+        <li class="menu__item menu__item--brand">
           <a class="brand" href="{{ url_for('index') }}">
             <img src="{{ url_for('static', filename='images/logo.svg') }}" title="Logo afpy" />
             <span>AFPy</span>
@@ -38,11 +42,11 @@
     <main>
       {% block main %}{% endblock main %}
     </main>
-    <footer class="menu menu--footer">
+    <footer class="wrapper menu menu--footer">
       {% set navigation_bar = [
         (url_for('rest', name='contact'), 'Contact'),
         (url_for('rest', name='charte'), 'Charte'),
-        (url_for('rest', name='legal'), 'Offres \'Mentions légales'),
+        (url_for('rest', name='legal'), 'Mentions légales'),
         (url_for('rest', name='rss'), 'Flux RSS'),
         ('https://twitter.com/asso_python_fr', 'Twitter'),
         (url_for('admin', name='actualites'), 'Admin actualités'),

@@ -85,31 +85,47 @@ header {
   order: 1;
   padding: 0 1em; }
 
+.wrapper {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box; }
+
 .menu {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
   padding: 0 1em;
   min-height: 70px; }
-  @media screen and (min-width: 640px) {
-    .menu {
-      flex-direction: row;
-      justify-content: center;
-      align-items: center; } }
   .menu--footer {
     background: #1d1e23;
     box-sizing: border-box;
     margin-top: 2em;
     order: 4; }
+  .menu__toggle {
+    order: 2;
+    text-align: right;
+    align-self: flex-start;
+    padding-top: 1em; }
+    @media screen and (min-width: 840px) {
+      .menu__toggle {
+        display: none; } }
+  .menu__checkbox {
+    display: none; }
+    .menu__checkbox:checked + .menu__list {
+      max-height: 84px;
+      overflow: hidden; }
   .menu__list {
+    flex: 1 1 100%;
     display: flex;
     flex-direction: column;
     list-style: none;
     margin: 0;
     padding: 0;
-    width: 100%; }
-    @media screen and (min-width: 640px) {
+    max-height: 1000px;
+    transition: max-height .3s; }
+    @media screen and (min-width: 840px) {
       .menu__list {
         flex-direction: row;
         justify-content: center;
@@ -118,17 +134,24 @@ header {
       color: #eaeaea;
       display: block;
       font-weight: 600;
-      padding: 1em;
       text-decoration: none; }
     .menu__list .active a {
       color: #ffcd05; }
   .menu__item {
+    padding: 1em 0;
     font-size: .8em;
-    text-transform: uppercase; }
+    text-transform: uppercase;
+    white-space: nowrap; }
+    @media screen and (min-width: 840px) {
+      .menu__item {
+        padding: 1em; } }
+    .menu__item--brand {
+      flex: 1 1 100%;
+      padding-left: 0; }
     .menu__item .brand {
+      flex: 1 1 100%;
       display: flex;
       flex-direction: row;
-      justify-content: center;
       align-items: center;
       font-size: 1.5em; }
       .menu__item .brand img {
@@ -158,10 +181,6 @@ footer ul {
   justify-content: center;
   list-style: none;
   padding: 0; }
-  footer ul a {
-    color: inherit;
-    text-decoration: inherit;
-    padding: 1em; }
 
 h1 {
   color: #ffcd05;
