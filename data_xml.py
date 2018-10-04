@@ -10,11 +10,23 @@ POSTS = {POST_ACTUALITIES: "Actualités", POST_JOBS: "Offres d’emploi"}
 
 STATE_WAITING = 'waiting'
 STATE_PUBLISHED = 'published'
-STATES = {STATE_WAITING: "En attente", STATE_PUBLISHED: "Publié"}
+STATE_TRASHED = 'trashed'
+STATES = {
+    STATE_WAITING: "En attente",
+    STATE_PUBLISHED:  "Publié",
+    STATE_TRASHED:  "À la corbeille"
+}
 
 ACTION_PUBLISH = 'publish'
 ACTION_UNPUBLISH = 'unpublish'
-ACTIONS = {ACTION_PUBLISH: "Publier", ACTION_UNPUBLISH: "Dépublier"}
+ACTION_REPUBLISH = 'republish'
+ACTION_TRASH = 'trash'
+ACTIONS = {
+    ACTION_PUBLISH: "Publier",
+    ACTION_UNPUBLISH: "Dépublier",
+    ACTION_REPUBLISH: "Republier",
+    ACTION_TRASH: "Supprimer",
+}
 
 TIMESTAMP = '_timestamp'
 STATE = '_state'
@@ -90,6 +102,8 @@ def save_post(category, timestamp, admin, form):
         status = STATE_WAITING
     elif get_path(category, STATE_PUBLISHED, timestamp, BASE_FILE).is_file():
         status = STATE_PUBLISHED
+    elif get_path(category, STATE_TRASHED, timestamp, BASE_FILE).is_file():
+        status = STATE_TRASHED
     else:
         raise DataException(http_code=404)
     if status == STATE_PUBLISHED and not admin:
@@ -116,6 +130,14 @@ def save_post(category, timestamp, admin, form):
         elif ACTION_UNPUBLISH in form and status == STATE_PUBLISHED:
             (root / category / STATE_PUBLISHED / timestamp).rename(
                 root / category / STATE_WAITING / timestamp
+            )
+        elif ACTION_REPUBLISH in form and status == STATE_TRASHED:
+            (root / category / STATE_TRASHED / timestamp).rename(
+                root / category / STATE_PUBLISHED / timestamp
+            )
+        elif ACTION_TRASH in form and status == STATE_PUBLISHED:
+            (root / category / STATE_PUBLISHED / timestamp).rename(
+                root / category / STATE_TRASHED / timestamp
             )
 
     return get_post(category, timestamp)
