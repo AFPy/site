@@ -16,6 +16,7 @@ ACTION_PUBLISH = 'publish'
 ACTION_UNPUBLISH = 'unpublish'
 ACTIONS = {ACTION_PUBLISH: "Publier", ACTION_UNPUBLISH: "Dépublier"}
 
+IMAGE = '_image'
 TIMESTAMP = '_timestamp'
 STATE = '_state'
 PATH = '_path'
@@ -23,6 +24,7 @@ DIR = '_dir'
 
 BASE_DIR = 'posts'
 BASE_FILE = 'post.xml'
+BASE_IMAGE = 'post.jpg'
 
 
 class DataException(Exception):
@@ -75,7 +77,12 @@ def get_post(category, timestamp, states=None):
         return None
     tree = ElementTree.parse(path)
     post = {item.tag: (item.text or '').strip() for item in tree.iter()}
-    post[TIMESTAMP] = int(timestamp)
+
+    # Calculated fields
+    image = post.get('image') or BASE_IMAGE
+    if (dir / image).is_file():
+        post[IMAGE] = '/'.join((category, state, timestamp, image))
+    post[TIMESTAMP] = timestamp
     post[STATE] = state
     post[DIR] = dir
     post[PATH] = path

@@ -2,7 +2,6 @@ import email
 import locale
 import os
 import time
-from pathlib import Path
 
 import docutils.core
 import docutils.writers.html5_polyglot
@@ -59,12 +58,11 @@ def index():
     for post in data.get_posts(data.POST_ACTUALITIES, end=4):
         timestamp = post[data.TIMESTAMP]
         posts[timestamp] = post
-        if (post[data.DIR] / 'post.jpg').is_file():
-            posts[timestamp]['image'] = '/'.join(
-                (data.POST_ACTUALITIES, data.STATE_PUBLISHED, timestamp)
-            )
     return render_template(
-        'index.html', body_id='index', name=data.POST_ACTUALITIES, posts=posts
+        'index.html',
+        body_id='index',
+        name=data.POST_ACTUALITIES,
+        posts=posts
     )
 
 
@@ -90,7 +88,10 @@ def rest(name):
     except FileNotFoundError:
         abort(404)
     return render_template(
-        'rst.html', body_id=name, html=parts['body'], title=parts['title']
+        'rst.html',
+        body_id=name,
+        html=parts['body'],
+        title=parts['title']
     )
 
 
@@ -128,7 +129,11 @@ def edit_post_admin(name, timestamp):
     if not post:
         abort(404)
     return render_template(
-        'edit_post.html', body_id='edit-post', post=post, name=name, admin=True
+        'edit_post.html',
+        body_id='edit-post',
+        post=post,
+        name=name,
+        admin=True
     )
 
 
@@ -153,7 +158,10 @@ def save_post(name, token=None):
     edit_post_url = url_for(
         'edit_post', name=name, token=signer.dumps(post['_timestamp'])
     )
-    return render_template('confirmation.html', edit_post_url=edit_post_url)
+    return render_template(
+        'confirmation.html',
+        edit_post_url=edit_post_url
+    )
 
 
 @app.route('/admin/post/edit/<name>/<timestamp>', methods=['post'])
@@ -185,10 +193,6 @@ def posts(name, page=1):
     ):
         timestamp = post[data.TIMESTAMP]
         posts[timestamp] = post
-        if (Path(str(timestamp)) / 'post.jpg').is_file():
-            posts[timestamp]['image'] = '/'.join(
-                (name, data.STATE_PUBLISHED, timestamp)
-            )
     return render_template(
         'posts.html',
         body_id=name,
@@ -226,21 +230,24 @@ def post(name, timestamp):
     post = data.get_post(name, timestamp, data.STATE_PUBLISHED)
     if not post:
         abort(404)
-    if (post[data.DIR] / 'post.jpg').is_file():
-        post['image'] = '/'.join((name, data.STATE_PUBLISHED, timestamp))
-    return render_template('post.html', body_id='post', post=post, name=name)
+    return render_template(
+        'post.html',
+        body_id='post',
+        post=post,
+        name=name
+    )
 
 
-@app.route('/post_image/<path:path>/post.jpg')
+@app.route('/post_image/<path:path>')
 def post_image(path):
-    if path.count('/') != 2:
+    if path.count('/') != 3:
         abort(404)
-    name, status, timestamp = path.split('/')
-    if name not in data.POSTS:
+    category, state, timestamp, name = path.split('/')
+    if category not in data.POSTS:
         abort(404)
-    if status not in data.STATES:
+    if state not in data.STATES:
         abort(404)
-    return send_from_directory(data.root / path, 'post.jpg')
+    return send_from_directory(data.root, path)
 
 
 @app.route('/feed/<name>/rss.xml')
