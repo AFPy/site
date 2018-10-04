@@ -3,6 +3,8 @@ import time
 from pathlib import Path
 from xml.etree import ElementTree
 
+from werkzeug.utils import secure_filename
+
 
 POST_ACTUALITIES = 'actualites'
 POST_JOBS = 'emplois'
@@ -108,10 +110,13 @@ def save_post(category, timestamp, admin, form, files):
     for key, value in form.items():
         if key.startswith('_'):
             continue
-        if key == 'image':
-            print(files)
         element = ElementTree.SubElement(tree, key)
         element.text = value
+    
+    if 'image' in files:
+        post_image = files['image']
+        filename = secure_filename(post_image.filename)
+        post_image.save(str(post.parent / filename))
 
     element = ElementTree.SubElement(tree, STATE_PUBLISHED)
     element.text = email.utils.formatdate(
