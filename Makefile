@@ -26,4 +26,4 @@ serve:
 
 afpy:
 	ssh -t $(AFPY_SERVER) 'cd site && git pull'
-	ssh -t $(AFPY_SERVER) 'killall uwsgi && /usr/local/etc/rc.d/uwsgi restart'
+	ssh -t $(AFPY_SERVER) 'killall uwsgi-3.6 && /usr/local/etc/rc.d/uwsgi restart'
