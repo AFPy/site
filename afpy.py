@@ -2,6 +2,7 @@ import email
 import locale
 import os
 import time
+from pathlib import Path
 
 import docutils.core
 import docutils.writers.html5_polyglot
@@ -184,7 +185,7 @@ def posts(name, page=1):
     ):
         timestamp = post[data.TIMESTAMP]
         posts[timestamp] = post
-        if (timestamp / 'post.jpg').is_file():
+        if (Path(str(timestamp)) / 'post.jpg').is_file():
             posts[timestamp]['image'] = '/'.join(
                 (name, data.STATE_PUBLISHED, timestamp)
             )
