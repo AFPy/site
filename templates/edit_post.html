@@ -52,7 +52,6 @@
       </label>
       <input type="submit" value="Enregistrer" />
       {% if admin %}
-
         {% if post._state == 'waiting' %}
           <input type="submit" name="publish" value="Publier" />
         {% elif post._state == 'published' %}
@@ -60,13 +59,10 @@
         {% else %}
           <input type="submit" name="republish" value="Republier" />
         {% endif %}
-
-        
       {% endif %}
       {% if post._state == 'published' %}
         <input type="submit" name="trashed" value="Supprimer" />
       {% endif %}
-
     </form>
     {% if name == 'actualites' %}
       <p>
