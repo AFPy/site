@@ -5,35 +5,29 @@
     <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" />
     <title>AFPY - Le site web de l'Association Francophone de Python</title>
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/style.sass.css') }}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     {% block script %}{% endblock script %}
   </head>
   <body id="{{ body_id }}">
     <header>
       {% block header %}{% endblock header %}
     </header>
-    <nav>
-      <ul>
-        <li{% if body_id == 'index' %} class="active"{% endif %}>
-          <a href="{{ url_for('index') }}">Accueil</a>
-        </li>
-        <li{% if body_id == 'a-propos' %} class="active"{% endif %}>
-          <a href="{{ url_for('rest', name='a-propos') }}">Qui sommes-nous ?</a>
-        </li>
-        <li{% if body_id == 'actualites' %} class="active"{% endif %}>
-          <a href="{{ url_for('posts', name='actualites') }}">Actualités</a>
-        </li>
-        <li{% if body_id == 'emplois' %} class="active"{% endif %}>
-          <a href="{{ url_for('posts', name='emplois') }}">Offres d'emplois</a>
-        </li>
-        <li{% if body_id == 'communaute' %} class="active"{% endif %}>
-          <a href="{{ url_for('pages', name='communaute') }}">Communauté</a>
-        </li>
-        <li{% if body_id == 'discussion' %} class="active"{% endif %}>
-          <a href="{{ url_for('pages', name='discussion') }}">Discussion</a>
-        </li>
-        <li{% if body_id == 'adhesions' %} class="active"{% endif %}>
-          <a href="{{ url_for('pages', name='adhesions') }}">Adhésions</a>
-        </li>
+    <nav class="menu">
+      {% set navigation_bar = [
+        (url_for('index'), 'index', 'Accueil'),
+        (url_for('rest', name='a-propos'), 'a-propos', 'Qui sommes-nous ?'),
+        (url_for('posts', name='actualites'), 'actualites', 'Actualités'),
+        (url_for('posts', name='emplois'), 'emplois', 'Offres \'emplois'),
+        (url_for('pages', name='communaute'), 'communaute', 'Communauté'),
+        (url_for('pages', name='discussion'), 'discussion', 'Discussion'),
+        (url_for('pages', name='adhesions'), 'adhesions', 'Adhésions')
+      ] -%}
+      {% set active_page = active_page|default('index') -%}
+      <ul class="menu__list">
+      {% for href, id, caption in navigation_bar %}
+        <li class="menu__list__item{% if id == active_page %} active{% endif
+        %}"><a href="{{ href|e }}">{{ caption|e }}</a></li>
+      {% endfor %}
       </ul>
     </nav>
     <main>

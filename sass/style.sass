@@ -107,21 +107,21 @@ header
   order: 1
   padding: 0 1em
 
-nav
+.menu
   align-items: center
   display: flex
   justify-content: center
   min-height: 70px
   order: 0
 
-  ul
+  &__list
     display: flex
     flex-wrap: wrap
     list-style: none
     margin: 0
     padding: 0 calc(4em + 50px)
 
-    li
+    &__item
       &:first-child
         a::before
           content: url(../images/logo.svg)
