@@ -2,6 +2,7 @@ VENV = $(PWD)/.env
 PIP = $(VENV)/bin/pip
 PYTHON = $(VENV)/bin/python
 FLASK = $(VENV)/bin/flask
+AFPY_SERVER = afpy_web
 
 all: install serve
 
@@ -22,3 +23,7 @@ test:
 
 serve:
 	env FLASK_APP=afpy.py FLASK_ENV=development $(FLASK) run
+
+afpy:
+	ssh -t $(AFPY_SERVER) 'cd site && git pull'
+	ssh -t $(AFPY_SERVER) 'killall uwsgi && /usr/local/etc/rc.d/uwsgi restart'
