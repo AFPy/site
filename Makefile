@@ -25,4 +25,5 @@ serve:
 	env FLASK_APP=afpy.py FLASK_ENV=development $(FLASK) run
 
 afpy:
-	ssh $(AFPY_SERVER) `cd site; git pull`
+	ssh -t $(AFPY_SERVER) 'cd site && git pull'
+	ssh -t $(AFPY_SERVER) 'killall uwsgi && /usr/local/etc/rc.d/uwsgi restart'
