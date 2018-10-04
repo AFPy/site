@@ -217,7 +217,10 @@ time {
     border: 1px solid #25252d;
     box-sizing: border-box;
     flex: 1 50%;
-    padding: 2em; }
+    padding: 2em;
+    word-wrap: break-word; }
+    #actualites main article img, #emplois main article img, #index-news article img {
+      max-width: 100%; }
     #actualites main article a, #emplois main article a, #index-news article a {
       color: #ffcd05;
       font-size: .8em;
@@ -241,6 +244,7 @@ time {
 
 @media screen and (max-width: 640px) {
   #actualites main article, #emplois main article, #index-news article {
-    flex: 1 100%; } }
+    flex: 1 100%;
+    width: 100%; } }
 
 /*# sourceMappingURL=../static/css/style.sass.css.map */
