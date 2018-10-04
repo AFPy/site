@@ -54,7 +54,7 @@ POSTS = {
 
 root = Path(__file__).parent / 'posts'
 for category in POSTS:
-    for status in ('waiting', 'published'):
+    for status in ('waiting', 'published', 'trash'):
         (root / category / status).mkdir(parents=True, exist_ok=True)
 
 
@@ -103,7 +103,7 @@ def rest(name):
 
 
 def _get_post(name, timestamp):
-    for state in ('waiting', 'published'):
+    for state in ('waiting', 'published', 'trash'):
         path = (root / name / state / timestamp / 'post.xml')
         if path.is_file():
             break
@@ -161,6 +161,8 @@ def _save_post(name, timestamp, admin):
         status = 'waiting'
     elif (root / name / 'published' / timestamp / 'post.xml').is_file():
         status = 'published'
+    elif (root / name / 'trash' / timestamp / 'post.xml').is_file():
+        status = 'trash'
     else:
         abort(404)
 
@@ -183,7 +185,10 @@ def _save_post(name, timestamp, admin):
                 root / name / 'published' / timestamp)
         elif 'unpublish' in request.form and status == 'published':
             (root / name / 'published' / timestamp).rename(
-                root / name / 'waiting' / timestamp)
+                root / name / 'trash' / timestamp)
+        elif 'republish' in request.form and status == 'trash':
+            (root / name / 'trash' / timestamp).rename(
+                root / name / 'published' / timestamp)
 
     return _get_post(name, timestamp)
 
@@ -241,7 +246,7 @@ def admin(name):
     if name not in POSTS:
         abort(404)
     posts = {}
-    for state in ('waiting', 'published'):
+    for state in ('waiting', 'published', 'trash'):
         posts[state] = state_posts = {}
         timestamps = sorted((root / name / state).iterdir(), reverse=True)
         for timestamp in timestamps:
