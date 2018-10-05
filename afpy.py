@@ -110,8 +110,8 @@ def edit_post(name, token=None):
             abort(404)
     else:
         post = {data.STATE: data.STATE_WAITING}
-    if post[data.STATE] != data.STATE_WAITING:
-        return redirect(url_for('rest', name='already_published'))
+    if post[data.STATE] == data.STATE_TRASHED:
+        return redirect(url_for('rest', name='already_trashed'))
     return render_template(
         'edit_post.html',
         body_id='edit-post',
@@ -158,6 +158,9 @@ def save_post(name, token=None):
     edit_post_url = url_for(
         'edit_post', name=name, token=signer.dumps(post['_timestamp'])
     )
+
+    if post[data.STATE] == data.STATE_TRASHED:
+        return redirect(url_for('rest', name='already_trashed'))
     return render_template(
         'confirmation.html',
         edit_post_url=edit_post_url

@@ -10,7 +10,6 @@ POSTS = {POST_ACTUALITIES: "Actualités", POST_JOBS: "Offres d’emploi"}
 
 STATE_WAITING = 'waiting'
 STATE_PUBLISHED = 'published'
-
 STATE_TRASHED = 'trashed'
 STATES = {
     STATE_WAITING: "En attente",
@@ -22,11 +21,13 @@ ACTION_PUBLISH = 'publish'
 ACTION_UNPUBLISH = 'unpublish'
 ACTION_REPUBLISH = 'republish'
 ACTION_TRASH = 'trash'
+ACTION_EDIT = 'edit'
 ACTIONS = {
     ACTION_PUBLISH: "Publier",
     ACTION_UNPUBLISH: "Dépublier",
     ACTION_REPUBLISH: "Republier",
     ACTION_TRASH: "Supprimer",
+    ACTION_EDIT: 'Editer',
 }
 
 IMAGE = '_image'
@@ -114,7 +115,7 @@ def save_post(category, timestamp, admin, form):
         status = STATE_TRASHED
     else:
         raise DataException(http_code=404)
-    if status == STATE_PUBLISHED and not admin:
+    if status == STATE_TRASHED and not admin:
         raise DataException(http_code=401)
 
     post = get_path(category, status, timestamp, BASE_FILE, create_dir=True)
@@ -133,6 +134,10 @@ def save_post(category, timestamp, admin, form):
     if ACTION_TRASH in form and status == STATE_PUBLISHED:
         (root / category / STATE_PUBLISHED / timestamp).rename(
             root / category / STATE_TRASHED / timestamp
+        )
+    if not admin and ACTION_EDIT in form and status == STATE_PUBLISHED:
+        (root / category / STATE_PUBLISHED / timestamp).rename(
+            root / category / STATE_WAITING / timestamp
         )
 
     if admin:

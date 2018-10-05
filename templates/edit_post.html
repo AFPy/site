@@ -50,7 +50,7 @@
       <label>Adresse e-mail
         <input name="email" type="email" value="{{ post.email }}" />
       </label>
-      <input type="submit" value="Enregistrer" />
+      <input type="submit" name="edit" value="Enregistrer" />
       {% if admin %}
         {% if post._state == 'waiting' %}
           <input type="submit" name="publish" value="Publier" />
