@@ -112,11 +112,13 @@ def save_post(category, timestamp, admin, form, files):
             continue
         element = ElementTree.SubElement(tree, key)
         element.text = value
-    
+
     if 'image' in files:
         post_image = files['image']
         filename = secure_filename(post_image.filename)
         post_image.save(str(post.parent / filename))
+        element = ElementTree.SubElement(tree, 'image')
+        element.text = str(post.parent / filename)
 
     element = ElementTree.SubElement(tree, STATE_PUBLISHED)
     element.text = email.utils.formatdate(
