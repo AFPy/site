@@ -31,11 +31,13 @@
         <textarea name="summary">{{ post.summary }}</textarea>
       </label>
       <label>Image
-        <img alt="" src="{{ url_for('post_image', path=post._image) }}" />
+        {% if post._image %}
+          <img alt="" src="{{ url_for('post_image', path=post._image) }}" />
+          <input name="_image_path" id="_image_path" value="{{ post._image }}" type="hidden"/> 
+          <input type="submit" name="delete_image" value="Supprimer l'image" class="button" />
+        {% endif %}
         <input name="image" id="image" type="file" value="{{ post.image }}" />
-        <input name="_image_path" id="_image_path" value="{{ post._image }}" type="hidden"/> 
       </label>
-      <input type="submit" name="delete_image" value="Supprimer l'image" class="button" />
       <label>Contenu de l'article
         <textarea name="content" id="content">{{ post.content }}</textarea>
       </label>

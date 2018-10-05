@@ -119,7 +119,9 @@ def save_post(category, timestamp, admin, form, files):
         element.text = value
 
     if ACTION_DELETE_IMAGE in form:
-        os.remove(form['_image_path'])
+        image_path = root / form['_image_path']
+        if image_path.exists:
+            image_path.unlink()
 
     if 'image' in files:
         post_image = files['image']
@@ -143,7 +145,5 @@ def save_post(category, timestamp, admin, form, files):
             (root / category / STATE_PUBLISHED / timestamp).rename(
                 root / category / STATE_WAITING / timestamp
             )
-
-
 
     return get_post(category, timestamp)
