@@ -60,7 +60,7 @@
       </label>
       <input type="submit" value="Enregistrer" class="button" />
       {% if admin %}
-        {% if post.state == 'waiting' %}
+        {% if post._state == 'waiting' %}
           <input type="submit" name="publish" value="Publier" class="button" />
         {% else %}
           <input type="submit" name="unpublish" value="Dépublier" class="button" />
