@@ -118,10 +118,13 @@ def save_post(category, timestamp, admin, form, files):
         element = ElementTree.SubElement(tree, key)
         element.text = value
 
-    if ACTION_DELETE_IMAGE in form:
+    if '_image_path' in form:
         image_path = root / form['_image_path']
-        if image_path.exists:
+        if ACTION_DELETE_IMAGE in form and image_path.exists:
             image_path.unlink()
+        else:
+            element = ElementTree.SubElement(tree, 'image')
+            element.text = image_path.name
 
     if 'image' in files:
         post_image = files['image']
