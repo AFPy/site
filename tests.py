@@ -32,3 +32,10 @@ def test_404():
     assert response.status_code == 404
     response = app.test_client().get('/feed/unknown')
     assert response.status_code == 404
+
+
+def test_read_posts():
+    response = app.test_client().get('/posts/actualites')
+    assert response.status_code == 200
+    response = app.test_client().get('/posts/emplois')
+    assert response.status_code == 200

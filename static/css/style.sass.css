@@ -28,7 +28,7 @@ label {
 textarea {
   height: 5em; }
 
-input[type="submit"] {
+.button {
   background: #2e5cfd;
   border: 0;
   color: #eaeaea;
@@ -39,7 +39,7 @@ input[type="submit"] {
   text-transform: uppercase;
   transition: background 250ms;
   width: auto; }
-  input[type="submit"]:hover {
+  .button:hover {
     background: #4770fd; }
 
 .nicEdit-panelContain, .nicEdit-pane {
@@ -208,6 +208,9 @@ dd {
 time {
   display: block; }
 
+article img {
+  max-width: 100%; }
+
 #actualites main, #emplois main, #index-news {
   box-sizing: border-box;
   display: flex;
@@ -219,8 +222,6 @@ time {
     flex: 1 50%;
     padding: 2em;
     word-wrap: break-word; }
-    #actualites main article img, #emplois main article img, #index-news article img {
-      max-width: 100%; }
     #actualites main article a, #emplois main article a, #index-news article a {
       color: #ffcd05;
       font-size: .8em;

@@ -2,6 +2,7 @@ import email
 import time
 from pathlib import Path
 from xml.etree import ElementTree
+from werkzeug.utils import secure_filename
 
 
 POST_ACTUALITIES = 'actualites'
@@ -22,12 +23,14 @@ ACTION_UNPUBLISH = 'unpublish'
 ACTION_REPUBLISH = 'republish'
 ACTION_TRASH = 'trash'
 ACTION_EDIT = 'edit'
+ACTION_DELETE_IMAGE = 'delete_image'
 ACTIONS = {
     ACTION_PUBLISH: "Publier",
     ACTION_UNPUBLISH: "Dépublier",
     ACTION_REPUBLISH: "Republier",
     ACTION_TRASH: "Supprimer",
     ACTION_EDIT: 'Editer',
+    ACTION_DELETE_IMAGE: "Supprimer l'image"
 }
 
 IMAGE = '_image'
@@ -103,7 +106,7 @@ def get_post(category, timestamp, states=None):
     return post
 
 
-def save_post(category, timestamp, admin, form):
+def save_post(category, timestamp, admin, form, files):
     if timestamp is None:
         status = STATE_WAITING
         timestamp = str(int(time.time()))
@@ -120,11 +123,28 @@ def save_post(category, timestamp, admin, form):
 
     post = get_path(category, status, timestamp, BASE_FILE, create_dir=True)
     tree = ElementTree.Element('entry')
+
     for key, value in form.items():
         if key.startswith('_'):
             continue
         element = ElementTree.SubElement(tree, key)
         element.text = value
+
+    if '_image_path' in form:
+        image_path = root / form['_image_path']
+        if ACTION_DELETE_IMAGE in form and image_path.exists:
+            image_path.unlink()
+        else:
+            element = ElementTree.SubElement(tree, 'image')
+            element.text = image_path.name
+
+    if 'image' in files:
+        post_image = files['image']
+        filename = secure_filename(post_image.filename)
+        post_image.save(str(post.parent / filename))
+        element = ElementTree.SubElement(tree, 'image')
+        element.text = filename
+
     element = ElementTree.SubElement(tree, STATE_PUBLISHED)
     element.text = email.utils.formatdate(
         int(timestamp) if timestamp else time.time()
