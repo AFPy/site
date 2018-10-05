@@ -30,7 +30,8 @@
       <label>Description
         <textarea name="summary">{{ post.summary }}</textarea>
       </label>
-      <label>
+      <label>Image
+        <img alt="" src="{{ url_for('post_image', path=post._image) }}" />
         <input name="image" id="image" type="file" value="{{ post.image }}" />
       </label>
       <label>Contenu de l'article
