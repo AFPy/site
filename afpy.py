@@ -176,6 +176,8 @@ def save_post_admin(name, timestamp):
         )
     except data.DataException as e:
         abort(e.http_code)
+    if 'delete_image' in request.form:
+        return redirect(request.url)
     return redirect(url_for('admin', name=name))
 
 @app.route('/posts/<name>')
