@@ -28,7 +28,7 @@ label {
 textarea {
   height: 5em; }
 
-input[type="submit"] {
+.button {
   background: #2e5cfd;
   border: 0;
   color: #eaeaea;
@@ -39,7 +39,7 @@ input[type="submit"] {
   text-transform: uppercase;
   transition: background 250ms;
   width: auto; }
-  input[type="submit"]:hover {
+  .button:hover {
     background: #4770fd; }
 
 .nicEdit-panelContain, .nicEdit-pane {

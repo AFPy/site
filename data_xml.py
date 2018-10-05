@@ -1,8 +1,8 @@
 import email
 import time
+import os
 from pathlib import Path
 from xml.etree import ElementTree
-
 from werkzeug.utils import secure_filename
 
 
@@ -16,7 +16,12 @@ STATES = {STATE_WAITING: "En attente", STATE_PUBLISHED: "Publié"}
 
 ACTION_PUBLISH = 'publish'
 ACTION_UNPUBLISH = 'unpublish'
-ACTIONS = {ACTION_PUBLISH: "Publier", ACTION_UNPUBLISH: "Dépublier"}
+ACTION_DELETE_IMAGE = 'delete_image'
+ACTIONS = {
+    ACTION_PUBLISH: "Publier",
+    ACTION_UNPUBLISH: "Dépublier",
+    ACTION_DELETE_IMAGE: "Supprimer l'image"
+}
 
 IMAGE = '_image'
 TIMESTAMP = '_timestamp'
@@ -113,6 +118,9 @@ def save_post(category, timestamp, admin, form, files):
         element = ElementTree.SubElement(tree, key)
         element.text = value
 
+    if ACTION_DELETE_IMAGE in form:
+        os.remove(form['_image_path'])
+
     if 'image' in files:
         post_image = files['image']
         filename = secure_filename(post_image.filename)
@@ -135,5 +143,7 @@ def save_post(category, timestamp, admin, form, files):
             (root / category / STATE_PUBLISHED / timestamp).rename(
                 root / category / STATE_WAITING / timestamp
             )
+
+
 
     return get_post(category, timestamp)

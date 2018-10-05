@@ -33,7 +33,9 @@
       <label>Image
         <img alt="" src="{{ url_for('post_image', path=post._image) }}" />
         <input name="image" id="image" type="file" value="{{ post.image }}" />
+        <input name="_image_path" id="_image_path" value="{{ post._image }}" type="hidden"/> 
       </label>
+      <input type="submit" name="delete_image" value="Supprimer l'image" class="button" />
       <label>Contenu de l'article
         <textarea name="content" id="content">{{ post.content }}</textarea>
       </label>
@@ -54,12 +56,12 @@
       <label>Adresse e-mail
         <input name="email" type="email" value="{{ post.email }}" />
       </label>
-      <input type="submit" value="Enregistrer" />
+      <input type="submit" value="Enregistrer" class="button" />
       {% if admin %}
         {% if post.state == 'waiting' %}
-          <input type="submit" name="publish" value="Publier" />
+          <input type="submit" name="publish" value="Publier" class="button" />
         {% else %}
-          <input type="submit" name="unpublish" value="Dépublier" />
+          <input type="submit" name="unpublish" value="Dépublier" class="button" />
         {% endif %}
       {% endif %}
     </form>

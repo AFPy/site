@@ -178,7 +178,6 @@ def save_post_admin(name, timestamp):
         abort(e.http_code)
     return redirect(url_for('admin', name=name))
 
-
 @app.route('/posts/<name>')
 @app.route('/posts/<name>/page/<int:page>')
 def posts(name, page=1):
@@ -238,7 +237,6 @@ def post(name, timestamp):
         post=post,
         name=name
     )
-
 
 @app.route('/post_image/<path:path>')
 def post_image(path):
