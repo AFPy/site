@@ -1,6 +1,5 @@
 import email
 import time
-import os
 from pathlib import Path
 from xml.etree import ElementTree
 from werkzeug.utils import secure_filename
@@ -12,14 +11,25 @@ POSTS = {POST_ACTUALITIES: "Actualités", POST_JOBS: "Offres d’emploi"}
 
 STATE_WAITING = 'waiting'
 STATE_PUBLISHED = 'published'
-STATES = {STATE_WAITING: "En attente", STATE_PUBLISHED: "Publié"}
+STATE_TRASHED = 'trashed'
+STATES = {
+    STATE_WAITING: "En attente",
+    STATE_PUBLISHED:  "Publié",
+    STATE_TRASHED:  "À la corbeille"
+}
 
 ACTION_PUBLISH = 'publish'
 ACTION_UNPUBLISH = 'unpublish'
+ACTION_REPUBLISH = 'republish'
+ACTION_TRASH = 'trash'
+ACTION_EDIT = 'edit'
 ACTION_DELETE_IMAGE = 'delete_image'
 ACTIONS = {
     ACTION_PUBLISH: "Publier",
     ACTION_UNPUBLISH: "Dépublier",
+    ACTION_REPUBLISH: "Republier",
+    ACTION_TRASH: "Supprimer",
+    ACTION_EDIT: 'Editer',
     ACTION_DELETE_IMAGE: "Supprimer l'image"
 }
 
@@ -104,9 +114,11 @@ def save_post(category, timestamp, admin, form, files):
         status = STATE_WAITING
     elif get_path(category, STATE_PUBLISHED, timestamp, BASE_FILE).is_file():
         status = STATE_PUBLISHED
+    elif get_path(category, STATE_TRASHED, timestamp, BASE_FILE).is_file():
+        status = STATE_TRASHED
     else:
         raise DataException(http_code=404)
-    if status == STATE_PUBLISHED and not admin:
+    if status == STATE_TRASHED and not admin:
         raise DataException(http_code=401)
 
     post = get_path(category, status, timestamp, BASE_FILE, create_dir=True)
@@ -139,6 +151,15 @@ def save_post(category, timestamp, admin, form, files):
     )
     ElementTree.ElementTree(tree).write(post)
 
+    if ACTION_TRASH in form and status == STATE_PUBLISHED:
+        (root / category / STATE_PUBLISHED / timestamp).rename(
+            root / category / STATE_TRASHED / timestamp
+        )
+    if not admin and ACTION_EDIT in form and status == STATE_PUBLISHED:
+        (root / category / STATE_PUBLISHED / timestamp).rename(
+            root / category / STATE_WAITING / timestamp
+        )
+
     if admin:
         if ACTION_PUBLISH in form and status == STATE_WAITING:
             (root / category / STATE_WAITING / timestamp).rename(
@@ -147,6 +168,10 @@ def save_post(category, timestamp, admin, form, files):
         elif ACTION_UNPUBLISH in form and status == STATE_PUBLISHED:
             (root / category / STATE_PUBLISHED / timestamp).rename(
                 root / category / STATE_WAITING / timestamp
+            )
+        elif ACTION_REPUBLISH in form and status == STATE_TRASHED:
+            (root / category / STATE_TRASHED / timestamp).rename(
+                root / category / STATE_PUBLISHED / timestamp
             )
 
     return get_post(category, timestamp)

@@ -8,7 +8,13 @@
   <article>
     <h2>{{ label }}</h2>
     {% for state, timestamps in posts.items() %}
-      {% set state_label = 'En attente' if state == 'waiting' else 'Publiés' %}
+    {% if state == 'waiting' %}
+      {% set state_label= 'En attente' %}
+    {% elif state == 'published' %}
+      {% set state_label= 'Publiés' %}
+    {% else %}
+      {% set state_label= 'Supprimés' %}
+    {% endif %}
       <h3>{{ state_label }}</h3>
       {% if timestamps %}
         <table>

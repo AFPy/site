@@ -58,13 +58,18 @@
       <label>Adresse e-mail
         <input name="email" type="email" value="{{ post.email }}" />
       </label>
-      <input type="submit" value="Enregistrer" class="button" />
+      <input type="submit" name="edit" value="Enregistrer" />
       {% if admin %}
         {% if post._state == 'waiting' %}
-          <input type="submit" name="publish" value="Publier" class="button" />
+          <input type="submit" name="publish" value="Publier" />
+        {% elif post._state == 'published' %}
+          <input type="submit" name="unpublish" value="Dépublier" />
         {% else %}
-          <input type="submit" name="unpublish" value="Dépublier" class="button" />
+          <input type="submit" name="republish" value="Republier" />
         {% endif %}
+      {% endif %}
+      {% if post._state == 'published' %}
+        <input type="submit" name="trash" value="Supprimer" />
       {% endif %}
     </form>
     {% if name == 'actualites' %}
