@@ -23,12 +23,20 @@
 
 {% block main %}
   <article>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
       <label>Titre
         <input name="title" value="{{ post.title }}" />
       </label>
       <label>Description
         <textarea name="summary">{{ post.summary }}</textarea>
+      </label>
+      <label>Image
+        {% if post._image %}
+          <img alt="" src="{{ url_for('post_image', path=post._image) }}" />
+          <input name="_image_path" id="_image_path" value="{{ post._image }}" type="hidden"/> 
+          <input type="submit" name="delete_image" value="Supprimer l'image" class="button" />
+        {% endif %}
+        <input name="image" id="image" type="file" value="{{ post.image }}" />
       </label>
       <label>Contenu de l'article
         <textarea name="content" id="content">{{ post.content }}</textarea>
@@ -50,12 +58,12 @@
       <label>Adresse e-mail
         <input name="email" type="email" value="{{ post.email }}" />
       </label>
-      <input type="submit" value="Enregistrer" />
+      <input type="submit" value="Enregistrer" class="button" />
       {% if admin %}
         {% if post.state == 'waiting' %}
-          <input type="submit" name="publish" value="Publier" />
+          <input type="submit" name="publish" value="Publier" class="button" />
         {% else %}
-          <input type="submit" name="unpublish" value="Dépublier" />
+          <input type="submit" name="unpublish" value="Dépublier" class="button" />
         {% endif %}
       {% endif %}
     </form>
