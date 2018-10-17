@@ -12,14 +12,18 @@ vulgarisation auprès d’un public francophone du langage de programmation pyth
 et de ses applications.
 
 
-Bureau 2017
+Bureau 2018
 ===========
 
-Les membres du bureau 2017 sont :
+Les membres du bureau 2018 sont :
 
 Président (president@afpy.org)
-  Arthur Vuillard
+  Marc Debureaux
+Vice-Président
+  Rémy Hubscher
 Secrétaire (secretaire@afpy.org)
-  Xavier Ordoquy
+  Pierre Charlet
+Vice-Secrétaire
+  Lucien Deleu
 Trésorier (tresorerie@afpy.org)
   Guillaume Ayoub
