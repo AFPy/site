@@ -287,7 +287,12 @@ def planet():
     entries = []
     for name, url in PLANET.items():
         for entry in feedparser.parse(url).entries:
-            date = getattr(entry, 'published_parsed', None)
+            if hasattr(entry, 'updated_parsed'):
+                date = entry.updated_parsed
+            elif hasattr(entry, 'published_parsed'):
+                date = entry.published_parsed
+            else:
+                date = time.time()
             entry['timestamp'] = time.mktime(date) if date else time.time()
             entries.append({'feed': name, 'content': entry})
     entries.sort(reverse=True, key=lambda entry: entry['content']['timestamp'])
