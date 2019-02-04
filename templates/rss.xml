@@ -9,9 +9,7 @@
         <title><![CDATA[ {% if entry.feed %}[{{ entry.feed | safe }}]{% endif %} {{ entry.content.title | safe }} ]]></title>
         <description><![CDATA[ {{ (entry.content.description or entry.content.summary) | safe }} ]]></description>
         <link>{{ entry.content.link }}</link>
-        {% if entry.content.timestamp %}
-          <pubDate>{{ entry.content.timestamp | rfc822_datetime }}</pubDate>
-        {% endif %}
+        <pubDate>{{ entry.content.timestamp | rfc822_datetime }}</pubDate>
       </item>
     {% endfor %}
   </channel>

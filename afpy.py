@@ -264,9 +264,10 @@ def feed(name):
         abort(404)
     entries = []
     for post in data.get_posts(name, data.STATE_PUBLISHED, end=50):
-        timestamp = post[data.TIMESTAMP]
+        post['timestamp'] = post[data.TIMESTAMP]
         post['link'] = url_for(
-            'post', name=name, timestamp=timestamp, _external=True
+            'post', name=name, timestamp=post['timestamp'],
+            _external=True
         )
         entries.append({'content': post})
     title = f'{data.POSTS[name]} AFPy.org'
@@ -322,7 +323,7 @@ def status():
 
 @app.template_filter('rfc822_datetime')
 def format_rfc822_datetime(timestamp):
-    return email.utils.formatdate(timestamp)
+    return email.utils.formatdate(int(timestamp))
 
 
 @app.template_filter('parse_iso_datetime')
