@@ -42,7 +42,7 @@ L'AFPy attend de ses membres un langage et un style adaptés à une audience
 variée. Les allusions sexuelles ou à caractère raciste ne sont en aucun cas
 tolérées, quel que soit leur support.
 
-Soyez poli(e). N'insultez personne. Discrimination et harcèlement sont à
+Soyez poli·e. N'insultez personne. Discrimination et harcèlement sont à
 exclure aussi bien dans les écrits, les visuels, les paroles et les actes, et
 ce quelle que soit leur nature (sexuelle, raciste, religieuse, sociale…).
 
