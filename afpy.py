@@ -9,7 +9,7 @@ import feedparser
 from dateutil.parser import parse
 from flask import (Flask, abort, jsonify, redirect, render_template, request,
                    send_from_directory, url_for)
-from flask_cache import Cache
+from flask_caching import Cache
 from itsdangerous import BadSignature, URLSafeSerializer
 from jinja2 import TemplateNotFound
 
