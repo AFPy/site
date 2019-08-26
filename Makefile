@@ -2,6 +2,8 @@ VENV = $(PWD)/.env
 PIP = $(VENV)/bin/pip
 PYTHON = $(VENV)/bin/python
 FLASK = $(VENV)/bin/flask
+ISORT = $(VENV)/bin/isort
+BLACK = $(VENV)/bin/black
 AFPY_SERVER = afpy_web
 
 all: install serve
@@ -27,3 +29,9 @@ serve:
 afpy:
 	ssh -t $(AFPY_SERVER) 'cd site && git pull'
 	ssh -t $(AFPY_SERVER) 'killall uwsgi-3.6 && /usr/local/etc/rc.d/uwsgi restart'
+
+isort:
+	$(ISORT) -rc .isort.cfg afpy.py tests.py
+
+black:
+	$(VENV)/bin/black afpy.py tests.py

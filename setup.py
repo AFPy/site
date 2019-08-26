@@ -5,6 +5,8 @@ tests_requirements = [
     'pytest-cov',
     'pytest-flake8',
     'pytest-isort',
+    'black',
+    'isort',
 ]
 
 setup(
