@@ -28,6 +28,7 @@ serve:
 
 afpy:
 	ssh -t $(AFPY_SERVER) 'cd site && git pull'
+	ssh -t $(AFPY_SERVER) 'cd site && make install LANG=en_US.UTF-8'
 	ssh -t $(AFPY_SERVER) 'killall uwsgi-3.6 && /usr/local/etc/rc.d/uwsgi restart'
 
 isort:
