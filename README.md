@@ -15,6 +15,14 @@ Si vous avez votre propre venv, un `FLASK_APP=afpy.py
 FLASK_ENV=development flask run` vous suffira.
 
 
+## Tester
+
+```bash
+pip install -e.[test]
+make test  # ou make test VENV="$VIRTUAL_ENV" pour utiliser votre venv.
+```
+
+
 ## Déployer
 
 Pour publier il suffit de `git push`, une action github s'occupe de la mise en prod.
