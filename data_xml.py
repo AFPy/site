@@ -74,7 +74,9 @@ def get_posts(category, state=STATE_PUBLISHED, start=0, end=None):
     timestamps = sorted(path.iterdir(), reverse=True)
     timestamps = timestamps[start:end] if end else timestamps[start:]
     for timestamp in timestamps:
-        yield get_post(category, timestamp.name, state)
+        post = get_post(category, timestamp.name, state)
+        if post:
+            yield post
 
 
 def get_post(category, timestamp, states=None):
