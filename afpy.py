@@ -21,6 +21,12 @@ from flask_caching import Cache
 from itsdangerous import BadSignature, URLSafeSerializer
 from jinja2 import TemplateNotFound
 
+try:
+    import sentry_sdk
+    from sentry_sdk.integrations.flask import FlaskIntegration
+except ImportError:
+    sentry_sdk = None
+
 import data_xml as data
 
 locale.setlocale(locale.LC_ALL, "fr_FR.UTF-8")
@@ -324,3 +330,6 @@ if app.env == "development":  # pragma: no cover
     app.wsgi_app = SassMiddleware(
         app.wsgi_app, {"afpy": ("sass", "static/css", "/static/css")}
     )
+
+if sentry_sdk:
+    sentry_sdk.init(integrations=[FlaskIntegration()])

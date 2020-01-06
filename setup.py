@@ -29,5 +29,6 @@ setup(
     scripts=['afpy.py'],
     setup_requires=['pytest-runner'],
     tests_require=tests_requirements,
-    extras_require={'test': tests_requirements}
+    extras_require={'test': tests_requirements,
+                    'sentry': 'sentry-sdk[flask]'}
 )

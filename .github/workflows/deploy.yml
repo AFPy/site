@@ -19,4 +19,5 @@ jobs:
         eval $(ssh-agent)
         ssh-add
         rsync -a ./ afpy-org@deb.afpy.org:/home/afpy-org/src/
+        ssh afpy-org@deb.afpy.org /home/afpy-org/venv/bin/python -m pip install /home/afpy-org/src/[sentry]
         ssh afpy-org@deb.afpy.org sudo systemctl restart afpy-org.service
