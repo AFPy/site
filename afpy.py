@@ -315,6 +315,11 @@ def status():
     return jsonify(stats)
 
 
+@app.route("/debug-sentry")
+def trigger_error():
+    print(1 / 0)
+
+
 @app.template_filter("rfc822_datetime")
 def format_rfc822_datetime(timestamp):
     return email.utils.formatdate(int(timestamp))
@@ -331,6 +336,7 @@ if app.env == "development":  # pragma: no cover
     app.wsgi_app = SassMiddleware(
         app.wsgi_app, {"afpy": ("sass", "static/css", "/static/css")}
     )
+
 
 if sentry_sdk:
     sentry_sdk.init(integrations=[FlaskIntegration()])
