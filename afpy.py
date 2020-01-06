@@ -315,11 +315,6 @@ def status():
     return jsonify(stats)
 
 
-@app.route("/debug-sentry")
-def trigger_error():
-    print(1 / 0)
-
-
 @app.template_filter("rfc822_datetime")
 def format_rfc822_datetime(timestamp):
     return email.utils.formatdate(int(timestamp))
