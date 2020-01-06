@@ -1,9 +1,9 @@
 import email
-import time
 from pathlib import Path
+import time
 from xml.etree import ElementTree
-from werkzeug.utils import secure_filename
 
+from werkzeug.utils import secure_filename
 
 POST_ACTUALITIES = 'actualites'
 POST_JOBS = 'emplois'

@@ -21,13 +21,14 @@ from flask_caching import Cache
 from itsdangerous import BadSignature, URLSafeSerializer
 from jinja2 import TemplateNotFound
 
+import data_xml as data
+
 try:
     import sentry_sdk
     from sentry_sdk.integrations.flask import FlaskIntegration
 except ImportError:
     sentry_sdk = None
 
-import data_xml as data
 
 locale.setlocale(locale.LC_ALL, "fr_FR.UTF-8")
 
