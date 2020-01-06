@@ -142,7 +142,7 @@ def save_post(category, timestamp, admin, form, files):
 
     if 'image' in files:
         post_image = files['image']
-        filename = secure_filename(post_image.filename)
+        filename = secure_filename(post_image.filename) or "image.jpg"
         post_image.save(str(post.parent / filename))
         element = ElementTree.SubElement(tree, 'image')
         element.text = filename
