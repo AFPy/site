@@ -43,7 +43,6 @@ PAGINATION = 12
 PLANET = {
     "Emplois AFPy": "https://www.afpy.org/feed/emplois/rss.xml",
     "Nouvelles AFPy": "https://www.afpy.org/feed/actualites/rss.xml",
-    "Anybox": "https://anybox.fr/site-feed/RSS?set_language=fr",
     "Ascendances": "https://ascendances.wordpress.com/feed/",
     "Code en Seine": "https://codeenseine.fr/feeds/all.atom.xml",
     "Yaal": "https://www.yaal.fr/blog/feeds/all.atom.xml",
