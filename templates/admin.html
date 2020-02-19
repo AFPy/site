@@ -24,7 +24,7 @@
               <tr>
                 <td>{{ post.title }}</td>
                 <td>{{ post.published | parse_iso_datetime('%x') }}</td>
-                <td><a href="{{ url_for('edit_post_admin', name=name, timestamp=timestamp) }}">Éditer</a></td>
+                <td><a href="{{ url_for('edit_post_admin', category=post.category, timestamp=post.timestamp) }}">Éditer</a></td>
               </tr>
             {% endfor %}
           </tbody>

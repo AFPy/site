@@ -31,7 +31,7 @@
           <img src="{{ url_for('post_image', path=post._image) }}" alt="{{ post.title }}" />
         {% endif %}
         {{ post.summary | safe }}
-        <p><a href="{{ url_for('post', name=name, timestamp=timestamp) }}">Lire la suite…</a></p>
+        <p><a href="{{ url_for('post', category=post.category, timestamp=post.timestamp) }}">Lire la suite…</a></p>
       </article>
     {% endfor %}
   </section>

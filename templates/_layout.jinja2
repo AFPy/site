@@ -18,8 +18,8 @@
       {% set navigation_bar = [
         (url_for('index'), 'index', 'Accueil'),
         (url_for('rest', name='a-propos'), 'a-propos', 'Qui sommes-nous ?'),
-        (url_for('posts', name='actualites'), 'actualites', 'Actualités'),
-        (url_for('posts', name='emplois'), 'emplois', 'Offres d\'emplois'),
+        (url_for('posts', category='actualites'), 'actualites', 'Actualités'),
+        (url_for('posts', category='emplois'), 'emplois', 'Offres d\'emplois'),
         (url_for('pages', name='communaute'), 'communaute', 'Communauté'),
         (url_for('pages', name='discussion'), 'discussion', 'Discussion'),
         (url_for('pages', name='adhesions'), 'adhesions', 'Adhésions')
@@ -49,8 +49,8 @@
         (url_for('rest', name='legal'), 'Mentions légales'),
         (url_for('rest', name='rss'), 'Flux RSS'),
         ('https://twitter.com/asso_python_fr', 'Twitter'),
-        (url_for('admin', name='actualites'), 'Admin actualités'),
-        (url_for('admin', name='emplois'), 'Admin offres d\'emploi')
+        (url_for('admin', category='actualites'), 'Admin actualités'),
+        (url_for('admin', category='emplois'), 'Admin offres d\'emploi')
       ] -%}
       <ul class="menu__list">
         {% for href, caption in navigation_bar %}

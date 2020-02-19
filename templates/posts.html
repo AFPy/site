@@ -6,7 +6,7 @@
 
 {% block main %}
   <aside>
-    Vous pouvez <a href="{{ url_for('edit_post', name=name) }}">créer un article</a> qui
+    Vous pouvez <a href="{{ url_for('edit_post', category=category) }}">créer un article</a> qui
     sera mis en ligne après acceptation de l'un des modérateurs.
   </aside>
   {% for timestamp, post in posts.items() %}
@@ -19,16 +19,16 @@
         <img src="{{ url_for('post_image', path=post._image) }}" alt="{{ post.title }}" />
       {% endif %}
       {{ post.summary | safe if post.summary }}
-      <p><a href="{{ url_for('post', name=name, timestamp=timestamp) }}">Lire la suite…</a></p>
+      <p><a href="{{ url_for('post', category=post.category, timestamp=post.timestamp) }}">Lire la suite…</a></p>
     </article>
   {% endfor %}
   <aside>
   {% if page != 1 %}
-  <a href="{{ url_for('posts', name=name, page=page-1) }}">Précedente</a>
+  <a href="{{ url_for('posts', category=category, page=page-1) }}">Précedente</a>
   {% endif %}
   Page {{ page }}/{{ total_pages }}
   {% if page != total_pages %}
-  <a href="{{ url_for('posts', name=name, page=page+1) }}">Suivante</a>
+  <a href="{{ url_for('posts', category=category, page=page+1) }}">Suivante</a>
   {% endif %}
   </aside>
 {% endblock main %}
