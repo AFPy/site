@@ -134,18 +134,18 @@ def save_post(category, timestamp, admin, form, files):
 
     if '_image_path' in form:
         image_path = root / form['_image_path']
-        if ACTION_DELETE_IMAGE in form and image_path.exists:
+        if ACTION_DELETE_IMAGE in form and image_path.exists():
             image_path.unlink()
-        else:
+    else:
+        if 'image' in files and files['image'].filename:
+            post_image = files['image']
+            filename = secure_filename(post_image.filename)
+            post_image.save(str(post.parent / filename))
+            element = ElementTree.SubElement(tree, 'image')
+            element.text = filename
+        elif '_image_path' in form:
             element = ElementTree.SubElement(tree, 'image')
             element.text = image_path.name
-
-    if 'image' in files:
-        post_image = files['image']
-        filename = secure_filename(post_image.filename) or "image.jpg"
-        post_image.save(str(post.parent / filename))
-        element = ElementTree.SubElement(tree, 'image')
-        element.text = filename
 
     element = ElementTree.SubElement(tree, STATE_PUBLISHED)
     element.text = email.utils.formatdate(
