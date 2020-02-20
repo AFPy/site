@@ -105,17 +105,16 @@ def get_posts(category, state=common.STATE_PUBLISHED, start=0, end=None):
     ).order_by(Article.timestamp.desc())
     if end:
         articles = articles.limit(end)
-    for article in articles:
+    for index, article in enumerate(articles):
+        if index > start:
+            continue
         yield article
 
 
 def get_post(category, timestamp, states=None):
     states = tuple(
-        states
-        if isinstance(states, (tuple, list))
-        else [states]
-        if isinstance(states, str)
-        else common.STATES.keys()
+        states if isinstance(states, (tuple, list)) else
+        [states] if isinstance(states, str) else common.STATES.keys()
     )
     return Article.select().where(
         Article.category == category,

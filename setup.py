@@ -23,6 +23,7 @@ setup(
         'feedparser',
         'python-dateutil',
         'itsdangerous',
+        'peewee',
     ],
     scripts=['afpy.py'],
     setup_requires=['pytest-runner'],
