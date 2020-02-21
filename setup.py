@@ -5,6 +5,8 @@ tests_requirements = [
     'pytest-cov',
     'pytest-flake8',
     'pytest-isort',
+    'black',
+    'isort',
 ]
 
 setup(
@@ -16,8 +18,8 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
-        'Flask<1.0.1',  # https://github.com/thadeusb/flask-cache/issues/188
-        'Flask-Cache',
+        'Flask',
+        'Flask-Caching',
         'libsass',
         'docutils',
         'feedparser',
@@ -28,5 +30,6 @@ setup(
     scripts=['afpy.py'],
     setup_requires=['pytest-runner'],
     tests_require=tests_requirements,
-    extras_require={'test': tests_requirements}
+    extras_require={'test': tests_requirements,
+                    'sentry': 'sentry-sdk[flask]'}
 )

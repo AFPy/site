@@ -2,7 +2,8 @@ VENV = $(PWD)/.env
 PIP = $(VENV)/bin/pip
 PYTHON = $(VENV)/bin/python
 FLASK = $(VENV)/bin/flask
-AFPY_SERVER = afpy_web
+ISORT = $(VENV)/bin/isort
+BLACK = $(VENV)/bin/black
 
 all: install serve
 
@@ -24,6 +25,10 @@ test:
 serve:
 	env FLASK_APP=afpy.py FLASK_ENV=development $(FLASK) run
 
-afpy:
-	ssh -t $(AFPY_SERVER) 'cd site && git pull'
-	ssh -t $(AFPY_SERVER) 'killall uwsgi-3.6 && /usr/local/etc/rc.d/uwsgi restart'
+isort:
+	$(ISORT) -rc .isort.cfg afpy.py tests.py
+
+black:
+	$(VENV)/bin/black afpy.py tests.py
+
+.PHONY: all install clean check-outdated test serve isort black

@@ -7,7 +7,6 @@ PAGINATION = 12
 PLANET = {
     'Emplois AFPy': 'https://www.afpy.org/feed/emplois/rss.xml',
     'Nouvelles AFPy': 'https://www.afpy.org/feed/actualites/rss.xml',
-    'Anybox': 'https://anybox.fr/site-feed/RSS?set_language=fr',
     'Ascendances': 'https://ascendances.wordpress.com/feed/',
     'Code en Seine': 'https://codeenseine.fr/feeds/all.atom.xml',
     'Yaal': 'https://www.yaal.fr/blog/feeds/all.atom.xml',
@@ -36,32 +35,34 @@ CATEGORIES = {
 
 STATE_WAITING = 'waiting'
 STATE_PUBLISHED = 'published'
-STATE_TRASH = 'trash'
+STATE_TRASHED = 'trashed'
 STATES = {
     STATE_WAITING: "En attente",
     STATE_PUBLISHED: "Publié",
-    STATE_TRASH: "Supprimé",
+    STATE_TRASHED: "Supprimé",
 }
 
 ACTION_PUBLISH = 'publish'
 ACTION_UNPUBLISH = 'unpublish'
+ACTION_REPUBLISH = 'republish'
+ACTION_TRASH = 'trash'
+ACTION_EDIT = 'edit'
+ACTION_DELETE_IMAGE = 'delete_image'
 ACTIONS = {
     ACTION_PUBLISH: "Publier",
     ACTION_UNPUBLISH: "Dépublier",
+    ACTION_REPUBLISH: "Republier",
+    ACTION_TRASH: "Supprimer",
+    ACTION_EDIT: 'Editer',
+    ACTION_DELETE_IMAGE: "Supprimer l'image",
 }
 
 FIELD_IMAGE = '_image'
+FIELD_IMAGE_PATH = '_image_path'
 FIELD_TIMESTAMP = '_timestamp'
 FIELD_STATE = '_state'
 FIELD_PATH = '_path'
 FIELD_DIR = '_dir'
-FIELDS = {
-    FIELD_IMAGE: 'image',
-    FIELD_TIMESTAMP: 'timestamp',
-    FIELD_STATE: 'state',
-    FIELD_PATH: 'path',
-    FIELD_DIR: 'dir',
-}
 
 BASE_DIR = 'posts'
 BASE_FILE = 'post.xml'

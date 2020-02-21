@@ -1,6 +1,7 @@
 import email
 import time
 from xml.etree import ElementTree
+from werkzeug.utils import secure_filename
 
 import common
 
@@ -23,21 +24,23 @@ def count_posts(category, state=common.STATE_PUBLISHED):
     return len(tuple((common.POSTS_DIR / category / state).iterdir()))
 
 
-def get_posts(category, state=common.STATE_PUBLISHED, start=0, end=None):
+def get_posts(category, state=common.STATE_PUBLISHED, page=1):
+    end = page * common.PAGINATION
+    start = end - common.PAGINATION
     path = common.POSTS_DIR / category / state
     timestamps = sorted(path.iterdir(), reverse=True)
     timestamps = timestamps[start:end] if end else timestamps[start:]
     for timestamp in timestamps:
-        yield get_post(category, timestamp.name, state)
+        post = get_post(category, timestamp.name, state)
+        if post:
+            yield post
 
 
 def get_post(category, timestamp, states=None):
     states = tuple(
-        states
-        if isinstance(states, (tuple, list))
-        else [states]
-        if isinstance(states, str)
-        else common.STATES.keys()
+        states if isinstance(states, (tuple, list)) else
+        [states] if isinstance(states, str) else
+        common.STATES.keys()
     )
     for state in states:
         dir = common.POSTS_DIR / category / state / timestamp
@@ -60,53 +63,77 @@ def get_post(category, timestamp, states=None):
     return post
 
 
-def save_post(category, timestamp, admin, **data):
+def save_post(category, timestamp, admin, form, files):
     if timestamp is None:
         status = common.STATE_WAITING
         timestamp = str(int(time.time()))
-    elif get_path(category, common.STATE_WAITING, timestamp, common.BASE_FILE).is_file():
+    elif get_path(
+            category, common.STATE_WAITING,
+            timestamp, common.BASE_FILE).is_file():
         status = common.STATE_WAITING
-    elif get_path(category, common.STATE_PUBLISHED, timestamp, common.BASE_FILE).is_file():
+    elif get_path(
+            category, common.STATE_PUBLISHED,
+            timestamp, common.BASE_FILE).is_file():
         status = common.STATE_PUBLISHED
+    elif get_path(
+            category, common.STATE_TRASHED,
+            timestamp, common.BASE_FILE).is_file():
+        status = common.STATE_TRASHED
     else:
         raise common.DataException(http_code=404)
+
     if status == common.STATE_PUBLISHED and not admin:
         raise common.DataException(http_code=401)
 
     post = get_path(category, status, timestamp, common.BASE_FILE, create_dir=True)
     tree = ElementTree.Element('entry')
-    for key, value in data.items():
+
+    for key, value in form.items():
         if key.startswith('_'):
             continue
         element = ElementTree.SubElement(tree, key)
         element.text = value
+
+    if common.FIELD_IMAGE_PATH in form:
+        image_path = common.POSTS_DIR / form[common.FIELD_IMAGE_PATH]
+        if common.ACTION_DELETE_IMAGE in form and image_path.exists():
+            image_path.unlink()
+        else:
+            element = ElementTree.SubElement(tree, common.FIELD_IMAGE)
+            element.text = image_path.name
+    elif common.FIELD_IMAGE in files and files[common.FIELD_IMAGE].filename:
+        post_image = files[common.FIELD_IMAGE]
+        filename = secure_filename(post_image.filename)
+        post_image.save(str(post.parent / filename))
+        element = ElementTree.SubElement(tree, common.FIELD_IMAGE)
+        element.text = filename
+
     element = ElementTree.SubElement(tree, common.STATE_PUBLISHED)
-    element.text = email.utils.formatdate(
-        int(timestamp) if timestamp else time.time()
-    )
+    element.text = email.utils.formatdate(int(timestamp) if timestamp else time.time())
     ElementTree.ElementTree(tree).write(post)
 
+    if common.ACTION_TRASH in form and status == common.STATE_PUBLISHED:
+        (common.POSTS_DIR / category / common.STATE_PUBLISHED / timestamp).rename(
+            common.POSTS_DIR / category / common.STATE_TRASHED / timestamp
+        )
+    if not admin and common.ACTION_EDIT in form and status == common.STATE_PUBLISHED:
+        (common.POSTS_DIR / category / common.STATE_PUBLISHED / timestamp).rename(
+            common.POSTS_DIR / category / common.STATE_WAITING / timestamp
+        )
+
     if admin:
-        if common.ACTION_PUBLISH in data and status == common.STATE_WAITING:
+
+        if common.ACTION_PUBLISH in form and status == common.STATE_WAITING:
             (common.POSTS_DIR / category / common.STATE_WAITING / timestamp).rename(
                 common.POSTS_DIR / category / common.STATE_PUBLISHED / timestamp
             )
-        elif common.ACTION_UNPUBLISH in data and status == common.STATE_PUBLISHED:
+        elif common.ACTION_UNPUBLISH in form and status == common.STATE_PUBLISHED:
             (common.POSTS_DIR / category / common.STATE_PUBLISHED / timestamp).rename(
                 common.POSTS_DIR / category / common.STATE_WAITING / timestamp
             )
+        elif common.ACTION_REPUBLISH in form and status == common.STATE_TRASHED:
+            (common.POSTS_DIR / category / common.STATE_TRASHED / timestamp).rename(
+                common.POSTS_DIR / category / common.STATE_PUBLISHED / timestamp
+            )
 
     return get_post(category, timestamp)
-
-
-def add_image(category, state, timestamp, image):
-    path = get_path(category, state, timestamp)
-    if not path.is_dir():
-        return common.DataException(http_code=401)
-    post = get_post(category, timestamp, states=state)
-    if not post:
-        return common.DataException(http_code=404)
-    image.save(post[common.FIELD_DIR], image.filename)
-    image_path = f'{timestamp}.{image.filename}'
-    image.save(common.IMAGE_DIR, image_path)
-    save_post(category, state, timestamp, old_image=image.filename, image=image_path)
