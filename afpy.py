@@ -23,9 +23,9 @@ from itsdangerous import BadSignature, URLSafeSerializer
 from jinja2 import TemplateNotFound
 
 import common
-# import data_xml as data
-import data_sql as data
 
+import data_sql as data
+# import data_xml as data
 
 try:
     import sentry_sdk
@@ -33,7 +33,6 @@ try:
     sentry_sdk.init(integrations=[FlaskIntegration()])
 except ImportError:
     sentry_sdk = None
-
 
 locale.setlocale(locale.LC_ALL, "fr_FR.UTF-8")
 

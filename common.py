@@ -58,7 +58,6 @@ ACTIONS = {
 }
 
 FIELD_IMAGE = '_image'
-FIELD_IMAGE_PATH = '_image_path'
 FIELD_TIMESTAMP = '_timestamp'
 FIELD_STATE = '_state'
 FIELD_PATH = '_path'

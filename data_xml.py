@@ -24,9 +24,11 @@ def count_posts(category, state=common.STATE_PUBLISHED):
     return len(tuple((common.POSTS_DIR / category / state).iterdir()))
 
 
-def get_posts(category, state=common.STATE_PUBLISHED, page=1):
-    end = page * common.PAGINATION
-    start = end - common.PAGINATION
+def get_posts(category, state=common.STATE_PUBLISHED, page=None, end=None):
+    start = 0
+    if page and not end:
+        end = page * common.PAGINATION
+        start = end - common.PAGINATION
     path = common.POSTS_DIR / category / state
     timestamps = sorted(path.iterdir(), reverse=True)
     timestamps = timestamps[start:end] if end else timestamps[start:]
@@ -94,18 +96,20 @@ def save_post(category, timestamp, admin, form, files):
         element = ElementTree.SubElement(tree, key)
         element.text = value
 
-    if common.FIELD_IMAGE_PATH in form:
-        image_path = common.POSTS_DIR / form[common.FIELD_IMAGE_PATH]
+    if '_image_path' in form:
+        image_path = common.POSTS_DIR / form['_image_path']
         if common.ACTION_DELETE_IMAGE in form and image_path.exists():
             image_path.unlink()
+            element = ElementTree.SubElement(tree, 'image')
+            element.text = ''
         else:
-            element = ElementTree.SubElement(tree, common.FIELD_IMAGE)
+            element = ElementTree.SubElement(tree, 'image')
             element.text = image_path.name
-    elif common.FIELD_IMAGE in files and files[common.FIELD_IMAGE].filename:
-        post_image = files[common.FIELD_IMAGE]
+    if 'image' in files and files['image'].filename:
+        post_image = files['image']
         filename = secure_filename(post_image.filename)
         post_image.save(str(post.parent / filename))
-        element = ElementTree.SubElement(tree, common.FIELD_IMAGE)
+        element = ElementTree.SubElement(tree, 'image')
         element.text = filename
 
     element = ElementTree.SubElement(tree, common.STATE_PUBLISHED)

@@ -3,9 +3,11 @@ import datetime
 import time
 import peewee as pw
 import os
+import shutil
 from dateutil.parser import parse
 
 import common
+import data_xml
 
 
 database = pw.SqliteDatabase('database.db', pragmas=(
@@ -16,11 +18,11 @@ database = pw.SqliteDatabase('database.db', pragmas=(
 
 class Article(pw.Model):
     category = pw.CharField(
-        max_length=max(len(c) for c in common.CATEGORIES),
+        max_length=max(map(len, common.CATEGORIES)),
         choices=common.CATEGORIES.items(),
         index=True)
     state = pw.CharField(
-        max_length=max(len(s) for s in common.STATES),
+        max_length=max(map(len, common.STATES)),
         choices=common.STATES.items(),
         index=True)
     timestamp = pw.BigIntegerField(
@@ -61,23 +63,23 @@ class Article(pw.Model):
     class Meta:
         database = database
         indexes = (
-            (('category', 'state', 'timestamp'), False),
+            (('category', 'timestamp'), False),
+            (('category', 'timestamp', 'state'), False),
         )
 
 
 try:
     Article.create_table(safe=False)
-    import data_xml as data
     for category in common.CATEGORIES:
         for state in common.STATES:
-            for post in data.get_posts(category, state):
+            for post in data_xml.get_posts(category, state):
                 try:
                     timestamp = post.get(common.FIELD_TIMESTAMP)
                     if post.get(common.FIELD_IMAGE):
                         image = common.POSTS_DIR / post.get(common.FIELD_IMAGE)
                         name, ext = os.path.splitext(post.get(common.FIELD_IMAGE))
                         post['image'] = f"{category}.{timestamp}{ext}"
-                        image.rename(common.IMAGE_DIR / post['image'])
+                        shutil.copy(str(image), str(common.IMAGE_DIR / post['image']))
                     Article.create(
                         category=category,
                         state=state,
@@ -106,31 +108,82 @@ def count_posts(category, state=common.STATE_PUBLISHED):
     ).count()
 
 
-def get_posts(category, state=common.STATE_PUBLISHED, page=1, end=None):
+def get_posts(category, state=common.STATE_PUBLISHED, page=None, end=None):
     articles = Article.select().where(
         Article.category == category,
         Article.state == state
     ).order_by(Article.timestamp.desc())
     if end:
         articles = articles.limit(end)
-    else:
+    elif page:
         articles = articles.paginate(page=page, paginate_by=common.PAGINATION)
     for article in articles:
         yield article
 
 
 def get_post(category, timestamp, states=None):
-    states = tuple(
-        states if isinstance(states, (tuple, list)) else
-        [states] if isinstance(states, str) else common.STATES.keys()
-    )
-    return Article.select().where(
-        Article.category == category,
-        Article.timestamp == timestamp,
-        Article.state.in_(states)
-    ).first()
+    if states:
+        states = tuple([states] if isinstance(states, str) else states)
+        return Article.select().where(
+            Article.category == category,
+            Article.timestamp == timestamp,
+            Article.state.in_(states)
+        ).first()
+    else:
+        return Article.select().where(
+            Article.category == category,
+            Article.timestamp == timestamp,
+        ).first()
 
 
 def save_post(category, timestamp, admin, form, files):
-    # TODO:
-    pass
+    timestamp = timestamp or int(time.time())
+    article = Article.get_or_none(
+        category=category,
+        timestamp=timestamp)
+
+    if not article:
+        article = Article(
+            category=category,
+            timestamp=timestamp,
+            state=common.STATE_WAITING)
+
+    if article.state == common.STATE_PUBLISHED and not admin:
+        raise common.DataException(http_code=401)
+
+    for key, value in form.items():
+        if key.startswith('_'):
+            continue
+        setattr(article, key, value)
+
+    uploaded_image = 'image' in files and files['image'].filename
+    if (common.ACTION_DELETE_IMAGE in form or uploaded_image) and article.image:
+        image_path = common.IMAGE_DIR / article.image
+        if image_path.exists():
+            image_path.unlink()
+            article.image = None
+    if uploaded_image:
+        post_image = files['image']
+        name, ext = os.path.splitext(post_image.filename)
+        filename = f"{category}.{timestamp}{ext}"
+        post_image.save(str(common.IMAGE_DIR / filename))
+        article.image = filename
+
+    if common.ACTION_TRASH in form \
+            and article.state == common.STATE_PUBLISHED:
+        article.state = common.STATE_TRASHED
+    elif common.ACTION_EDIT in form \
+            and article.state == common.STATE_PUBLISHED:
+        article.state = common.STATE_WAITING
+    elif admin and common.ACTION_PUBLISH in form \
+            and article.state == common.STATE_WAITING:
+        article.state = common.STATE_PUBLISHED
+    elif admin and common.ACTION_UNPUBLISH in form \
+            and article.state == common.STATE_PUBLISHED:
+        article.state = common.STATE_WAITING
+    elif admin and common.ACTION_UNPUBLISH in form \
+            and article.state == common.STATE_TRASHED:
+        article.state = common.STATE_PUBLISHED
+
+    article.save()
+    return article
