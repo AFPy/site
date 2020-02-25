@@ -1,8 +1,8 @@
+from datetime import datetime
 import email
 import locale
 import os
 import time
-from datetime import datetime
 
 from dateutil.parser import parse
 import docutils.core
@@ -23,8 +23,8 @@ from itsdangerous import BadSignature, URLSafeSerializer
 from jinja2 import TemplateNotFound
 
 import common
-
 import data_sql as data
+
 # import data_xml as data
 
 try:

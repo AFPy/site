@@ -1,10 +1,10 @@
 import email
 import time
 from xml.etree import ElementTree
+
 from werkzeug.utils import secure_filename
 
 import common
-
 
 for category in common.CATEGORIES:
     for state in common.STATES:

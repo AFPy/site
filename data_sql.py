@@ -1,14 +1,14 @@
 # coding: utf-8
 import datetime
-import time
-import peewee as pw
 import os
 import shutil
+import time
+
 from dateutil.parser import parse
+import peewee as pw
 
 import common
 import data_xml
-
 
 database = pw.SqliteDatabase('database.db', pragmas=(
     ('cache_size', -1024 * 64),
