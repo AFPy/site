@@ -19,7 +19,6 @@ from flask import (
 )
 from flask_caching import Cache
 from itsdangerous import BadSignature, URLSafeSerializer
-from jinja2 import TemplateNotFound
 
 import data_xml as data
 
@@ -76,14 +75,19 @@ def index():
     )
 
 
-@app.route("/<name>")
-def pages(name):
-    if name == "index":
-        return redirect(url_for("index"))
-    try:
-        return render_template(f"{name}.html", body_id=name, meetups=MEETUPS)
-    except TemplateNotFound:
-        abort(404)
+@app.route("/adhesions")
+def adhesions():
+    return render_template("adhesions.html", body_id="adhesions")
+
+
+@app.route("/communaute")
+def communaute():
+    return render_template("communaute.html", body_id="communaute", meetups=MEETUPS)
+
+
+@app.route("/discussion")
+def discussion():
+    return render_template("discussion.html", body_id="discussion")
 
 
 @app.route("/docs/<name>")

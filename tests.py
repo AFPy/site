@@ -21,7 +21,7 @@ def test_rest(name):
 
 
 def test_planet():
-    response = app.test_client().get(f"/planet/")
+    response = app.test_client().get("/planet/")
     assert response.status_code == 200
 
 
