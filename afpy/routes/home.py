@@ -12,17 +12,17 @@ home_bp = Blueprint("home", __name__)
 
 @home_bp.route("/")
 def home_page():
-    return render_template("pages/index.html")
+    return render_template("pages/index.html", body_id="index")
 
 
 @home_bp.route("/communaute")
 def community_page():
-    return render_template("pages/communaute.html")
+    return render_template("pages/communaute.html", body_id="communaute")
 
 
 @home_bp.route("/adherer")
-def adhere():
-    return render_template("pages/adhesions.html")
+def adhere_page():
+    return render_template("pages/adhesions.html", body_id="adhesions")
 
 
 @home_bp.route("/docs/<name>")
