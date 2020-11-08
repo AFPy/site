@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="fr">
+{% include "_parts/html_head.jinja2" %}
+
+<body id="{{ body_id }}">
+
+<header>
+    <div class="wrapper">
+        {% block header %}
+        {% endblock header %}
+    </div>
+</header>
+
+{% include "_parts/nav_menu.jinja2" %}
+
+<main>
+    {% block main %}
+    {% endblock main %}
+</main>
+
+{% include "_parts/html_footer.jinja2" %}
+
+</body>
+</html>

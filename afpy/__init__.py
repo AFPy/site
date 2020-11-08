@@ -24,14 +24,13 @@ for item in REQUIRED_ENV_VARS:
     if item not in os.environ:
         raise EnvironmentError(f"{item} is not set in the server's environment or .env file. It is required.")
 
-from afpy.static import (
-    FLASK_SECRET_KEY,
-    # DB_NAME,
-    # DB_USER,
-    # DB_PASSWORD,
-    # DB_PORT,
-    # DB_HOST,
-)
+from afpy.static import FLASK_SECRET_KEY
+
+# DB_NAME,
+# DB_USER,
+# DB_PASSWORD,
+# DB_PORT,
+# DB_HOST,
 
 application = Flask(__name__)
 
@@ -44,6 +43,6 @@ application.secret_key = FLASK_SECRET_KEY
 application.config.update(FLASK_SECRET_KEY=FLASK_SECRET_KEY)
 
 
-@application.route("/")
-def home_test():
-    return "AFPY"
+from afpy.routes.home import home_bp
+
+application.register_blueprint(home_bp)

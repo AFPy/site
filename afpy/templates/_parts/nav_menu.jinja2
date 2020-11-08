@@ -1,0 +1,27 @@
+{% block nav_menu %}
+    <nav class="wrapper menu menu--main">
+        {% set navigation_bar = [
+        (url_for('home.home_page'), 'index', 'Accueil'),
+                      ] -%}
+{#        (url_for('rest', name='a-propos'), 'a-propos', 'Qui sommes-nous ?'),#}
+{#        (url_for('posts', name='actualites'), 'actualites', 'Actualités'),#}
+{#        (url_for('posts', name='emplois'), 'emplois', 'Offres d\'emplois'),#}
+{#        (url_for('communaute'), 'communaute', 'Communauté'),#}
+{#        (url_for('discussion'), 'discussion', 'Discussion'),#}
+{#        (url_for('adhesions'), 'adhesions', 'Adhésions')#}
+        <label for="toggle" class="menu__toggle">Menu</label>
+        <input class="menu__checkbox" type="checkbox" name="toggle" id="toggle" checked>
+        <ul class="menu__list">
+            <li class="menu__item menu__item--brand">
+                <a class="brand" href="{{ url_for('home.home_page') }}">
+                    <img src="{{ url_for('static', filename='images/logo.svg') }}" title="Logo afpy" />
+                    <span>AFPy</span>
+                </a>
+            </li>
+            {% for href, id, caption in navigation_bar %}
+                <li class="menu__item{% if id == body_id %} active{% endif
+                        %}"><a href="{{ href|e }}">{{ caption|e }}</a></li>
+            {% endfor %}
+        </ul>
+    </nav>
+{% endblock %}
