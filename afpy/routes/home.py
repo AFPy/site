@@ -15,7 +15,7 @@ home_bp = Blueprint("home", __name__)
 
 @home_bp.route("/")
 def home_page():
-    all_news = NewsEntry.select()
+    all_news = NewsEntry.select().where(NewsEntry.state == "published").limit(4)
     return render_template("pages/index.html", body_id="index", posts=all_news)
 
 
@@ -48,10 +48,10 @@ def render_rest(name):
     return render_template("pages/rst.html", body_id=name, html=parts["body"], title=parts["title"])
 
 
-@home_bp.route("/posts/<id>")
-def post_render(id: int):
+@home_bp.route("/posts/<post_id>")
+def post_render(post_id: int):
     try:
-        post = NewsEntry.get_by_id(id)
+        post = NewsEntry.get_by_id(post_id)
     except DoesNotExist:
         abort(404)
     return render_template("pages/post.html", body_id="post", post=post, name=post.title)
