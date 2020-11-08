@@ -2,6 +2,7 @@ import os
 
 from dotenv import load_dotenv
 from flask import Flask
+from flask import render_template
 
 
 AFPY_ROOT = os.path.join(os.path.dirname(__file__), "../")  # refers to application_top
@@ -41,6 +42,11 @@ else:
 
 application.secret_key = FLASK_SECRET_KEY
 application.config.update(FLASK_SECRET_KEY=FLASK_SECRET_KEY)
+
+
+@application.errorhandler(404)
+def page_not_found(e):
+    return render_template("pages/404.html"), 404
 
 
 from afpy.routes.home import home_bp
