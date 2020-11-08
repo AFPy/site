@@ -25,6 +25,11 @@ def adhere_page():
     return render_template("pages/adhesions.html", body_id="adhesions")
 
 
+@home_bp.route("/discussion")
+def discussion_page():
+    return render_template("pages/discussion.html", body_id="discussion")
+
+
 @home_bp.route("/docs/<name>")
 def render_rest(name):
     try:
