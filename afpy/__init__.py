@@ -4,7 +4,10 @@ from dotenv import load_dotenv
 from flask import Flask
 from flask import render_template
 from flask_admin import Admin
+from flask_login import LoginManager
+from peewee import DoesNotExist
 from peewee import SqliteDatabase
+
 
 AFPY_ROOT = os.path.join(os.path.dirname(__file__), "../")  # refers to application_top
 dotenv_path = os.path.join(AFPY_ROOT, ".env")
@@ -29,7 +32,23 @@ else:
 
 application.secret_key = FLASK_SECRET_KEY
 application.config.update(FLASK_SECRET_KEY=FLASK_SECRET_KEY)
-application.config["FLASK_ADMIN_SWATCH"] = "lumen"
+application.config["FLASK_ADMIN_SWATCH"] = "darkly"
+
+
+# Initializes the login manager used for the admin
+login_manager = LoginManager()
+login_manager.init_app(application)
+
+
+# Loads the user when a request is done to a protected page
+@login_manager.user_loader
+def load_user(uid):
+    try:
+        user = AdminUser.get_by_id(uid)
+    except DoesNotExist:
+        return None
+    else:
+        return user
 
 
 @application.errorhandler(404)
@@ -47,8 +66,11 @@ application.register_blueprint(posts_bp)
 from afpy.models.AdminUser import AdminUser, AdminUser_Admin
 from afpy.models.NewsEntry import NewsEntry, NewsEntry_Admin
 
+
+from afpy.routes.admin_auth import AdminAuthIndexView
+
 # Creates the Admin manager
-admin = Admin(application, name="Afpy Admin", template_mode="bootstrap3")
+admin = Admin(application, name="Afpy Admin", template_mode="bootstrap3", index_view=AdminAuthIndexView())
 
 # Registers the views for each table
 admin.add_view(AdminUser_Admin(AdminUser))

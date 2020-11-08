@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Confirm Registration</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    {{ pagedown.include_pagedown() }}
+
+    <style>
+        .row{margin: 15px;}
+    </style>
+</head>
+
+{% block body %}
+<div class="row-fluid">
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <table>
+                {% for user in users %}
+                    <tr>
+                        <form class="form-inline" method="post" action="">
+                            <th><div class="form-group"><b>{{ user.email }}</b></div></th>
+                            <input id="email" name="email" type="hidden" value={{ user.email }}>
+                            <th><div class="form-group"><button class="btn btn-primary" type="submit">Confirm</button></div></th>
+                        </form>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    <a class="btn btn-warning" href="/admin"><i class="icon-arrow-left icon-white"></i>Retour à la page d'accueil</a>
+
+</div>
+{% endblock body %}
+</html>
+

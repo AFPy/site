@@ -2,6 +2,7 @@ from datetime import datetime
 from typing import Optional
 
 from flask_admin.contrib.peewee import ModelView
+from flask_login import current_user
 from peewee import CharField
 from peewee import DateTimeField
 from peewee import ForeignKeyField
@@ -86,8 +87,7 @@ class NewsEntry_Admin(ModelView):
     model_class = NewsEntry
 
     def is_accessible(self):
-        # return login.current_user.is_authenticated
-        return True
+        return current_user.is_authenticated
 
 
 if not NewsEntry.table_exists():

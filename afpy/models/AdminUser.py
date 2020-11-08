@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from flask_admin.contrib.peewee import ModelView
+from flask_login import current_user
 from peewee import CharField
 from peewee import DateTimeField
 from peewee import TextField
@@ -16,13 +17,31 @@ class AdminUser(BaseModel):
         null=False, default=datetime.now, help_text="When was the admin user entry added", verbose_name="Datetime Added"
     )
 
+    def get_id(self) -> int:
+        return int(self.id)
+
+    @property
+    def is_authenticated(self):
+        return True
+
+    @property
+    def is_active(self):
+        return True
+
+    @property
+    def is_anonymous(self):
+        return False
+
+    # Required for administrative interface
+    def __unicode__(self):
+        return self.username
+
 
 class AdminUser_Admin(ModelView):
     model_class = AdminUser
 
     def is_accessible(self):
-        # return login.current_user.is_authenticated
-        return True
+        return current_user.is_authenticated
 
 
 if not AdminUser.table_exists():
