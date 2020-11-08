@@ -1,38 +1,38 @@
 {% extends '_parts/base.jinja2' %}
 
 {% block header %}
-  <h1><abbr>AFPy</abbr> Association Francophone Python</h1>
+    <h1><abbr>AFPy</abbr> Association Francophone Python</h1>
 {% endblock header %}
 
 {% block main %}
-  <h2>AFPy</h2>
-  <p>
-    Créée en décembre 2004, l'AFPy (Association Francophone Python) a pour but de promouvoir le langage Python, que ce soit auprès d'un public averti ou débutant.
-    Pour ce faire, des <a href="{{ url_for('home.community_page') }}">évènements</a> sont organisés régulièrement au niveau local et d'autres évènements à un niveau plus général.
-  </p>
+    <h2>AFPy</h2>
+    <p>
+        Créée en décembre 2004, l'AFPy (Association Francophone Python) a pour but de promouvoir le langage Python, que ce soit auprès d'un public averti ou débutant.
+        Pour ce faire, des <a href="{{ url_for('home.community_page') }}">évènements</a> sont organisés régulièrement au niveau local et d'autres évènements à un niveau plus général.
+    </p>
 
-  <h2>Adhérer</h2>
-  <p>
-    Il est possible de soutenir le développement de l'AFPy en cotisant ou en effectuant un don.
-  </p>
-  <form action="{{ url_for('home.adhere_page') }}">
-    <input type="submit" value="S'inscrire" class="button" />
-  </form>
+    <h2>Adhérer</h2>
+    <p>
+        Il est possible de soutenir le développement de l'AFPy en cotisant ou en effectuant un don.
+    </p>
+    <form action="{{ url_for('home.adhere_page') }}">
+        <input type="submit" value="S'inscrire" class="button" />
+    </form>
 
-  <h2>Actualités</h2>
-  <section id="index-news">
-{#    {% for timestamp, post in posts.items() %}#}
-{#      <article>#}
-{#        <h3>{{ post.title }}</h3>#}
-{#        <time pubdate datetime="{{ post.published }}">#}
-{#          {{ post.published | parse_iso_datetime('%x') }}#}
-{#        </time>#}
-{#        {% if post._image %}#}
-{#          <img src="{{ url_for('post_image', path=post._image) }}" alt="{{ post.title }}" />#}
-{#        {% endif %}#}
-{#        {{ post.summary | safe }}#}
-{#        <p><a href="{{ url_for('post', name=name, timestamp=timestamp) }}">Lire la suite…</a></p>#}
-{#      </article>#}
-{#    {% endfor %}#}
-  </section>
+    <h2>Actualités</h2>
+    <section id="index-news">
+        {#    {% for timestamp, post in posts.items() %}#}
+        {#      <article>#}
+        {#        <h3>{{ post.title }}</h3>#}
+        {#        <time pubdate datetime="{{ post.published }}">#}
+        {#          {{ post.published | parse_iso_datetime('%x') }}#}
+        {#        </time>#}
+        {#        {% if post._image %}#}
+        {#          <img src="{{ url_for('post_image', path=post._image) }}" alt="{{ post.title }}" />#}
+        {#        {% endif %}#}
+        {#        {{ post.summary | safe }}#}
+        {#        <p><a href="{{ url_for('post', name=name, timestamp=timestamp) }}">Lire la suite…</a></p>#}
+        {#      </article>#}
+        {#    {% endfor %}#}
+    </section>
 {% endblock main %}

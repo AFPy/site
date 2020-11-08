@@ -1,3 +1,5 @@
+import json
+
 from docutils.core import publish_parts
 from docutils.writers import html5_polyglot
 from flask import abort
@@ -17,7 +19,9 @@ def home_page():
 
 @home_bp.route("/communaute")
 def community_page():
-    return render_template("pages/communaute.html", body_id="communaute")
+    with open(f"{AFPY_ROOT}/afpy/data/meetups.json", "r") as handle:
+        meetups = json.load(handle)
+    return render_template("pages/communaute.html", body_id="communaute", meetups=meetups)
 
 
 @home_bp.route("/adherer")

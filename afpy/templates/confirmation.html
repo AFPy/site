@@ -1,31 +1,31 @@
 {% extends '_layout.jinja2' %}
 
 {% block header %}
-  <h1>Confirmation de l'enregistrement de l'article</h1>
+    <h1>Confirmation de l'enregistrement de l'article</h1>
 {% endblock header %}
 
 {% block main %}
 
-<h2>Merci de votre participation</h2>
+    <h2>Merci de votre participation</h2>
 
-<p>
-    Votre article a bien été enregistré. Il sera mis en ligne après acceptation
-    de l'un des modérateurs.
-</p>
-<p>
-    En attendant, vous pouvez toujours la modifier en utilisant le lien :
-    <a class="case-sensitive" href="{{ edit_post_url }}">{{ edit_post_url }}</a>.
-    Attention à conserver celui-ci secret !
-</p>
+    <p>
+        Votre article a bien été enregistré. Il sera mis en ligne après acceptation
+        de l'un des modérateurs.
+    </p>
+    <p>
+        En attendant, vous pouvez toujours la modifier en utilisant le lien :
+        <a class="case-sensitive" href="{{ edit_post_url }}">{{ edit_post_url }}</a>.
+        Attention à conserver celui-ci secret !
+    </p>
 
 
-<h2>Demande d'informations complémentaires</h2>
+    <h2>Demande d'informations complémentaires</h2>
 
-<p>
-    Si vous avez besoin d'informations complémentaires concernant votre article,
-    ou si vous ne comprenez pas pourquoi votre article n'apparaît pas encore en
-    ligne plusieurs jours après avoir été posté, n'hésitez pas à nous contacter
-    sur la page <a class="reference external" href="/discussion">Discussion</a>.
-</p>
+    <p>
+        Si vous avez besoin d'informations complémentaires concernant votre article,
+        ou si vous ne comprenez pas pourquoi votre article n'apparaît pas encore en
+        ligne plusieurs jours après avoir été posté, n'hésitez pas à nous contacter
+        sur la page <a class="reference external" href="/discussion">Discussion</a>.
+    </p>
 
 {% endblock main %}
