@@ -13,3 +13,5 @@ posts
 .idea
 out
 gen
+
+venv/
