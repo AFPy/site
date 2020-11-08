@@ -38,8 +38,10 @@ def page_not_found(e):
 
 
 from afpy.routes.home import home_bp
+from afpy.routes.posts import posts_bp
 
 application.register_blueprint(home_bp)
+application.register_blueprint(posts_bp)
 
 
 from afpy.models.AdminUser import AdminUser, AdminUser_Admin

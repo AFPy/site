@@ -1,0 +1,54 @@
+{% extends '_parts/base.jinja2' %}
+
+{% block header %}
+    <h1>
+        {% if post %}
+            Modification d'un article
+        {% else %}
+            Création d'un article
+        {% endif %}
+    </h1>
+{% endblock header %}
+
+{% block main %}
+
+
+    <article>
+        <form method="POST" action="{{ url_for("posts.new_post") }}">
+            {{ form.hidden_tag() }}
+
+            <label>{{ form.title.label }}
+                {{ form.title(size=40) }}
+            </label>
+            <label>{{ form.summary.label }}
+                {{ form.summary(size=100) }}
+            </label>
+            <label>{{ form.image_url.label }}
+                {{ form.image_url(size=30) }}
+            </label>
+            <label>{{ form.author.label }}
+                {{ form.author(size=20) }}
+            </label>
+            <label>{{ form.author_email.label }}
+                {{ form.author_email(size=40) }}
+            </label>
+            <label>{{ form.content.label }}
+                {{ form.content(size=40) }}
+            </label>
+            <input type="submit" name="submit" value="Enregistrer" />
+
+            <script type="text/javascript" src="{{ url_for('static', filename='js/nicEdit.js') }}"></script>
+            <script type="text/javascript">
+                bkLib.onDomLoaded(function() {
+                    new nicEditor({
+                        buttonList : ['fontFormat','bold','italic','underline','strikeThrough','subscript','superscript','link','unlink','xhtml']
+                    }).panelInstance('content');
+                });
+            </script>
+        </form>
+        <p>
+            L'adresse e-mail n'est pas rendue publique, elle est uniquement
+            utilisée par les modérateurs pour vous contacter si nécessaire.
+        </p>
+    </article>
+{% endblock main %}

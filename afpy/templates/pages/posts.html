@@ -5,10 +5,10 @@
 {% endblock header %}
 
 {% block main %}
-    {#    <aside>#}
-    {#        Vous pouvez <a href="{{ url_for('edit_post', name=name) }}">créer un article</a> qui#}
-    {#        sera mis en ligne après acceptation de l'un des modérateurs.#}
-    {#    </aside>#}
+        <aside>
+            Vous pouvez <a href="{{ url_for('posts.new_post') }}">créer un article</a> qui
+            sera mis en ligne après acceptation de l'un des modérateurs.
+        </aside>
     {% for post in posts %}
         <article>
             <h2>{{ post.title }}</h2>
@@ -19,17 +19,17 @@
                 <img src="{{ post.image_url }}" alt="{{ post.title }}" />
             {% endif %}
             {{ post.summary | safe if post.summary }}
-            <p><a href="{{ url_for('home.post_render', post_id=post.id) }}">Lire la suite…</a></p>
+            <p><a href="{{ url_for('posts.post_render', post_id=post.id) }}">Lire la suite…</a></p>
         </article>
     {% endfor %}
 
     <aside>
         {% if current_page != 1 %}
-            <a href="{{ url_for('home.posts_page', current_page=(current_page - 1)) }}">Précedente</a>
+            <a href="{{ url_for('posts.posts_page', current_page=(current_page - 1)) }}">Précedente</a>
         {% endif %}
         Page {{ current_page }}/{{ total_pages }}
         {% if current_page != total_pages %}
-            <a href="{{ url_for('home.posts_page', current_page=(current_page + 1)) }}">Suivante</a>
+            <a href="{{ url_for('posts.posts_page', current_page=(current_page + 1)) }}">Suivante</a>
         {% endif %}
     </aside>
 {% endblock main %}
