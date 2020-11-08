@@ -1,3 +1,6 @@
 Flask==1.1.2
 python-dotenv==0.15.0
 docutils==0.16
+peewee==3.14.0
+flask-admim==1.5.7
+wtf-peewee==3.0.2

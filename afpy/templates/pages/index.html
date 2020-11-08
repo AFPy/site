@@ -21,18 +21,18 @@
 
     <h2>Actualités</h2>
     <section id="index-news">
-        {#    {% for timestamp, post in posts.items() %}#}
-        {#      <article>#}
-        {#        <h3>{{ post.title }}</h3>#}
-        {#        <time pubdate datetime="{{ post.published }}">#}
-        {#          {{ post.published | parse_iso_datetime('%x') }}#}
-        {#        </time>#}
-        {#        {% if post._image %}#}
-        {#          <img src="{{ url_for('post_image', path=post._image) }}" alt="{{ post.title }}" />#}
-        {#        {% endif %}#}
-        {#        {{ post.summary | safe }}#}
-        {#        <p><a href="{{ url_for('post', name=name, timestamp=timestamp) }}">Lire la suite…</a></p>#}
-        {#      </article>#}
-        {#    {% endfor %}#}
+        {% for post in posts %}
+            <article>
+                <h3>{{ post.title }}</h3>
+                <time pubdate datetime="{{ post.dt_published }}">
+                    {{ post.dt_published.strftime('%d/%m/%Y') }}
+                </time>
+                {% if post.image_url %}
+                    <img src="{{ post.image_url }}" alt="{{ post.title }}" />
+                {% endif %}
+                {{ post.summary | safe }}
+                <p><a href="{{ url_for('home.post_render', id=post.id) }}">Lire la suite…</a></p>
+            </article>
+        {% endfor %}
     </section>
 {% endblock main %}

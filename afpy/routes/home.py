@@ -5,16 +5,18 @@ from docutils.writers import html5_polyglot
 from flask import abort
 from flask import Blueprint
 from flask import render_template
+from peewee import DoesNotExist
 
+from afpy.models.NewsEntry import NewsEntry
 from afpy.static import AFPY_ROOT
-
 
 home_bp = Blueprint("home", __name__)
 
 
 @home_bp.route("/")
 def home_page():
-    return render_template("pages/index.html", body_id="index")
+    all_news = NewsEntry.select()
+    return render_template("pages/index.html", body_id="index", posts=all_news)
 
 
 @home_bp.route("/communaute")
@@ -44,3 +46,12 @@ def render_rest(name):
     except FileNotFoundError:
         abort(404)
     return render_template("pages/rst.html", body_id=name, html=parts["body"], title=parts["title"])
+
+
+@home_bp.route("/posts/<id>")
+def post_render(id: int):
+    try:
+        post = NewsEntry.get_by_id(id)
+    except DoesNotExist:
+        abort(404)
+    return render_template("pages/post.html", body_id="post", post=post, name=post.title)
