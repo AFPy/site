@@ -2,6 +2,7 @@ import email
 import locale
 import os
 import time
+import json
 
 from dateutil.parser import parse
 import docutils.core
@@ -29,6 +30,12 @@ except ImportError:
     sentry_sdk = None
 
 
+base_path = os.path.dirname(os.path.abspath(__file__))
+json_data = None
+with open(os.path.join(base_path, 'data', 'data.json')) as f:
+    json_data = json.load(f)
+
+
 locale.setlocale(locale.LC_ALL, "fr_FR.UTF-8")
 
 cache = Cache(config={"CACHE_TYPE": "simple", "CACHE_DEFAULT_TIMEOUT": 600})
@@ -39,24 +46,9 @@ cache.init_app(app)
 
 PAGINATION = 12
 
-PLANET = {
-    "Emplois AFPy": "https://www.afpy.org/feed/emplois/rss.xml",
-    "Nouvelles AFPy": "https://www.afpy.org/feed/actualites/rss.xml",
-    "Ascendances": "https://ascendances.wordpress.com/feed/",
-    "Code en Seine": "https://codeenseine.fr/feeds/all.atom.xml",
-    "Yaal": "https://www.yaal.fr/blog/feeds/all.atom.xml",
-}
+PLANET = json_data['PLANET']
 
-MEETUPS = {
-    "amiens": "https://www.meetup.com/fr-FR/Python-Amiens",
-    "bruxelles": "https://www.meetup.com/fr-FR/"
-    "Belgium-Python-Meetup-aka-AperoPythonBe/",
-    "grenoble": "https://www.meetup.com/fr-FR/" "Groupe-dutilisateurs-Python-Grenoble/",
-    "lille": "https://www.meetup.com/fr-FR/Lille-py/",
-    "lyon": "https://www.meetup.com/fr-FR/Python-AFPY-Lyon/",
-    "nantes": "https://www.meetup.com/fr-FR/Nantes-Python-Meetup/",
-    "montpellier": "https://www.meetup.com/fr-FR/Meetup-Python-Montpellier/",
-}
+MEETUPS = json_data['MEETUPS']
 
 
 @app.errorhandler(404)

@@ -1,0 +1,18 @@
+{
+    "MEETUPS":{
+        "amiens": "https://www.meetup.com/fr-FR/Python-Amiens",
+        "bruxelles": "https://www.meetup.com/fr-FR/Belgium-Python-Meetup-aka-AperoPythonBe/ ",
+        "grenoble": "https://www.meetup.com/fr-FR/Groupe-dutilisateurs-Python-Grenoble/",
+        "lille": "https://www.meetup.com/fr-FR/Lille-py/",
+        "lyon": "https://www.meetup.com/fr-FR/Python-AFPY-Lyon/",
+        "nantes": "https://www.meetup.com/fr-FR/Nantes-Python-Meetup/",
+        "montpellier": "https://www.meetup.com/fr-FR/Meetup-Python-Montpellier/"
+    },
+    "PLANET":{
+        "Emplois AFPy": "https://www.afpy.org/feed/emplois/rss.xml",
+        "Nouvelles AFPy": "https://www.afpy.org/feed/actualites/rss.xml",
+        "Ascendances": "https://ascendances.wordpress.com/feed/",
+        "Code en Seine": "https://codeenseine.fr/feeds/all.atom.xml",
+        "Yaal": "https://www.yaal.fr/blog/feeds/all.atom.xml"
+    }
+}
