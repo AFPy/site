@@ -48,3 +48,9 @@ class RegistrationForm(form.Form):
     username = fields.StringField(validators=[validators.required()])
     email = fields.StringField(validators=[validators.email(), validators.input_required(), validate_email_taken])
     password = fields.PasswordField(validators=[validators.required()])
+
+
+class ChangePasswordForm(form.Form):
+    old_password = fields.PasswordField(validators=[validators.required()])
+    new_password = fields.PasswordField(validators=[validators.required()])
+    new_password_confirmation = fields.PasswordField(validators=[validators.required()])

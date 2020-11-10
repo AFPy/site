@@ -1,0 +1,50 @@
+{% extends 'admin/master.html' %}
+{% block body %}
+    {{ super() }}
+    {% include "_parts/flashes.jinja2" %}
+    <div class="row-fluid">
+        <div>
+            <form class="form-horizontal" action='{{ url_for("admin.register_view") }}' method="POST">
+                <fieldset>
+                    <div id="legend">
+                        <legend class="">Register</legend>
+                    </div>
+                    <div class="control-group">
+                        <!-- Username -->
+                        <label class="control-label"  for="username">Username</label>
+                        <div class="controls">
+                            {{ form.username }}
+                            <p class="help-block">Username can contain any letters or numbers, without spaces</p>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <!-- E-mail -->
+                        <label class="control-label" for="email">E-mail</label>
+                        <div class="controls">
+                            {{ form.email }}
+                            <p class="help-block">Please provide your E-mail</p>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <!-- Password-->
+                        <label class="control-label" for="password">Password</label>
+                        <div class="controls">
+                            {{ form.password }}
+                            <p class="help-block">Password should be at least 4 characters</p>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <!-- Button -->
+                        <div class="controls">
+                            <button type="submit" class="btn btn-success">Register</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+
+    </div>
+{% endblock body %}

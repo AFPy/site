@@ -70,7 +70,13 @@ from afpy.models.NewsEntry import NewsEntry, NewsEntry_Admin
 from afpy.routes.admin_auth import AdminAuthIndexView
 
 # Creates the Admin manager
-admin = Admin(application, name="Afpy Admin", template_mode="bootstrap3", index_view=AdminAuthIndexView())
+admin = Admin(
+    application,
+    name="Afpy Admin",
+    template_mode="bootstrap3",
+    index_view=AdminAuthIndexView(),
+    base_template="admin/admin_master.html",
+)
 
 # Registers the views for each table
 admin.add_view(AdminUser_Admin(AdminUser))

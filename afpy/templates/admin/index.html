@@ -2,7 +2,7 @@
 {% block body %}
     {{ super() }}
     <div class="row-fluid">
-
+    {% include "_parts/flashes.jinja2" %}
         <div>
             {% if current_user.is_authenticated %}
                 <h1>AFPy Backend Admin</h1>
@@ -13,10 +13,10 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-xs-12 col-md-4 text-center mx-3">
-                            <a class="btn btn-primary" href="#"><i class="icon-arrow-left icon-white"></i>?</a>
+                            <a class="btn btn-primary" href="{{ url_for("admin.register_view") }}"><i class="icon-arrow-left icon-white"></i>Add a new admin</a>
                         </div>
                         <div class="col-md-4 text-center mx-3">
-                            <a class="btn btn-primary" href="#"><i class="icon-arrow-left icon-white"></i>?</a>
+                            <a class="btn btn-primary" href="{{ url_for("admin.change_password_view") }}"><i class="icon-arrow-left icon-white"></i>Change your password</a>
                         </div>
                         <div class="col-md-4 text-center mx-3">
                             <a class="btn btn-primary" href="#"><i class="icon-arrow-left icon-white"></i>?</a>
