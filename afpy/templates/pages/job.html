@@ -1,0 +1,36 @@
+{% extends '_parts/base.jinja2' %}
+
+{% block header %}
+    <h1>{{ job.title }}</h1>
+{% endblock header %}
+
+{% block main %}
+    <article>
+        <time pubdate datetime="{{ job.dt_published }}">
+            Posté le {{ job.dt_published.strftime('%d/%m/%Y') }} à {{ job.dt_published.strftime('%H:%M:%S') }}
+        </time>
+        <p>
+            <em>
+                {{ job.summary | safe if job.summary }}
+            </em>
+        </p>
+        {{ job.content | safe }}
+        <aside>
+            <h2>{{ job.company or "(Société inconnue)" }}</h2>
+            <dl>
+                <dt>Adresse</dt>
+                <dd>{{ job.location }}</dd>
+                <dt>Personne à contacter</dt>
+                <dd>{{ job.contact_info }}</dd>
+                {% if job.phone %}
+                    <dt>Téléphone</dt>
+                    <dd><a href="tel:{{ job.phone }}">{{ job.phone }}</a></dd>
+                {% endif %}
+                {% if job.email %}
+                    <dt>Adresse e-mail</dt>
+                    <dd><a href="mailto:{{ job.email }}">{{ job.email }}</a></dd>
+                {% endif %}
+            </dl>
+        </aside>
+    </article>
+{% endblock main %}

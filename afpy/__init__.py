@@ -58,13 +58,16 @@ def page_not_found(e):
 
 from afpy.routes.home import home_bp
 from afpy.routes.posts import posts_bp
+from afpy.routes.jobs import jobs_bp
 
 application.register_blueprint(home_bp)
 application.register_blueprint(posts_bp)
+application.register_blueprint(jobs_bp)
 
 
 from afpy.models.AdminUser import AdminUser, AdminUser_Admin
 from afpy.models.NewsEntry import NewsEntry, NewsEntry_Admin
+from afpy.models.JobPost import JobPost, JobPost_Admin
 
 
 from afpy.routes.admin_auth import AdminAuthIndexView
@@ -81,3 +84,4 @@ admin = Admin(
 # Registers the views for each table
 admin.add_view(AdminUser_Admin(AdminUser))
 admin.add_view(NewsEntry_Admin(NewsEntry))
+admin.add_view(JobPost_Admin(JobPost))

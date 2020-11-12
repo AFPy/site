@@ -1,0 +1,60 @@
+{% extends '_parts/base.jinja2' %}
+
+{% block header %}
+    <h1>
+        {% if post %}
+            Modification d'un job
+        {% else %}
+            Création d'un job
+        {% endif %}
+    </h1>
+{% endblock header %}
+
+{% block main %}
+
+
+    <article>
+        <form method="POST" action="{{ url_for("jobs.new_job") }}">
+            {{ form.hidden_tag() }}
+            {% for field, errors in form.errors.items() %}
+                <div class="alert alert-error">
+                    {{ form[field].label }}: {{ ', '.join(errors) }}
+                </div>
+            {% endfor %}
+            <label>{{ form.title.label }}
+                {{ form.title(size=40) }}
+            </label>
+            <label>{{ form.summary.label }}
+                {{ form.summary(size=100) }}
+            </label>
+            <label>{{ form.content.label }}
+                {{ form.content(size=100) }}
+            </label>
+            <label>{{ form.company.label }}
+                {{ form.company(size=40) }}
+            </label>
+            <label>{{ form.location.label }}
+                {{ form.location(size=40) }}
+            </label>
+            <label>{{ form.contact_info.label }}
+                {{ form.contact_info(size=40) }}
+            </label>
+            <label>{{ form.email.label }}
+                {{ form.email(size=40) }}
+            </label>
+            <label>{{ form.phone.label }}
+                {{ form.phone(size=40) }}
+            </label>
+            <input type="submit" name="submit" value="Enregistrer" />
+
+            {#            <script type="text/javascript" src="{{ url_for('static', filename='js/nicEdit.js') }}"></script>#}
+            {#            <script type="text/javascript">#}
+            {#                bkLib.onDomLoaded(function() {#}
+            {#                    new nicEditor({#}
+            {#                        buttonList : ['fontFormat','bold','italic','underline','strikeThrough','subscript','superscript','link','unlink','xhtml']#}
+            {#                    }).panelInstance('content');#}
+            {#                });#}
+            {#            </script>#}
+        </form>
+    </article>
+{% endblock main %}

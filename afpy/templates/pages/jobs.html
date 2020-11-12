@@ -1,0 +1,35 @@
+{% extends '_parts/base.jinja2' %}
+
+{% block header %}
+    <h1>{{ title }}</h1>
+{% endblock header %}
+
+{% block main %}
+        <aside>
+            Vous pouvez <a href="{{ url_for('jobs.new_job') }}">créer une nouvelle offre</a> qui
+            sera mis en ligne après acceptation de l'un des modérateurs.
+        </aside>
+    {% for job in jobs %}
+        <article>
+            <h2>{{ job.title }}</h2>
+            <time pubdate datetime="{{ job.dt_published }}">
+                {{ job.dt_published.strftime('%d/%m/%Y') }}
+            </time>
+            {% if job.image_url %}
+                <img src="{{ job.image_url }}" alt="{{ job.title }}" />
+            {% endif %}
+            {{ job.summary | safe if job.summary }}
+            <p><a href="{{ url_for('jobs.jobs_render', post_id=job.id) }}">Lire la suite…</a></p>
+        </article>
+    {% endfor %}
+
+    <aside>
+        {% if current_page != 1 %}
+            <a href="{{ url_for('jobs.jobs_page', current_page=(current_page - 1)) }}">Précedente</a>
+        {% endif %}
+        Page {{ current_page }}/{{ total_pages }}
+        {% if current_page != total_pages %}
+            <a href="{{ url_for('jobs.jobs_page', current_page=(current_page + 1)) }}">Suivante</a>
+        {% endif %}
+    </aside>
+{% endblock main %}

@@ -4,11 +4,11 @@
         (url_for('home.home_page'), 'index', 'Accueil'),
         (url_for('home.render_rest', name='a-propos'), 'a-propos', 'Qui sommes-nous ?'),
         (url_for('posts.posts_page', current_page='1'), 'actualites', 'Actualités'),
+        (url_for('jobs.jobs_page', current_page='1'), 'emplois', 'Offres d\'emplois'),
         (url_for('home.community_page'), 'communaute', 'Communauté'),
         (url_for('home.discussion_page'), 'discussion', 'Discussion'),
         (url_for('home.adhere_page'), 'adhesions', 'Adhésions')
       ] -%}
-{#        (url_for('posts', name='emplois'), 'emplois', 'Offres d\'emplois'),#}
         <label for="toggle" class="menu__toggle">Menu</label>
         <input class="menu__checkbox" type="checkbox" name="toggle" id="toggle" checked>
         <ul class="menu__list">

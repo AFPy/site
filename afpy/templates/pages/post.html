@@ -19,27 +19,4 @@
         {% endif %}
         {{ post.content | safe }}
     </article>
-    {#    {% if name == 'emplois' %}#}
-    {#        <aside>#}
-    {#            <h2>{{ post.company or "(Société inconnue)" }}</h2>#}
-    {#            <dl>#}
-    {#                {% if post.address %}#}
-    {#                    <dt>Adresse</dt>#}
-    {#                    <dd>{{ post.address }}</dd>#}
-    {#                {% endif %}#}
-    {#                {% if post.contact %}#}
-    {#                    <dt>Personne à contacter</dt>#}
-    {#                    <dd>{{ post.contact }}</dd>#}
-    {#                {% endif %}#}
-    {#                {% if post.phone %}#}
-    {#                    <dt>Téléphone</dt>#}
-    {#                    <dd><a href="tel:{{ post.phone }}">{{ post.phone }}</a></dd>#}
-    {#                {% endif %}#}
-    {#                {% if post.email %}#}
-    {#                    <dt>Adresse e-mail</dt>#}
-    {#                    <dd><a href="mailto:{{ post.email }}">{{ post.email }}</a></dd>#}
-    {#                {% endif %}#}
-    {#            </dl>#}
-    {#        </aside>#}
-    {#    {% endif %}#}
 {% endblock main %}
