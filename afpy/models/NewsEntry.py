@@ -44,7 +44,7 @@ class NewsEntry(BaseModel):
         verbose_name="Approved by",
     )
     author = CharField(null=False, default="Admin", help_text="Author of the news entry", verbose_name="Author")
-    author_email = CharField(null=False, help_text="Author email", verbose_name="Author Email")
+    author_email = CharField(null=True, help_text="Author email", verbose_name="Author Email")
     image_url = TextField(null=True, help_text="Image for the news entry", verbose_name="Image URL")
 
     @classmethod
@@ -53,7 +53,7 @@ class NewsEntry(BaseModel):
         title: str,
         content: str,
         author: str,
-        author_email: str,
+        author_email: Optional[str] = None,
         image_url: Optional[str] = None,
         summary: Optional[str] = None,
         dt_submitted: Optional[datetime] = None,
