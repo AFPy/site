@@ -6,23 +6,27 @@
     <div class="container">
         <!-- Example row of columns -->
         <div class="row">
-            {% for item in items %}
-                <div class="col-md-3">
-                    <h2>{{ item.title }}</h2>
-                    {% if item.summary %}
-                        <p>{{ item.summary }}</p>
-                    {% endif %}
-                    {% if type == "jobs" %}
-                        <p><a class="btn btn-secondary" href="{{ url_for("admin.preview_item", type="job", id=item.id) }}" role="button">Preview</a></p>
-                        <p><a class="btn btn-warning" href="http://127.0.0.1:5000/admin/jobpost/edit/?id={{ item.id }}" role="button">Edit</a></p>
-                        <p><a class="btn btn-success" href="{{ url_for("admin.moderate_action", id=item.id, type="job", action="approve") }}" role="button">Approve</a> <a class="btn btn-danger" href="{{ url_for("admin.moderate_action", id=item.id, type="job", action="reject") }}" role="button">Reject</a></p>
-                    {% else %}
-                        <p><a class="btn btn-secondary" href="{{ url_for("admin.preview_item", type="news", id=item.id) }}" role="button">Preview</a></p>
-                        <p><a class="btn btn-warning" href="http://127.0.0.1:5000/admin/newsentry/edit/?id={{ item.id }}" role="button">Edit</a></p>
-                        <p><a class="btn btn-success" href="{{ url_for("admin.moderate_action", id=item.id, type="news", action="approve") }}" role="button">Approve</a> <a class="btn btn-danger" href="{{ url_for("admin.moderate_action", id=item.id, type="news", action="reject") }}" role="button">Reject</a></p>
-                    {% endif %}
-                </div>
-            {% endfor %}
+            {% if not items %}
+                <p>Nothing to moderate.</p>
+            {% else %}
+                {% for item in items %}
+                    <div class="col-md-3">
+                        <h2>{{ item.title }}</h2>
+                        {% if item.summary %}
+                            <p>{{ item.summary }}</p>
+                        {% endif %}
+                        {% if type == "jobs" %}
+                            <p><a class="btn btn-secondary" href="{{ url_for("admin.preview_item", type="job", id=item.id) }}" role="button">Preview</a></p>
+                            <p><a class="btn btn-warning" href="http://127.0.0.1:5000/admin/jobpost/edit/?id={{ item.id }}" role="button">Edit</a></p>
+                            <p><a class="btn btn-success" href="{{ url_for("admin.moderate_action", id=item.id, type="job", action="approve") }}" role="button">Approve</a> <a class="btn btn-danger" href="{{ url_for("admin.moderate_action", id=item.id, type="job", action="reject") }}" role="button">Reject</a></p>
+                        {% else %}
+                            <p><a class="btn btn-secondary" href="{{ url_for("admin.preview_item", type="news", id=item.id) }}" role="button">Preview</a></p>
+                            <p><a class="btn btn-warning" href="http://127.0.0.1:5000/admin/newsentry/edit/?id={{ item.id }}" role="button">Edit</a></p>
+                            <p><a class="btn btn-success" href="{{ url_for("admin.moderate_action", id=item.id, type="news", action="approve") }}" role="button">Approve</a> <a class="btn btn-danger" href="{{ url_for("admin.moderate_action", id=item.id, type="news", action="reject") }}" role="button">Reject</a></p>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 {% endblock body %}
