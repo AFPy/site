@@ -6,9 +6,8 @@
         (url_for('home.render_rest', name='legal'), 'Mentions légales'),
         (url_for('home.render_rest', name='rss'), 'Flux RSS'),
         ('https://twitter.com/asso_python_fr', 'Twitter'),
+        (url_for('admin.index', name='Admin'), 'Admin'),
       ] -%}
-{#        (url_for('admin', name='actualites'), 'Admin actualités'),#}
-{#        (url_for('admin', name='emplois'), 'Admin offres d\'emploi')#}
         <ul class="menu__list">
             {% for href, caption in navigation_bar %}
                 <li class="menu__item"><a href="{{ href|e }}">{{ caption|e }}</a></li>
