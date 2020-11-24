@@ -9,6 +9,7 @@ __pycache__
 afpy.egg-info
 static/css/*.map
 posts
+images
 
 # PyCharm project files
 .idea
