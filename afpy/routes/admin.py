@@ -18,15 +18,17 @@ from afpy.forms.auth import ChangePasswordForm
 from afpy.forms.auth import LoginForm
 from afpy.forms.auth import RegistrationForm
 from afpy.models.AdminUser import AdminUser
+from afpy.models.JobPost import JobPost
+from afpy.models.NewsEntry import NewsEntry
 
 
 # Create customized index view class that handles login & registration
-class AdminAuthIndexView(admin.AdminIndexView):
+class AdminIndexView(admin.AdminIndexView):
     @expose("/")
     def index(self):
         if not current_user.is_authenticated:
             return redirect(url_for(".login_view"))
-        return super(AdminAuthIndexView, self).index()
+        return super(AdminIndexView, self).index()
 
     @expose("/login/", methods=("GET", "POST"))
     def login_view(self):
@@ -42,7 +44,7 @@ class AdminAuthIndexView(admin.AdminIndexView):
         if current_user.is_authenticated:
             return redirect(url_for(".index"))
         self._template_args["form"] = form
-        return super(AdminAuthIndexView, self).index()
+        return super(AdminIndexView, self).index()
 
     @expose("/register/", methods=("GET", "POST"))
     def register_view(self):
@@ -74,6 +76,59 @@ class AdminAuthIndexView(admin.AdminIndexView):
             current_user.password = generate_password_hash(form.new_password.data)
             return redirect(url_for(".index"))
         return self.render("admin/change_password.html", form=form)
+
+    @expose("/moderate/<type>", methods=["GET"])
+    def moderate_view(self, type):
+        if not current_user.is_authenticated:
+            return redirect(url_for(".index"))
+        if type == "jobs":
+            jobs = JobPost.select().where(JobPost.state == "waiting")
+            return self.render("admin/moderate_view.html", items=jobs, type=type)
+        elif type == "news":
+            news = NewsEntry.select().where(NewsEntry.state == "waiting")
+            return self.render("admin/moderate_view.html", items=news, type=type)
+        else:
+            flash("Wrong type")
+            return redirect(url_for(".index"))
+
+    @expose("/preview/<type>/<id>", methods=["GET"])
+    def preview_item(self, type, id):
+        if not current_user.is_authenticated:
+            return redirect(url_for(".index"))
+        if type == "job":
+            job = JobPost.get_by_id(id)
+            return self.render("pages/job.html", job=job, preview=True)
+        elif type == "news":
+            news = NewsEntry.get_by_id(id)
+            return self.render("pages/post.html", post=news, preview=True)
+        else:
+            flash("Wrong type")
+            return redirect(url_for(".index"))
+
+    @expose("/moderate/action/<id>/<type>/<action>", methods=["GET"])
+    def moderate_action(self, id, type, action):
+        if not current_user.is_authenticated:
+            return redirect(url_for(".index"))
+        if type == "job":
+            item = JobPost.get_by_id(id)
+        elif type == "news":
+            item = NewsEntry.get_by_id(id)
+        else:
+            flash("Wrong type")
+            return redirect(url_for(".index"))
+        if action == "approve":
+            item.state = "published"
+            item.approved_by = current_user.id
+            item.dt_published = datetime.now()
+            item.save()
+        elif action == "reject":
+            item.state = "rejected"
+            item.approved_by = current_user.id
+            item.save()
+        else:
+            flash("Wrong action type")
+            return redirect(url_for(".index"))
+        return redirect(url_for(".moderate_view", type=type))
 
     @expose("/logout/")
     def logout_view(self):

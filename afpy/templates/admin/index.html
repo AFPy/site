@@ -19,12 +19,12 @@
                             <a class="btn btn-primary" href="{{ url_for("admin.change_password_view") }}"><i class="icon-arrow-left icon-white"></i>Change your password</a>
                         </div>
                         <div class="col-md-4 text-center mx-3">
-                            <a class="btn btn-primary" href="#"><i class="icon-arrow-left icon-white"></i>?</a>
+                            <a class="btn btn-primary" href="{{ url_for("admin.moderate_view", type="jobs") }}"><i class="icon-arrow-left icon-white"></i>Moderate Jobs</a>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-md-4 text-center mx-3">
-                            <a class="btn btn-primary" href="#"><i class="icon-arrow-left icon-white"></i>?</a>
+                            <a class="btn btn-primary" href="{{ url_for("admin.moderate_view", type="news") }}"><i class="icon-arrow-left icon-white"></i>Moderate News</a>
                         </div>
                         <div class="col-md-4 text-center mx-3">
                             <a class="btn btn-primary" href="#"><i class="icon-arrow-left icon-white"></i>?</a>

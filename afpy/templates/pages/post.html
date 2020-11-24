@@ -5,10 +5,21 @@
 {% endblock header %}
 
 {% block main %}
+    {% if preview %}
+        <a href="{{ url_for("admin.moderate_view", type="news") }}">Retour à l'interface d'administration</a>
+{#        <p><a class="btn btn-warning" href="http://127.0.0.1:5000/admin/jobpost/edit/?id={{ job.id }}" role="button">Edit</a></p>#}
+    {% endif %}
+
     <article>
-        <time pubdate datetime="{{ post.dt_published }}">
-            Posté le {{ post.dt_published.strftime('%d/%m/%Y') }} à {{ post.dt_published.strftime('%H:%M:%S') }}
-        </time>
+        {% if preview %}
+            <time pubdate datetime="">
+                Pas publié
+            </time>
+        {% else %}
+            <time pubdate datetime="{{ job.dt_published }}">
+                Posté le {{ job.dt_published.strftime('%d/%m/%Y') }} à {{ job.dt_published.strftime('%H:%M:%S') }}
+            </time>
+        {% endif %}
         <p>
             <em>
                 {{ post.summary | safe if post.summary }}
