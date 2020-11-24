@@ -1,3 +1,4 @@
+import email
 import os
 
 from dotenv import load_dotenv
@@ -59,10 +60,12 @@ def page_not_found(e):
 from afpy.routes.home import home_bp
 from afpy.routes.posts import posts_bp
 from afpy.routes.jobs import jobs_bp
+from afpy.routes.rss import rss_bp
 
 application.register_blueprint(home_bp)
 application.register_blueprint(posts_bp)
 application.register_blueprint(jobs_bp)
+application.register_blueprint(rss_bp)
 
 
 from afpy.models.AdminUser import AdminUser, AdminUser_Admin
@@ -85,3 +88,8 @@ admin = Admin(
 admin.add_view(AdminUser_Admin(AdminUser))
 admin.add_view(NewsEntry_Admin(NewsEntry))
 admin.add_view(JobPost_Admin(JobPost))
+
+
+@application.template_filter("rfc822_datetime")
+def format_rfc822_datetime(timestamp):
+    return email.utils.formatdate(int(timestamp))

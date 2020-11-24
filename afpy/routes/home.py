@@ -22,8 +22,8 @@ def home_page():
 
 @home_bp.route("/communaute")
 def community_page():
-    with open(f"{AFPY_ROOT}/afpy/data/meetups.json", "r") as handle:
-        meetups = json.load(handle)
+    with open(f"{AFPY_ROOT}/afpy/data/data.json", "r") as handle:
+        meetups = json.load(handle)["meetups"]
     return render_template("pages/communaute.html", body_id="communaute", meetups=meetups)
 
 
