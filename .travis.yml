@@ -1,0 +1,13 @@
+language: python
+
+python:
+  - 3.6
+
+install:
+  - virtualenv -p python .env
+  - make install
+
+script:
+  - make test
+
+sudo: false

@@ -1,0 +1,16 @@
+<rss xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" version="2.0">
+  <channel>
+    <title>{{ title }}</title>
+    <description>{{ description }}</description>
+    <link>{{ link }}</link>
+    <language>fr</language>
+    {% for entry in entries %}
+      <item>
+        <title><![CDATA[ {% if entry.feed %}[{{ entry.feed | safe }}]{% endif %} {{ entry.content.title | safe }} ]]></title>
+        <description><![CDATA[ {{ (entry.content.description or entry.content.summary) | safe }} ]]></description>
+        <link>{{ entry.content.link }}</link>
+        <pubDate>{{ entry.content.timestamp | rfc822_datetime }}</pubDate>
+      </item>
+    {% endfor %}
+  </channel>
+</rss>

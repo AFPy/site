@@ -12,7 +12,7 @@ from afpy.static import NEWS_PER_PAGE
 posts_bp = Blueprint("posts", __name__)
 
 
-@posts_bp.route("/posts/<int:post_id>")
+@posts_bp.route("/actualites/<int:post_id>")
 def post_render(post_id: int):
     try:
         post = NewsEntry.get_by_id(post_id)
@@ -21,7 +21,7 @@ def post_render(post_id: int):
     return render_template("pages/post.html", body_id="post", post=post, name=post.title)
 
 
-@posts_bp.route("/posts/page/<int:current_page>")
+@posts_bp.route("/actualites/page/<int:current_page>")
 def posts_page(current_page: int = 1):
     total_pages = (NewsEntry.select().where(NewsEntry.state == "published").count() // NEWS_PER_PAGE) + 1
     posts = NewsEntry.select().where(NewsEntry.state == "published").paginate(current_page, NEWS_PER_PAGE)
@@ -35,7 +35,7 @@ def posts_page(current_page: int = 1):
     )
 
 
-@posts_bp.route("/posts/new", methods=["GET", "POST"])
+@posts_bp.route("/actualites/new", methods=["GET", "POST"])
 def new_post():
     form = NewsEntryForm()
     if form.validate_on_submit():

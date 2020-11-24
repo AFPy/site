@@ -12,7 +12,7 @@ from afpy.static import NEWS_PER_PAGE
 jobs_bp = Blueprint("jobs", __name__)
 
 
-@jobs_bp.route("/jobs/<int:post_id>")
+@jobs_bp.route("/emplois/<int:post_id>")
 def jobs_render(post_id: int):
     try:
         job = JobPost.get_by_id(post_id)
@@ -21,7 +21,7 @@ def jobs_render(post_id: int):
     return render_template("pages/job.html", body_id="job", job=job, name=job.title)
 
 
-@jobs_bp.route("/jobs/page/<int:current_page>")
+@jobs_bp.route("/emplois/page/<int:current_page>")
 def jobs_page(current_page: int = 1):
     total_pages = (JobPost.select().where(JobPost.state == "published").count() // NEWS_PER_PAGE) + 1
     jobs = JobPost.select().where(JobPost.state == "published").paginate(current_page, NEWS_PER_PAGE)
@@ -35,7 +35,7 @@ def jobs_page(current_page: int = 1):
     )
 
 
-@jobs_bp.route("/jobs/new", methods=["GET", "POST"])
+@jobs_bp.route("/emplois/new", methods=["GET", "POST"])
 def new_job():
     form = JobPostForm()
     if form.validate_on_submit():

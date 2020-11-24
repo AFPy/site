@@ -30,9 +30,9 @@ def validate_password(form, field):
 # Define login and registration forms (for flask-login)
 class LoginForm(form.Form):
     email_or_username = fields.StringField(
-        "Email or Username", validators=[validators.required(), validate_email_or_username]
+        "Email or Username", validators=[validators.DataRequired(), validate_email_or_username]
     )
-    password = fields.PasswordField(validators=[validators.required(), validate_password])
+    password = fields.PasswordField(validators=[validators.DataRequired(), validate_password])
 
 
 def validate_email_taken(form, field):
@@ -45,12 +45,12 @@ def validate_email_taken(form, field):
 
 
 class RegistrationForm(form.Form):
-    username = fields.StringField(validators=[validators.required()])
+    username = fields.StringField(validators=[validators.DataRequired()])
     email = fields.StringField(validators=[validators.email(), validators.input_required(), validate_email_taken])
-    password = fields.PasswordField(validators=[validators.required()])
+    password = fields.PasswordField(validators=[validators.DataRequired()])
 
 
 class ChangePasswordForm(form.Form):
-    old_password = fields.PasswordField(validators=[validators.required()])
-    new_password = fields.PasswordField(validators=[validators.required()])
-    new_password_confirmation = fields.PasswordField(validators=[validators.required()])
+    old_password = fields.PasswordField(validators=[validators.DataRequired()])
+    new_password = fields.PasswordField(validators=[validators.DataRequired()])
+    new_password_confirmation = fields.PasswordField(validators=[validators.DataRequired()])

@@ -56,7 +56,7 @@ def planet_rss():
             entries.append({"feed": name, "content": entry})
     entries.sort(reverse=True, key=lambda entry: entry["content"]["timestamp"])
     return render_template(
-        "rss.xml",
+        "pages/planet_rss.xml",
         entries=entries,
         title="Planet Python francophone",
         description="Nouvelles autour de Python en français",
