@@ -12,6 +12,9 @@
                 {% for item in items %}
                     <div class="col-md-3">
                         <h2>{{ item.title }}</h2>
+                        {% if item.image_path %}
+                            <p class="text-warning">An image exists but has not been displayed</p>
+                        {% endif %}
                         {% if item.summary %}
                             <p>{{ item.summary }}</p>
                         {% endif %}

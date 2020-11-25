@@ -7,7 +7,7 @@
 {% block main %}
     {% if preview %}
         <a href="{{ url_for("admin.moderate_view", type="news") }}">Retour à l'interface d'administration</a>
-{#        <p><a class="btn btn-warning" href="http://127.0.0.1:5000/admin/jobpost/edit/?id={{ post.id }}" role="button">Edit</a></p>#}
+        {#        <p><a class="btn btn-warning" href="http://127.0.0.1:5000/admin/jobpost/edit/?id={{ post.id }}" role="button">Edit</a></p>#}
     {% endif %}
 
     <article>
@@ -25,8 +25,8 @@
                 {{ post.summary | safe if post.summary }}
             </em>
         </p>
-        {% if post.image_url %}
-            <img src="{{ post.image_url }}" alt="{{ post.title }}" />
+        {% if post.image_path %}
+            <img src="{{ url_for('home.get_image', path=post.image_path) }}" alt="{{ post.title }}" />
         {% endif %}
         {{ post.content | safe }}
     </article>

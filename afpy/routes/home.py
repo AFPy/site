@@ -5,6 +5,7 @@ from docutils.writers import html5_polyglot
 from flask import abort
 from flask import Blueprint
 from flask import render_template
+from flask import send_from_directory
 from peewee import DoesNotExist
 
 from afpy.models.NewsEntry import NewsEntry
@@ -16,7 +17,7 @@ home_bp = Blueprint("home", __name__)
 
 @home_bp.route("/")
 def home_page():
-    all_news = NewsEntry.select().where(NewsEntry.state == "published").limit(4)
+    all_news = NewsEntry.select().where(NewsEntry.state == "published").order_by(NewsEntry.dt_submitted.desc()).limit(4)
     return render_template("pages/index.html", body_id="index", posts=all_news)
 
 
@@ -70,3 +71,15 @@ def posts_page(current_page: int = 1):
         current_page=current_page,
         total_pages=total_pages,
     )
+
+
+@home_bp.route("/post_image/<path:path>")
+def get_image(path):
+    # if path.count("/") != 3:
+    #     abort(404)
+    # category, state, timestamp, name = path.split("/")
+    # if category not in data.POSTS:
+    #     abort(404)
+    # if state not in data.STATES:
+    #     abort(404)
+    return send_from_directory(AFPY_ROOT + "/images/", path)

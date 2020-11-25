@@ -15,8 +15,8 @@
             <time pubdate datetime="{{ job.dt_published }}">
                 {{ job.dt_published.strftime('%d/%m/%Y') }}
             </time>
-            {% if job.image_url %}
-                <img src="{{ job.image_url }}" alt="{{ job.title }}" />
+            {% if job.image_path %}
+                <img src="{{ url_for('home.get_image', path=job.image_path) }}" alt="{{ job.title }}" />
             {% endif %}
             {{ job.summary | safe if job.summary }}
             <p><a href="{{ url_for('jobs.jobs_render', post_id=job.id) }}">Lire la suite…</a></p>

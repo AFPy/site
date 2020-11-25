@@ -45,7 +45,7 @@ class NewsEntry(BaseModel):
     )
     author = CharField(null=False, default="Admin", help_text="Author of the news entry", verbose_name="Author")
     author_email = CharField(null=True, help_text="Author email", verbose_name="Author Email")
-    image_url = TextField(null=True, help_text="Image for the news entry", verbose_name="Image URL")
+    image_path = CharField(null=True, help_text="Image for the news entry", verbose_name="Image Path in filesystem")
 
     @classmethod
     def create(
@@ -54,7 +54,7 @@ class NewsEntry(BaseModel):
         content: str,
         author: str,
         author_email: Optional[str] = None,
-        image_url: Optional[str] = None,
+        image_path: Optional[str] = None,
         summary: Optional[str] = None,
         dt_submitted: Optional[datetime] = None,
         dt_updated: Optional[datetime] = None,
@@ -71,7 +71,7 @@ class NewsEntry(BaseModel):
             content=content,
             author=author,
             author_email=author_email,
-            image_url=image_url,
+            image_path=image_path,
             summary=summary,
             dt_submitted=dt_submitted,
             dt_updated=dt_updated,

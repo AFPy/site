@@ -27,8 +27,8 @@
                 <time pubdate datetime="{{ post.dt_published }}">
                     {{ post.dt_published.strftime('%d/%m/%Y') }}
                 </time>
-                {% if post.image_url %}
-                    <img src="{{ post.image_url }}" alt="{{ post.title }}" />
+                {% if post.image_path %}
+                    <img src="{{ url_for('home.get_image', path=post.image_path) }}" alt="{{ post.title }}" />
                 {% endif %}
                 {{ post.summary | safe }}
                 <p><a href="{{ url_for('posts.post_render', post_id=post.id) }}">Lire la suite…</a></p>

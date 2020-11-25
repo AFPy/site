@@ -24,7 +24,12 @@ def jobs_render(post_id: int):
 @jobs_bp.route("/emplois/page/<int:current_page>")
 def jobs_page(current_page: int = 1):
     total_pages = (JobPost.select().where(JobPost.state == "published").count() // NEWS_PER_PAGE) + 1
-    jobs = JobPost.select().where(JobPost.state == "published").paginate(current_page, NEWS_PER_PAGE)
+    jobs = (
+        JobPost.select()
+        .where(JobPost.state == "published")
+        .order_by(JobPost.dt_submitted.desc())
+        .paginate(current_page, NEWS_PER_PAGE)
+    )
     return render_template(
         "pages/jobs.html",
         body_id="jobs",

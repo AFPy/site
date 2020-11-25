@@ -8,7 +8,7 @@
 
     {% if preview %}
         <a href="{{ url_for("admin.moderate_view", type="jobs") }}">Retour à l'interface d'administration</a>
-{#        <p><a class="btn btn-warning" href="http://127.0.0.1:5000/admin/jobpost/edit/?id={{ job.id }}" role="button">Edit</a></p>#}
+        {#        <p><a class="btn btn-warning" href="http://127.0.0.1:5000/admin/jobpost/edit/?id={{ job.id }}" role="button">Edit</a></p>#}
     {% endif %}
 
     <article>
@@ -26,6 +26,9 @@
                 {{ job.summary | safe if job.summary }}
             </em>
         </p>
+        {% if job.image_path %}
+            <img src="{{ url_for('home.get_image', path=job.image_path) }}" alt="{{ job.title }}" />
+        {% endif %}
         {{ job.content | safe }}
         <aside>
             <h2>{{ job.company or "(Société inconnue)" }}</h2>

@@ -96,7 +96,7 @@ if __name__ == "__main__":
                             content=post.get("content"),
                             author="Admin",
                             author_email=post.get("email"),
-                            image_url=None,  # TODO !
+                            image_path=post.get("image"),
                             dt_published=parse(post.get("published")).replace(tzinfo=None)
                             if state == "published"
                             else None,
@@ -122,6 +122,7 @@ if __name__ == "__main__":
                             dt_updated=parse(post.get("published")).replace(tzinfo=None),
                             state=state,
                             approved_by=admin_1 if state == "published" or state == "rejected" else None,
+                            image_path=post.get("image"),
                         )
                 except Exception as ex:
                     print(f"[{post.get(FIELD_TIMESTAMP)}] {ex}")

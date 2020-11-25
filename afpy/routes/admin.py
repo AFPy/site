@@ -82,10 +82,10 @@ class AdminIndexView(admin.AdminIndexView):
         if not current_user.is_authenticated:
             return redirect(url_for(".index"))
         if type == "jobs":
-            jobs = JobPost.select().where(JobPost.state == "waiting")
+            jobs = JobPost.select().where(JobPost.state == "waiting").order_by(JobPost.dt_submitted.desc())
             return self.render("admin/moderate_view.html", items=jobs, type=type)
         elif type == "news":
-            news = NewsEntry.select().where(NewsEntry.state == "waiting")
+            news = NewsEntry.select().where(NewsEntry.state == "waiting").order_by(NewsEntry.dt_submitted.desc())
             return self.render("admin/moderate_view.html", items=news, type=type)
         else:
             flash("Wrong type")

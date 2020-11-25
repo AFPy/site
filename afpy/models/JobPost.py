@@ -46,6 +46,7 @@ class JobPost(BaseModel):
     location = CharField(null=False, help_text="Where is the job located", verbose_name="Job Location")
     email = CharField(null=True, help_text="Email to contact", verbose_name="Email Address")
     contact_info = CharField(null=False, help_text="Person to contact", verbose_name="Contact info")
+    image_path = CharField(null=True, help_text="Image for the job post", verbose_name="Image Path in filesystem")
 
     @classmethod
     def create(
@@ -63,6 +64,7 @@ class JobPost(BaseModel):
         dt_published: Optional[datetime] = None,
         state: str = "waiting",
         approved_by: Optional[AdminUser] = None,
+        image_path: Optional[str] = None,
     ):
         if not dt_submitted:
             dt_submitted = datetime.now()
@@ -86,6 +88,7 @@ class JobPost(BaseModel):
             dt_published=dt_published,
             state=state,
             approved_by=approved_by,
+            image_path=image_path,
         )
         new_job.save()
         return new_job

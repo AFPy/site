@@ -1,10 +1,12 @@
 import email
 import os
+import os.path as op
 
 from dotenv import load_dotenv
 from flask import Flask
 from flask import render_template
 from flask_admin import Admin
+from flask_admin.contrib.fileadmin import FileAdmin
 from flask_login import LoginManager
 from peewee import DoesNotExist
 from peewee import SqliteDatabase
@@ -33,7 +35,7 @@ else:
 
 application.secret_key = FLASK_SECRET_KEY
 application.config.update(FLASK_SECRET_KEY=FLASK_SECRET_KEY)
-application.config["FLASK_ADMIN_SWATCH"] = "darkly"
+application.config["FLASK_ADMIN_SWATCH"] = "lux"
 
 
 # Initializes the login manager used for the admin
@@ -79,7 +81,7 @@ from afpy.routes.admin import AdminIndexView
 admin = Admin(
     application,
     name="Afpy Admin",
-    template_mode="bootstrap3",
+    template_mode="bootstrap4",
     index_view=AdminIndexView(),
     base_template="admin/admin_master.html",
 )
@@ -88,6 +90,8 @@ admin = Admin(
 admin.add_view(AdminUser_Admin(AdminUser))
 admin.add_view(NewsEntry_Admin(NewsEntry))
 admin.add_view(JobPost_Admin(JobPost))
+images_path = op.join(AFPY_ROOT, "images")
+admin.add_view(FileAdmin(images_path, "/images/", name="Images Files"))
 
 
 @application.template_filter("rfc822_datetime")

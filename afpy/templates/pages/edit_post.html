@@ -14,7 +14,7 @@
 
 
     <article>
-        <form method="POST" action="{{ url_for("posts.new_post") }}">
+        <form method="POST" action="{{ url_for("posts.new_post") }}" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
 
             <label>{{ form.title.label }}
@@ -23,8 +23,8 @@
             <label>{{ form.summary.label }}
                 {{ form.summary(size=100) }}
             </label>
-            <label>{{ form.image_url.label }}
-                {{ form.image_url(size=30) }}
+            <label>{{ form.image.label }}
+                {{ form.image }}
             </label>
             <label>{{ form.author.label }}
                 {{ form.author(size=20) }}
@@ -37,14 +37,14 @@
             </label>
             <input type="submit" name="submit" value="Enregistrer" />
 
-            <script type="text/javascript" src="{{ url_for('static', filename='js/nicEdit.js') }}"></script>
-            <script type="text/javascript">
-                bkLib.onDomLoaded(function() {
-                    new nicEditor({
-                        buttonList : ['fontFormat','bold','italic','underline','strikeThrough','subscript','superscript','link','unlink','xhtml']
-                    }).panelInstance('content');
-                });
-            </script>
+{#            <script type="text/javascript" src="{{ url_for('static', filename='js/nicEdit.js') }}"></script>#}
+{#            <script type="text/javascript">#}
+{#                bkLib.onDomLoaded(function() {#}
+{#                    new nicEditor({#}
+{#                        buttonList : ['fontFormat','bold','italic','underline','strikeThrough','subscript','superscript','link','unlink','xhtml']#}
+{#                    }).panelInstance('content');#}
+{#                });#}
+{#            </script>#}
         </form>
         <p>
             L'adresse e-mail n'est pas rendue publique, elle est uniquement
