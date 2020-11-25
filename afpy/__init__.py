@@ -75,7 +75,7 @@ from afpy.models.NewsEntry import NewsEntry, NewsEntry_Admin
 from afpy.models.JobPost import JobPost, JobPost_Admin
 
 
-from afpy.routes.admin import AdminIndexView
+from afpy.routes.admin import AdminIndexView, NewAdminView, ChangePasswordView, ModerateView
 
 # Creates the Admin manager
 admin = Admin(
@@ -87,11 +87,14 @@ admin = Admin(
 )
 
 # Registers the views for each table
-admin.add_view(AdminUser_Admin(AdminUser))
-admin.add_view(NewsEntry_Admin(NewsEntry))
-admin.add_view(JobPost_Admin(JobPost))
+admin.add_view(AdminUser_Admin(AdminUser, category="Models"))
+admin.add_view(NewsEntry_Admin(NewsEntry, category="Models"))
+admin.add_view(JobPost_Admin(JobPost, category="Models"))
 images_path = op.join(AFPY_ROOT, "images")
 admin.add_view(FileAdmin(images_path, "/images/", name="Images Files"))
+admin.add_view(NewAdminView(name="New Admin", endpoint="register_admin"))
+admin.add_view(ChangePasswordView(name="Change password", endpoint="change_password"))
+admin.add_view(ModerateView(name="Moderate", endpoint="moderation"))
 
 
 @application.template_filter("rfc822_datetime")

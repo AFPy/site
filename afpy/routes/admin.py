@@ -46,7 +46,14 @@ class AdminIndexView(admin.AdminIndexView):
         self._template_args["form"] = form
         return super(AdminIndexView, self).index()
 
-    @expose("/register/", methods=("GET", "POST"))
+    @expose("/logout/")
+    def logout_view(self):
+        logout_user()
+        return redirect(url_for(".index"))
+
+
+class NewAdminView(admin.BaseView):
+    @expose("/", methods=("GET", "POST"))
     def register_view(self):
         if not current_user.is_authenticated:
             return redirect(url_for(".index"))
@@ -61,7 +68,9 @@ class AdminIndexView(admin.AdminIndexView):
             return redirect(url_for(".index"))
         return self.render("admin/create_user.html", form=form)
 
-    @expose("/change_password", methods=("GET", "POST"))
+
+class ChangePasswordView(admin.BaseView):
+    @expose("/", methods=("GET", "POST"))
     def change_password_view(self):
         if not current_user.is_authenticated:
             return redirect(url_for(".index"))
@@ -77,7 +86,15 @@ class AdminIndexView(admin.AdminIndexView):
             return redirect(url_for(".index"))
         return self.render("admin/change_password.html", form=form)
 
-    @expose("/moderate/<type>", methods=["GET"])
+
+class ModerateView(admin.BaseView):
+    @expose("/", methods=["GET"])
+    def home_moderation(self):
+        if not current_user.is_authenticated:
+            return redirect(url_for(".index"))
+        return self.render("admin/moderation_home.html")
+
+    @expose("/<type>", methods=["GET"])
     def moderate_view(self, type):
         if not current_user.is_authenticated:
             return redirect(url_for(".index"))
@@ -129,8 +146,3 @@ class AdminIndexView(admin.AdminIndexView):
             flash("Wrong action type")
             return redirect(url_for(".index"))
         return redirect(url_for(".moderate_view", type=type))
-
-    @expose("/logout/")
-    def logout_view(self):
-        logout_user()
-        return redirect(url_for(".index"))

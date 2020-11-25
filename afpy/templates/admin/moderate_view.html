@@ -19,13 +19,13 @@
                             <p>{{ item.summary }}</p>
                         {% endif %}
                         {% if type == "jobs" %}
-                            <p><a class="btn btn-secondary" href="{{ url_for("admin.preview_item", type="jobs", id=item.id) }}" role="button">Preview</a></p>
+                            <p><a class="btn btn-secondary" href="{{ url_for("moderation.preview_item", type="jobs", id=item.id) }}" role="button">Preview</a></p>
                             <p><a class="btn btn-warning" href="http://127.0.0.1:5000/admin/jobpost/edit/?id={{ item.id }}" role="button">Edit</a></p>
-                            <p><a class="btn btn-success" href="{{ url_for("admin.moderate_action", id=item.id, type="jobs", action="approve") }}" role="button">Approve</a> <a class="btn btn-danger" href="{{ url_for("admin.moderate_action", id=item.id, type="jobs", action="reject") }}" role="button">Reject</a></p>
+                            <p><a class="btn btn-success" href="{{ url_for("moderation.moderate_action", id=item.id, type="jobs", action="approve") }}" role="button">Approve</a> <a class="btn btn-danger" href="{{ url_for("moderation.moderate_action", id=item.id, type="jobs", action="reject") }}" role="button">Reject</a></p>
                         {% else %}
-                            <p><a class="btn btn-secondary" href="{{ url_for("admin.preview_item", type="news", id=item.id) }}" role="button">Preview</a></p>
+                            <p><a class="btn btn-secondary" href="{{ url_for("moderation.preview_item", type="news", id=item.id) }}" role="button">Preview</a></p>
                             <p><a class="btn btn-warning" href="http://127.0.0.1:5000/admin/newsentry/edit/?id={{ item.id }}" role="button">Edit</a></p>
-                            <p><a class="btn btn-success" href="{{ url_for("admin.moderate_action", id=item.id, type="news", action="approve") }}" role="button">Approve</a> <a class="btn btn-danger" href="{{ url_for("admin.moderate_action", id=item.id, type="news", action="reject") }}" role="button">Reject</a></p>
+                            <p><a class="btn btn-success" href="{{ url_for("moderation.moderate_action", id=item.id, type="news", action="approve") }}" role="button">Approve</a> <a class="btn btn-danger" href="{{ url_for("moderation.moderate_action", id=item.id, type="news", action="reject") }}" role="button">Reject</a></p>
                         {% endif %}
                     </div>
                 {% endfor %}

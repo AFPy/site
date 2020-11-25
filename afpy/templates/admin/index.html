@@ -10,38 +10,6 @@
                     Bienvenue dans le backoffice de l'AFPy. Vous avez accès à la création, modification et suppression d'articles, jobs et admins, ainsi qu'aux tables.<br>
                     Ne touchez à rien si vous ne savez pas ce que vous faites.
                 </p>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-12 col-md-4 text-center mx-3">
-                            <a class="btn btn-primary" href="{{ url_for("admin.register_view") }}"><i class="icon-arrow-left icon-white"></i>Add a new admin</a>
-                        </div>
-                        <div class="col-md-4 text-center mx-3">
-                            <a class="btn btn-primary" href="{{ url_for("admin.change_password_view") }}"><i class="icon-arrow-left icon-white"></i>Change your password</a>
-                        </div>
-                        <div class="col-md-4 text-center mx-3">
-                            <a class="btn btn-primary" href="{{ url_for("admin.moderate_view", type="jobs") }}"><i class="icon-arrow-left icon-white"></i>Moderate Jobs</a>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12 col-md-4 text-center mx-3">
-                            <a class="btn btn-primary" href="{{ url_for("admin.moderate_view", type="news") }}"><i class="icon-arrow-left icon-white"></i>Moderate News</a>
-                        </div>
-                        <div class="col-md-4 text-center mx-3">
-                            <a class="btn btn-primary" href="#"><i class="icon-arrow-left icon-white"></i>?</a>
-                        </div>
-                        <div class="col-md-4 text-center mx-3">
-                            <a class="btn btn-primary" href="{{ url_for("admin.logout_view") }}"><i class="icon-arrow-left icon-white"></i>Se déconnecter</a>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-4 text-center mx-3">
-                        </div>
-                        <div class="col-xs-4 text-center mx-3">
-                        </div>
-                        <div class="col-xs-4 text-center mx-3">
-                        </div>
-                    </div>
-                </div>
             {% else %}
                 <form method="POST" action="">
                     {{ form.hidden_tag() if form.hidden_tag }}
