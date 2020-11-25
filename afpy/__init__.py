@@ -33,10 +33,7 @@ application = Flask(__name__)
 pagedown = PageDown(application)
 
 
-if os.getenv("FLASK_DEBUG", "false") == "true" or os.getenv("FLASK_DEBUG", "false") == "1":
-    application.debug = True
-else:
-    application.debug = False
+application.debug = os.getenv("FLASK_DEBUG") in ("true", "1")
 
 application.secret_key = FLASK_SECRET_KEY
 application.config.update(FLASK_SECRET_KEY=FLASK_SECRET_KEY)

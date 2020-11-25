@@ -9,7 +9,7 @@ Commencez par un `make install`
 
 Ensuite, `mv .env.template .env` en remplacant les valeurs nécéssaires
 
-Puis un `make serve` suffit pour testerlocalement sans article.
+Puis un `make serve` suffit pour tester localement sans article.
 
 Si vous voulez des articles, lancez un `tar xjf posts.tar.bz2`
 d'abord, puis un `python xml2sql.py` ce qui remplira la DB
