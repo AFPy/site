@@ -76,4 +76,4 @@ def new_job():
             new_job.image_path = filename
             new_job.save()
         return redirect(url_for("jobs.jobs_page", current_page=1, submitted=True))
-    return render_template("pages/edit_job.html", form=form, post=None, body_id="emplois")
+    return render_template("pages/edit_job.html", form=form, post=None, body_id="edit-post")

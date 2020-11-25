@@ -66,4 +66,4 @@ def new_post():
             new_post.image_path = filename
             new_post.save()
         return redirect(url_for("posts.posts_page", current_page=1, submitted=True))
-    return render_template("pages/edit_post.html", form=form, post=None, body_id="actualites")
+    return render_template("pages/edit_post.html", form=form, post=None, body_id="edit-post")
