@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from wtforms import FileField
 from wtforms import StringField
 from wtforms import TextAreaField
 from wtforms import validators
@@ -19,3 +20,4 @@ class JobPostForm(FlaskForm):
     contact_info = StringField("ContactInfo", validators=[DataRequired()])
     email = StringField("Email", validators=[validate_email_or_phone])
     phone = StringField("Phone", validators=[validate_email_or_phone])
+    image = FileField("Image")

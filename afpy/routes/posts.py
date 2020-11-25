@@ -58,8 +58,9 @@ def new_post():
 
         if form.image.data:
             extension = form.image.data.filename.split(".")[-1].lower()
-            filename = f"{AFPY_ROOT}/images/actualites.{new_post.id}.{extension}"
-            request.files[form.image.name].save(filename)
+            filename = f"emplois.{new_post.id}.{extension}"
+            filepath = f"{AFPY_ROOT}/images/{filename}"
+            request.files[form.image.name].save(filepath)
             new_post.image_path = filename
             new_post.save()
         return redirect(url_for("posts.posts_page", current_page=1))

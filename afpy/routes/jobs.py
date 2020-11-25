@@ -2,11 +2,13 @@ from flask import abort
 from flask import Blueprint
 from flask import redirect
 from flask import render_template
+from flask import request
 from flask import url_for
 from peewee import DoesNotExist
 
 from afpy.forms.JobPost import JobPostForm
 from afpy.models.JobPost import JobPost
+from afpy.static import AFPY_ROOT
 from afpy.static import NEWS_PER_PAGE
 
 jobs_bp = Blueprint("jobs", __name__)
@@ -52,7 +54,8 @@ def new_job():
         email = form.email.data
         phone = form.phone.data
         summary = form.summary.data
-        JobPost.create(
+
+        new_job = JobPost.create(
             title=title,
             content=content,
             company=company,
@@ -62,5 +65,13 @@ def new_job():
             phone=phone,
             summary=summary,
         )
+
+        if form.image.data:
+            extension = form.image.data.filename.split(".")[-1].lower()
+            filename = f"emplois.{new_job.id}.{extension}"
+            filepath = f"{AFPY_ROOT}/images/{filename}"
+            request.files[form.image.name].save(filepath)
+            new_job.image_path = filename
+            new_job.save()
         return redirect(url_for("jobs.jobs_page", current_page=1))
     return render_template("pages/edit_job.html", form=form, post=None)

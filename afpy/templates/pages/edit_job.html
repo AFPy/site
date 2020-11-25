@@ -14,7 +14,7 @@
 
 
     <article>
-        <form method="POST" action="{{ url_for("jobs.new_job") }}">
+        <form method="POST" action="{{ url_for("jobs.new_job") }}" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
             {% for field, errors in form.errors.items() %}
                 <div class="alert alert-error">
@@ -44,6 +44,9 @@
             </label>
             <label>{{ form.phone.label }}
                 {{ form.phone(size=40) }}
+            </label>
+            <label>{{ form.image.label }}
+                {{ form.image }}
             </label>
             <input type="submit" name="submit" value="Enregistrer" />
 
