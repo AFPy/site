@@ -20,7 +20,7 @@ def post_render(post_id: int):
         post = NewsEntry.get_by_id(post_id)
     except DoesNotExist:
         abort(404)
-    return render_template("pages/post.html", body_id="post", post=post, name=post.title)
+    return render_template("pages/post.html", body_id="actualites", post=post, name=post.title)
 
 
 @posts_bp.route("/actualites/page/<int:current_page>")
@@ -35,7 +35,7 @@ def posts_page(current_page: int = 1):
     )
     return render_template(
         "pages/posts.html",
-        body_id="posts",
+        body_id="actualites",
         posts=posts,
         title="Actualités",
         current_page=current_page,
@@ -66,4 +66,4 @@ def new_post():
             new_post.image_path = filename
             new_post.save()
         return redirect(url_for("posts.posts_page", current_page=1, submitted=True))
-    return render_template("pages/edit_post.html", form=form, post=None)
+    return render_template("pages/edit_post.html", form=form, post=None, body_id="actualites")
