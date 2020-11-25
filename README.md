@@ -5,23 +5,20 @@ Site Web de l'AFPy.
 
 ## Tester localement
 
-Un `make install` suivi d'un `make serve` suffit pour tester
-localement sans article.
+Commencez par un `make install`
+
+Ensuite, `mv .env.template .env` en remplacant les valeurs nécéssaires
+
+Puis un `make serve` suffit pour testerlocalement sans article.
 
 Si vous voulez des articles, lancez un `tar xjf posts.tar.bz2`
-d'abord.
-
-Si vous avez votre propre venv, un `FLASK_APP=afpy.py
-FLASK_ENV=development flask run` vous suffira.
-
+d'abord, puis un `python xml2sql.py` ce qui remplira la DB
 
 ## Tester
 
 ```bash
-pip install -e.[test]
-make test  # ou make test VENV="$VIRTUAL_ENV" pour utiliser votre venv.
+make test
 ```
-
 
 ## Déployer
 

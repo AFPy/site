@@ -4,7 +4,7 @@ python:
   - 3.6
 
 install:
-  - virtualenv -p python .env
+  - virtualenv -p python venv
   - make install
 
 script:
