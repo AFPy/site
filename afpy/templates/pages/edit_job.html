@@ -28,8 +28,15 @@
                 {{ form.summary(size=100) }}
             </label>
             <label>{{ form.content.label }}
-                {{ form.content(size=100) }}
-            </label>
+                <div class="pagedown-row">
+                    <div class="pagedown-column">
+                        {{ form.content(only_input=True, rows=30) }}
+                    </div>
+                    <div class="pagedown-column" style="margin-left: 40px;">
+                        Prévisualisation:
+                        {{ form.content(only_preview=True) }}
+                    </div>
+                </div>            </label>
             <label>{{ form.company.label }}
                 {{ form.company(size=40) }}
             </label>

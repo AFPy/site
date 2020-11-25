@@ -29,7 +29,7 @@
         {% if job.image_path %}
             <img src="{{ url_for('home.get_image', path=job.image_path) }}" alt="{{ job.title }}" />
         {% endif %}
-        {{ job.content | safe }}
+        {{ job.content | md2html | safe }}
         <aside>
             <h2>{{ job.company or "(Société inconnue)" }}</h2>
             <dl>

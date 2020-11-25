@@ -2,12 +2,14 @@ import email
 import os
 import os.path as op
 
+import markdown2
 from dotenv import load_dotenv
 from flask import Flask
 from flask import render_template
 from flask_admin import Admin
 from flask_admin.contrib.fileadmin import FileAdmin
 from flask_login import LoginManager
+from flask_pagedown import PageDown
 from peewee import DoesNotExist
 from peewee import SqliteDatabase
 
@@ -27,6 +29,9 @@ from afpy.static import FLASK_SECRET_KEY, DB_NAME
 database = SqliteDatabase(database=DB_NAME)
 
 application = Flask(__name__)
+
+pagedown = PageDown(application)
+
 
 if os.getenv("FLASK_DEBUG", "false") == "true" or os.getenv("FLASK_DEBUG", "false") == "1":
     application.debug = True
@@ -100,3 +105,8 @@ admin.add_view(ModerateView(name="Moderate", endpoint="moderation"))
 @application.template_filter("rfc822_datetime")
 def format_rfc822_datetime(timestamp):
     return email.utils.formatdate(int(timestamp))
+
+
+@application.template_filter("md2html")
+def format_markdown2html(content):
+    return markdown2.markdown(content)

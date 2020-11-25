@@ -28,6 +28,6 @@
         {% if post.image_path %}
             <img src="{{ url_for('home.get_image', path=post.image_path) }}" alt="{{ post.title }}" />
         {% endif %}
-        {{ post.content | safe }}
+        {{ post.content | md2html | safe }}
     </article>
 {% endblock main %}
