@@ -6,7 +6,7 @@
 
 {% block main %}
     {% if preview %}
-        <a href="{{ url_for("admin.moderate_view", type="news") }}">Retour à l'interface d'administration</a>
+        <a href="{{ url_for("moderation.moderate_view", type="news") }}">Retour à l'interface d'administration</a>
         {#        <p><a class="btn btn-warning" href="http://127.0.0.1:5000/admin/jobpost/edit/?id={{ post.id }}" role="button">Edit</a></p>#}
     {% endif %}
 

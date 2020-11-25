@@ -12,12 +12,12 @@ def validate_email_or_phone(form, field):
 
 
 class JobPostForm(FlaskForm):
-    title = StringField("Title", validators=[DataRequired()])
-    summary = StringField("Summary")
+    title = StringField("Titre", validators=[DataRequired()])
+    summary = StringField("Résumé (optionnel)")
     content = TextAreaField("Content", validators=[DataRequired()])
-    company = StringField("Company", validators=[DataRequired()])
-    location = StringField("Location", validators=[DataRequired()])
-    contact_info = StringField("ContactInfo", validators=[DataRequired()])
+    company = StringField("Entreprise", validators=[DataRequired()])
+    location = StringField("Addresse", validators=[DataRequired()])
+    contact_info = StringField("Personne à contacter", validators=[DataRequired()])
     email = StringField("Email", validators=[validate_email_or_phone])
-    phone = StringField("Phone", validators=[validate_email_or_phone])
-    image = FileField("Image")
+    phone = StringField("Téléphone", validators=[validate_email_or_phone])
+    image = FileField("Image (optionnel)")
