@@ -25,6 +25,7 @@ def jobs_render(post_id: int):
 
 @jobs_bp.route("/emplois/page/<int:current_page>")
 def jobs_page(current_page: int = 1):
+    submitted = request.args.get("submitted", False)
     total_pages = (JobPost.select().where(JobPost.state == "published").count() // NEWS_PER_PAGE) + 1
     jobs = (
         JobPost.select()
@@ -39,6 +40,7 @@ def jobs_page(current_page: int = 1):
         title="Offres d'emploi",
         current_page=current_page,
         total_pages=total_pages,
+        submitted=submitted,
     )
 
 
@@ -73,5 +75,5 @@ def new_job():
             request.files[form.image.name].save(filepath)
             new_job.image_path = filename
             new_job.save()
-        return redirect(url_for("jobs.jobs_page", current_page=1))
+        return redirect(url_for("jobs.jobs_page", current_page=1, submitted=True))
     return render_template("pages/edit_job.html", form=form, post=None)

@@ -95,7 +95,7 @@ class AdminIndexView(admin.AdminIndexView):
     def preview_item(self, type, id):
         if not current_user.is_authenticated:
             return redirect(url_for(".index"))
-        if type == "job":
+        if type == "jobs":
             job = JobPost.get_by_id(id)
             return self.render("pages/job.html", job=job, preview=True)
         elif type == "news":
@@ -109,7 +109,7 @@ class AdminIndexView(admin.AdminIndexView):
     def moderate_action(self, id, type, action):
         if not current_user.is_authenticated:
             return redirect(url_for(".index"))
-        if type == "job":
+        if type == "jobs":
             item = JobPost.get_by_id(id)
         elif type == "news":
             item = NewsEntry.get_by_id(id)
