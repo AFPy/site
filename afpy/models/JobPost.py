@@ -17,7 +17,11 @@ class JobPost(BaseModel):
     summary = TextField(null=True, help_text="Summary of the job post", verbose_name="Summary")
     content = TextField(null=False, help_text="Content of the job post", verbose_name="Content")
     dt_submitted = DateTimeField(
-        null=False, default=datetime.now, help_text="When was the job post submitted", verbose_name="Datetime Submitted"
+        null=False,
+        default=datetime.now,
+        help_text="When was the job post submitted",
+        verbose_name="Datetime Submitted",
+        index=True,
     )
     dt_updated = DateTimeField(
         null=False, default=datetime.now, help_text="When was the job post updated", verbose_name="Datetime Updated"

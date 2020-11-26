@@ -21,6 +21,7 @@ class NewsEntry(BaseModel):
         default=datetime.now,
         help_text="When was the news entry submitted",
         verbose_name="Datetime Submitted",
+        index=True,
     )
     dt_updated = DateTimeField(
         null=False, default=datetime.now, help_text="When was the news entry updated", verbose_name="Datetime Updated"
