@@ -5,6 +5,7 @@ from flask_login import current_user
 from peewee import CharField
 from peewee import DateTimeField
 from peewee import TextField
+from werkzeug.security import generate_password_hash
 
 from afpy.models import BaseModel
 
@@ -46,3 +47,12 @@ class AdminUser_Admin(ModelView):
 
 if not AdminUser.table_exists():
     AdminUser.create_table()
+    try:
+        AdminUser.get_by_id(1)
+    except AdminUser.DoesNotExist:
+        AdminUser.create(
+            email="admin@admin.org",
+            username="admin",
+            password=generate_password_hash("password"),
+            dt_added=datetime.now(),
+        ).save()
