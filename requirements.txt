@@ -13,3 +13,4 @@ feedparser==6.0.2
 xmltodict==0.12.0
 flask-pagedown==0.3.0
 markdown2==2.3.10
+bleach==3.2.1

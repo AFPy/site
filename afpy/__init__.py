@@ -2,7 +2,6 @@ import email
 import os
 import os.path as op
 
-import markdown2
 from dotenv import load_dotenv
 from flask import Flask
 from flask import render_template
@@ -12,6 +11,8 @@ from flask_login import LoginManager
 from flask_pagedown import PageDown
 from peewee import DoesNotExist
 from peewee import SqliteDatabase
+
+from afpy.utils import markdown_to_html
 
 
 AFPY_ROOT = os.path.join(os.path.dirname(__file__), "../")  # refers to application_top
@@ -104,4 +105,4 @@ def format_rfc822_datetime(timestamp):
 
 @application.template_filter("md2html")
 def format_markdown2html(content):
-    return markdown2.markdown(content)
+    return markdown_to_html(content)
