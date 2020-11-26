@@ -42,21 +42,21 @@ class AdminIndexView(admin.AdminIndexView):
             login_user(user)
 
         if current_user.is_authenticated:
-            return redirect(url_for(".index"))
+            return redirect(url_for("admin.index"))
         self._template_args["form"] = form
         return super(AdminIndexView, self).index()
 
     @expose("/logout/")
     def logout_view(self):
         logout_user()
-        return redirect(url_for(".index"))
+        return redirect(url_for("admin.index"))
 
 
 class NewAdminView(admin.BaseView):
     @expose("/", methods=("GET", "POST"))
     def register_view(self):
         if not current_user.is_authenticated:
-            return redirect(url_for(".index"))
+            return redirect(url_for("admin.index"))
         form = RegistrationForm(request.form)
         if helpers.validate_form_on_submit(form):
             AdminUser.create(
@@ -65,7 +65,7 @@ class NewAdminView(admin.BaseView):
                 password=generate_password_hash(form.password.data),
                 dt_added=datetime.now(),
             ).save()
-            return redirect(url_for(".index"))
+            return redirect(url_for("admin.index"))
         return self.render("admin/create_user.html", form=form)
 
 
@@ -73,7 +73,7 @@ class ChangePasswordView(admin.BaseView):
     @expose("/", methods=("GET", "POST"))
     def change_password_view(self):
         if not current_user.is_authenticated:
-            return redirect(url_for(".index"))
+            return redirect(url_for("admin.index"))
         form = ChangePasswordForm(request.form)
         if helpers.validate_form_on_submit(form):
             if not check_password_hash(current_user.password, form.old_password.data):
@@ -83,7 +83,7 @@ class ChangePasswordView(admin.BaseView):
                 flash("Passwords don't match.")
                 return self.render("admin/change_password.html", form=form)
             current_user.password = generate_password_hash(form.new_password.data)
-            return redirect(url_for(".index"))
+            return redirect(url_for("admin.index"))
         return self.render("admin/change_password.html", form=form)
 
 
@@ -91,13 +91,13 @@ class ModerateView(admin.BaseView):
     @expose("/", methods=["GET"])
     def home_moderation(self):
         if not current_user.is_authenticated:
-            return redirect(url_for(".index"))
+            return redirect(url_for("admin.index"))
         return self.render("admin/moderation_home.html")
 
     @expose("/<type>", methods=["GET"])
     def moderate_view(self, type):
         if not current_user.is_authenticated:
-            return redirect(url_for(".index"))
+            return redirect(url_for("admin.index"))
         if type == "jobs":
             jobs = JobPost.select().where(JobPost.state == "waiting").order_by(JobPost.dt_submitted.desc())
             return self.render("admin/moderate_view.html", items=jobs, type=type)
@@ -106,12 +106,12 @@ class ModerateView(admin.BaseView):
             return self.render("admin/moderate_view.html", items=news, type=type)
         else:
             flash("Wrong type")
-            return redirect(url_for(".index"))
+            return redirect(url_for("admin.index"))
 
     @expose("/preview/<type>/<id>", methods=["GET"])
     def preview_item(self, type, id):
         if not current_user.is_authenticated:
-            return redirect(url_for(".index"))
+            return redirect(url_for("admin.index"))
         if type == "jobs":
             job = JobPost.get_by_id(id)
             return self.render("pages/job.html", job=job, preview=True)
@@ -120,19 +120,19 @@ class ModerateView(admin.BaseView):
             return self.render("pages/post.html", post=news, preview=True)
         else:
             flash("Wrong type")
-            return redirect(url_for(".index"))
+            return redirect(url_for("admin.index"))
 
     @expose("/moderate/action/<id>/<type>/<action>", methods=["GET"])
     def moderate_action(self, id, type, action):
         if not current_user.is_authenticated:
-            return redirect(url_for(".index"))
+            return redirect(url_for("admin.index"))
         if type == "jobs":
             item = JobPost.get_by_id(id)
         elif type == "news":
             item = NewsEntry.get_by_id(id)
         else:
             flash("Wrong type")
-            return redirect(url_for(".index"))
+            return redirect(url_for("admin.index"))
         if action == "approve":
             item.state = "published"
             item.approved_by = current_user.id
@@ -144,5 +144,5 @@ class ModerateView(admin.BaseView):
             item.save()
         else:
             flash("Wrong action type")
-            return redirect(url_for(".index"))
+            return redirect(url_for("admin.index"))
         return redirect(url_for(".moderate_view", type=type))
