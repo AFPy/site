@@ -49,11 +49,9 @@ login_manager.init_app(application)
 @login_manager.user_loader
 def load_user(uid):
     try:
-        user = AdminUser.get_by_id(uid)
+        return AdminUser.get_by_id(uid)
     except DoesNotExist:
         return None
-    else:
-        return user
 
 
 @application.errorhandler(404)
