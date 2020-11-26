@@ -5,6 +5,7 @@ from flask import render_template
 from flask import request
 from flask import url_for
 from peewee import DoesNotExist
+from werkzeug.utils import secure_filename
 
 from afpy.forms.NewsEntry import NewsEntryForm
 from afpy.models.NewsEntry import NewsEntry
@@ -59,7 +60,7 @@ def new_post():
         )
 
         if form.image.data:
-            extension = form.image.data.filename.split(".")[-1].lower()
+            extension = secure_filename(form.image.data.filename).split(".")[-1].lower()
             filename = f"emplois.{new_post.id}.{extension}"
             filepath = f"{AFPY_ROOT}/images/{filename}"
             request.files[form.image.name].save(filepath)
