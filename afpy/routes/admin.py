@@ -82,7 +82,7 @@ class ChangePasswordView(admin.BaseView):
             if not check_password_hash(current_user.password, form.old_password.data):
                 flash("Incorrect old password.")
                 return self.render("admin/change_password.html", form=form)
-            if not form.new_password == form.new_password_confirmation:
+            if not form.new_password.data == form.new_password_confirmation.data:
                 flash("Passwords don't match.")
                 return self.render("admin/change_password.html", form=form)
             current_user.password = generate_password_hash(form.new_password.data)
