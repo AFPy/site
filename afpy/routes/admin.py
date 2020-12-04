@@ -86,6 +86,7 @@ class ChangePasswordView(admin.BaseView):
                 flash("Passwords don't match.")
                 return self.render("admin/change_password.html", form=form)
             current_user.password = generate_password_hash(form.new_password.data)
+            current_user.save()
             return redirect(url_for("admin.index"))
         return self.render("admin/change_password.html", form=form)
 
