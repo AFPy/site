@@ -10,6 +10,7 @@ from peewee import DoesNotExist
 
 from afpy.models.NewsEntry import NewsEntry
 from afpy.static import AFPY_ROOT
+from afpy.static import IMAGES_PATH
 from afpy.static import NEWS_PER_PAGE
 
 home_bp = Blueprint("home", __name__)
@@ -82,4 +83,4 @@ def get_image(path):
     #     abort(404)
     # if state not in data.STATES:
     #     abort(404)
-    return send_from_directory(AFPY_ROOT + "/images/", path)
+    return send_from_directory(IMAGES_PATH, path)

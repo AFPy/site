@@ -9,7 +9,7 @@ from werkzeug.utils import secure_filename
 
 from afpy.forms.JobPost import JobPostForm
 from afpy.models.JobPost import JobPost
-from afpy.static import AFPY_ROOT
+from afpy.static import IMAGES_PATH
 from afpy.static import NEWS_PER_PAGE
 
 jobs_bp = Blueprint("jobs", __name__)
@@ -72,7 +72,7 @@ def new_job():
         if form.image.data:
             extension = secure_filename(form.image.data.filename).split(".")[-1].lower()
             filename = f"emplois.{new_job.id}.{extension}"
-            filepath = f"{AFPY_ROOT}/images/{filename}"
+            filepath = f"{IMAGES_PATH}/{filename}"
             request.files[form.image.name].save(filepath)
             new_job.image_path = filename
             new_job.save()

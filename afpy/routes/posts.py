@@ -9,7 +9,7 @@ from werkzeug.utils import secure_filename
 
 from afpy.forms.NewsEntry import NewsEntryForm
 from afpy.models.NewsEntry import NewsEntry
-from afpy.static import AFPY_ROOT
+from afpy.static import IMAGES_PATH
 from afpy.static import NEWS_PER_PAGE
 
 posts_bp = Blueprint("posts", __name__)
@@ -62,7 +62,7 @@ def new_post():
         if form.image.data:
             extension = secure_filename(form.image.data.filename).split(".")[-1].lower()
             filename = f"emplois.{new_post.id}.{extension}"
-            filepath = f"{AFPY_ROOT}/images/{filename}"
+            filepath = f"{IMAGES_PATH}/{filename}"
             request.files[form.image.name].save(filepath)
             new_post.image_path = filename
             new_post.save()
