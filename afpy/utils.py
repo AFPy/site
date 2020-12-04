@@ -10,6 +10,7 @@ ALLOWED_TAGS = [
     "abbr",
     "acronym",
     "b",
+    "u",
     "blockquote",
     "code",
     "em",
@@ -81,4 +82,5 @@ def markdown_to_html(content):
         attributes=ALLOWED_ATTRIBUTES,
         styles=ALLOWED_STYLES,
         filters=[partial(bleach.linkifier.LinkifyFilter, skip_tags=["pre"], parse_email=False)],
+        strip=True,
     ).clean(markdown2.markdown(content))

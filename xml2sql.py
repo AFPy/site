@@ -5,10 +5,12 @@ from pathlib import Path
 from xml.etree import ElementTree
 
 from dateutil.parser import parse
+from html2text import html2text
 
 from afpy.models.AdminUser import AdminUser
 from afpy.models.JobPost import JobPost
 from afpy.models.NewsEntry import NewsEntry
+from afpy.models.Slug import Slug
 
 PAGINATION = 12
 
@@ -19,7 +21,7 @@ CATEGORIES = {CATEGORY_ACTUALITIES: "Actualités", CATEGORY_JOBS: "Offres d’em
 
 STATE_WAITING = "waiting"
 STATE_PUBLISHED = "published"
-STATE_TRASHED = "rejected"
+STATE_TRASHED = "trashed"
 STATES = {STATE_WAITING: "En attente", STATE_PUBLISHED: "Publié", STATE_TRASHED: "Supprimé"}
 
 FIELD_IMAGE = "_image"
@@ -90,10 +92,10 @@ if __name__ == "__main__":
                         post["image"] = f"{category}.{timestamp}{ext}"
                         shutil.copy(str(image), str(IMAGE_DIR / post["image"]))
                     if category == "actualites":
-                        NewsEntry.create(
+                        new_post = NewsEntry.create(
                             title=post.get("title"),
                             summary=post.get("summary"),
-                            content=post.get("content"),
+                            content=html2text(post.get("content")),
                             author="Admin",
                             author_email=post.get("email"),
                             image_path=post.get("image"),
@@ -105,11 +107,15 @@ if __name__ == "__main__":
                             state=state,
                             approved_by=admin_1 if state == "published" or state == "rejected" else None,
                         )
+                        Slug.create(url=f"/posts/actualites/{post.get(FIELD_TIMESTAMP)}", newsentry=new_post)
+                        post_id = post.get("id")
+                        if post_id:
+                            Slug.create(url=post_id.split("afpy.org")[-1], newsentry=new_post)
                     else:
-                        JobPost.create(
+                        new_job = JobPost.create(
                             title=post.get("title"),
                             summary=post.get("summary"),
-                            content=post.get("content"),
+                            content=html2text(post.get("content")),
                             company=post.get("company"),
                             email=post.get("email"),
                             phone=post.get("phone"),
@@ -124,5 +130,9 @@ if __name__ == "__main__":
                             approved_by=admin_1 if state == "published" or state == "rejected" else None,
                             image_path=post.get("image"),
                         )
+                        Slug.create(url=f"/posts/emplois/{post.get(FIELD_TIMESTAMP)}", jobpost=new_job)
+                        post_id = post.get("id")
+                        if post_id:
+                            Slug.create(url=post_id.split("afpy.org")[-1], jobpost=new_job)
                 except Exception as ex:
                     print(f"[{post.get(FIELD_TIMESTAMP)}] {ex}")

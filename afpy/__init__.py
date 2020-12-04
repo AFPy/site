@@ -3,6 +3,7 @@ import os
 import os.path as op
 
 from dotenv import load_dotenv
+from flask import abort
 from flask import Flask
 from flask import render_template
 from flask_admin import Admin
@@ -61,8 +62,8 @@ def page_not_found(e):
 
 
 from afpy.routes.home import home_bp
-from afpy.routes.posts import posts_bp
-from afpy.routes.jobs import jobs_bp
+from afpy.routes.posts import posts_bp, post_render
+from afpy.routes.jobs import jobs_bp, jobs_render
 from afpy.routes.rss import rss_bp
 
 application.register_blueprint(home_bp)
@@ -74,6 +75,7 @@ application.register_blueprint(rss_bp)
 from afpy.models.AdminUser import AdminUser, AdminUser_Admin
 from afpy.models.NewsEntry import NewsEntry, NewsEntry_Admin
 from afpy.models.JobPost import JobPost, JobPost_Admin
+from afpy.models.Slug import Slug, SlugAdmin
 
 
 from afpy.routes.admin import AdminIndexView, NewAdminView, ChangePasswordView, ModerateView
@@ -91,6 +93,7 @@ admin = Admin(
 admin.add_view(AdminUser_Admin(AdminUser, category="Models"))
 admin.add_view(NewsEntry_Admin(NewsEntry, category="Models"))
 admin.add_view(JobPost_Admin(JobPost, category="Models"))
+admin.add_view(SlugAdmin(Slug, category="Models"))
 images_path = op.join(AFPY_ROOT, "images")
 admin.add_view(FileAdmin(images_path, "/images/", name="Images Files"))
 admin.add_view(NewAdminView(name="New Admin", endpoint="register_admin"))
@@ -106,3 +109,14 @@ def format_rfc822_datetime(timestamp):
 @application.template_filter("md2html")
 def format_markdown2html(content):
     return markdown_to_html(content)
+
+
+@application.route("/<path:slug>")
+def slug_fallback(slug):
+    slug = Slug.get_or_none(url="/" + slug)
+    if not slug:
+        abort(404)
+    if slug.newsentry:
+        return post_render(slug.newsentry.id)
+    elif slug.jobpost:
+        return jobs_render(slug.jobpost.id)
