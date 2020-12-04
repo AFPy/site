@@ -39,7 +39,10 @@ class AdminIndexView(admin.AdminIndexView):
                 user = AdminUser.get(AdminUser.email == form.email_or_username.data)
             except DoesNotExist:
                 user = AdminUser.get(AdminUser.username == form.email_or_username.data)
-            login_user(user)
+            if check_password_hash(user.password, form.password.data):
+                login_user(user)
+            else:
+                flash("Incorrect username or password")
 
         if current_user.is_authenticated:
             return redirect(url_for("admin.index"))
