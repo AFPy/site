@@ -19,7 +19,7 @@ AFPY_ROOT = os.path.join(os.path.dirname(__file__), "../")  # refers to applicat
 dotenv_path = os.path.join(AFPY_ROOT, ".env")
 load_dotenv(dotenv_path)
 
-REQUIRED_ENV_VARS = ["FLASK_PORT", "FLASK_DEBUG", "FLASK_HOST", "FLASK_SECRET_KEY", "DB_NAME"]
+REQUIRED_ENV_VARS = ["FLASK_DEBUG", "FLASK_HOST", "FLASK_SECRET_KEY", "DB_NAME"]
 
 for item in REQUIRED_ENV_VARS:
     if item not in os.environ:
