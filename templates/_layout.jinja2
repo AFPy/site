@@ -21,7 +21,8 @@
         (url_for('posts', name='actualites'), 'actualites', 'Actualités'),
         (url_for('posts', name='emplois'), 'emplois', 'Offres d\'emplois'),
         (url_for('communaute'), 'communaute', 'Communauté'),
-        (url_for('discussion'), 'discussion', 'Discussion'),
+        ('https://discuss.afpy.org', 'discussion', 'Discussion'),
+        (url_for('irc'), 'irc', 'IRC'),
         (url_for('adhesions'), 'adhesions', 'Adhésions')
       ] -%}
       <label for="toggle" class="menu__toggle">Menu</label>
