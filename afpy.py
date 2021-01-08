@@ -87,7 +87,7 @@ def communaute():
 
 @app.route("/irc")
 def irc():
-    return render_template("irc.html", body_id="discussion")
+    return render_template("irc.html", body_id="irc")
 
 
 @app.route("/docs/<name>")
