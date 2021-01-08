@@ -85,9 +85,9 @@ def communaute():
     return render_template("communaute.html", body_id="communaute", meetups=MEETUPS)
 
 
-@app.route("/discussion")
-def discussion():
-    return render_template("discussion.html", body_id="discussion")
+@app.route("/irc")
+def irc():
+    return render_template("irc.html", body_id="discussion")
 
 
 @app.route("/docs/<name>")
