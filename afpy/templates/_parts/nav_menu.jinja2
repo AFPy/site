@@ -6,7 +6,8 @@
         (url_for('posts.posts_page', current_page='1'), 'actualites', 'Actualités'),
         (url_for('jobs.jobs_page', current_page='1'), 'emplois', 'Offres d\'emplois'),
         (url_for('home.community_page'), 'communaute', 'Communauté'),
-        (url_for('home.discussion_page'), 'discussion', 'Discussion'),
+        ('https://discuss.afpy.org', 'discussion', 'Discussion'),
+        (url_for('home.discussion_page'), 'irc', 'IRC'),
         (url_for('home.adhere_page'), 'adhesions', 'Adhésions')
       ] -%}
         <label for="toggle" class="menu__toggle">Menu</label>
