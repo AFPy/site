@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from flask import abort
 from flask import Flask
 from flask import render_template
+from flask import request
 from flask_admin import Admin
 from flask_admin.contrib.fileadmin import FileAdmin
 from flask_login import LoginManager
@@ -109,6 +110,19 @@ def format_rfc822_datetime(timestamp):
 @application.template_filter("md2html")
 def format_markdown2html(content):
     return markdown_to_html(content)
+
+
+@application.template_filter("slug_url")
+def get_slug_url(item):
+    url_root = request.url_root
+    slug = item.slug.where(Slug.canonical == True).first()  # noqa
+    if not slug:
+        if isinstance(item, JobPost):
+            return url_root[:-1] + "/emplois/" + str(item.id)
+        else:
+            return url_root[:-1] + "/actualites/" + str(item.id)
+    else:
+        return url_root[:-1] + slug.url
 
 
 @application.route("/<path:slug>")

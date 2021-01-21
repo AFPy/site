@@ -22,7 +22,7 @@
                 <img src="{{ url_for('home.get_image', path=job.image_path) }}" alt="{{ job.title }}" />
             {% endif %}
             {{ job.summary | safe if job.summary }}
-            <p><a href="{{ url_for('jobs.jobs_render', post_id=job.id) }}">Lire la suite…</a></p>
+            <p><a href="{{ job|slug_url }}">Lire la suite…</a></p>
         </article>
     {% endfor %}
 
