@@ -7,6 +7,7 @@ from flask import request
 from flask import url_for
 from flask_admin import expose
 from flask_admin import helpers
+from flask_admin.contrib.fileadmin import FileAdmin
 from flask_login import current_user
 from flask_login import login_user
 from flask_login import logout_user
@@ -150,3 +151,8 @@ class ModerateView(admin.BaseView):
             flash("Wrong action type")
             return redirect(url_for("admin.index"))
         return redirect(url_for(".moderate_view", type=type))
+
+
+class CustomFileAdmin(FileAdmin):
+    def is_accessible(self):
+        return current_user.is_authenticated

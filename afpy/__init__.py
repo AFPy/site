@@ -8,7 +8,6 @@ from flask import Flask
 from flask import render_template
 from flask import request
 from flask_admin import Admin
-from flask_admin.contrib.fileadmin import FileAdmin
 from flask_login import LoginManager
 from flask_pagedown import PageDown
 from peewee import DoesNotExist
@@ -79,7 +78,7 @@ from afpy.models.JobPost import JobPost, JobPost_Admin
 from afpy.models.Slug import Slug, SlugAdmin
 
 
-from afpy.routes.admin import AdminIndexView, NewAdminView, ChangePasswordView, ModerateView
+from afpy.routes.admin import AdminIndexView, NewAdminView, ChangePasswordView, ModerateView, CustomFileAdmin
 
 # Creates the Admin manager
 admin = Admin(
@@ -96,7 +95,7 @@ admin.add_view(NewsEntry_Admin(NewsEntry, category="Models"))
 admin.add_view(JobPost_Admin(JobPost, category="Models"))
 admin.add_view(SlugAdmin(Slug, category="Models"))
 images_path = op.join(AFPY_ROOT, "images")
-admin.add_view(FileAdmin(images_path, "/images/", name="Images Files"))
+admin.add_view(CustomFileAdmin(images_path, "/images/", name="Images Files"))
 admin.add_view(NewAdminView(name="New Admin", endpoint="register_admin"))
 admin.add_view(ChangePasswordView(name="Change password", endpoint="change_password"))
 admin.add_view(ModerateView(name="Moderate", endpoint="moderation"))
