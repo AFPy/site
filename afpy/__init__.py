@@ -13,10 +13,9 @@ from flask_pagedown import PageDown
 from peewee import DoesNotExist
 from peewee import SqliteDatabase
 
+from afpy.static import AFPY_ROOT
 from afpy.utils import markdown_to_html
 
-
-AFPY_ROOT = os.path.join(os.path.dirname(__file__), "../")  # refers to application_top
 dotenv_path = os.path.join(AFPY_ROOT, ".env")
 load_dotenv(dotenv_path)
 

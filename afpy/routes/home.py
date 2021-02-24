@@ -76,11 +76,4 @@ def posts_page(current_page: int = 1):
 
 @home_bp.route("/post_image/<path:path>")
 def get_image(path):
-    # if path.count("/") != 3:
-    #     abort(404)
-    # category, state, timestamp, name = path.split("/")
-    # if category not in data.POSTS:
-    #     abort(404)
-    # if state not in data.STATES:
-    #     abort(404)
     return send_from_directory(IMAGES_PATH, path)
