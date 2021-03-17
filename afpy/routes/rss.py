@@ -19,10 +19,10 @@ rss_bp = Blueprint("rss", __name__)
 def feed_rss(type):
     name = ""
     entries = []
-    if type == "jobs":
+    if type == "emplois":
         name = "Emplois"
         entries = JobPost.select().where(JobPost.state == "published")
-    elif type == "news":
+    elif type == "actualites":
         name = "Actualités"
         entries = NewsEntry.select().where(NewsEntry.state == "published")
     else:

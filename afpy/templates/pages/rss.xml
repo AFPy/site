@@ -8,7 +8,7 @@
             <item>
                 <title><![CDATA[ {{ entry.title | safe }} ]]></title>
                 <description><![CDATA[ {{ (entry.description or entry.summary) | safe }} ]]></description>
-                {% if type == "jobs" %}
+                {% if type == "emplois" %}
                     <link>{{ url_for("jobs.jobs_render", post_id=entry.id, _external=True) }}</link>
                 {% else %}
                     <link>{{ url_for("posts.post_render", post_id=entry.id, _external=True) }}</link>

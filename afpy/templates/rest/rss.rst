@@ -9,8 +9,8 @@ Flux de l'AFPy
 Vous pouvez suivre les informations de l'AFPy en vous abonnant aux flux
 suivants :
 
-- `Actualités </feed/news/rss.xml>`_
-- `Offres d'emploi </feed/jobs/rss.xml>`_
+- `Actualités </feed/actualites/rss.xml>`_
+- `Offres d'emploi </feed/emplois/rss.xml>`_
 
 
 Flux généralistes
