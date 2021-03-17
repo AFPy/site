@@ -1,4 +1,4 @@
-VENV = $(PWD)/.env
+VENV = $(PWD)/venv
 PIP = $(VENV)/bin/pip
 PYTHON = $(VENV)/bin/python
 FLASK = $(VENV)/bin/flask
@@ -9,26 +9,18 @@ all: install serve
 
 install:
 	test -d $(VENV) || python3 -m venv $(VENV)
-	$(PIP) install --upgrade --no-cache pip setuptools -e .[test]
+	$(PIP) install --upgrade --no-cache pip setuptools -r requirements.txt -r requirements-dev.txt
 
 clean:
-	rm -fr dist
 	rm -fr $(VENV)
-	rm -fr *.egg-info
 
 check-outdated:
 	$(PIP) list --outdated --format=columns
 
 test:
-	$(PYTHON) -m pytest tests.py afpy.py --flake8 --isort --cov=afpy --cov=tests --cov-report=term-missing
+	$(PYTHON) -m pytest tests.py afpy/ --flake8 --black --cov=afpy --cov=tests --cov-report=term-missing
 
 serve:
-	env FLASK_APP=afpy.py FLASK_ENV=development $(FLASK) run
+	$(PYTHON) run.py
 
-isort:
-	$(ISORT) -rc .isort.cfg afpy.py tests.py
-
-black:
-	$(VENV)/bin/black afpy.py tests.py
-
-.PHONY: all install clean check-outdated test serve isort black
+.PHONY: all install clean check-outdated test serve

@@ -1,0 +1,57 @@
+{% extends '_parts/base.jinja2' %}
+
+{% block header %}
+    <h1>
+        {% if post %}
+            Modification d'un article
+        {% else %}
+            Création d'un article
+        {% endif %}
+    </h1>
+{% endblock header %}
+
+{% block main %}
+
+
+    <article>
+        <form method="POST" action="{{ url_for("posts.new_post") }}" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            {% for field, errors in form.errors.items() %}
+                <div class="alert alert-error">
+                    {{ form[field].label }}: {{ ', '.join(errors) }}
+                </div>
+            {% endfor %}
+            <label>{{ form.title.label }}
+                {{ form.title(size=40) }}
+            </label>
+            <label>{{ form.summary.label }}
+                {{ form.summary(size=100) }}
+            </label>
+            <label>{{ form.image.label }}
+                {{ form.image }}
+            </label>
+            <label>{{ form.author.label }}
+                {{ form.author(size=20) }}
+            </label>
+            <label>{{ form.author_email.label }}
+                {{ form.author_email(size=40) }}
+            </label>
+            <label>{{ form.content.label }}
+                <div class="pagedown-row">
+                    <div class="pagedown-column">
+                        {{ form.content(only_input=True, rows=30) }}
+                    </div>
+                    <div class="pagedown-column" style="margin-left: 40px;">
+                        Prévisualisation:
+                        {{ form.content(only_preview=True) }}
+                    </div>
+                </div>
+            </label>
+            <input type="submit" name="submit" value="Enregistrer" />
+        </form>
+        <p>
+            L'adresse e-mail n'est pas rendue publique, elle est uniquement
+            utilisée par les modérateurs pour vous contacter si nécessaire.
+        </p>
+    </article>
+{% endblock main %}

@@ -3,13 +3,17 @@
 .coverage
 .eggs
 .env
+venv/
 .pytest_cache
 __pycache__
 afpy.egg-info
 static/css/*.map
 posts
+images
 
 # PyCharm project files
 .idea
 out
 gen
+*.db
+images/

@@ -1,0 +1,51 @@
+{% extends '_parts/base.jinja2' %}
+
+{% block header %}
+    <h1>{{ job.title }}</h1>
+{% endblock header %}
+
+{% block main %}
+
+    {% if preview %}
+        <a href="{{ url_for("moderation.moderate_view", type="jobs") }}">Retour à l'interface d'administration</a>
+        {#        <p><a class="btn btn-warning" href="http://127.0.0.1:5000/admin/jobpost/edit/?id={{ job.id }}" role="button">Edit</a></p>#}
+    {% endif %}
+
+    <article>
+        {% if preview %}
+            <time pubdate datetime="">
+                Pas publié
+            </time>
+        {% else %}
+            <time pubdate datetime="{{ job.dt_published }}">
+                Posté le {{ job.dt_published.strftime('%d/%m/%Y') }} à {{ job.dt_published.strftime('%H:%M:%S') }}
+            </time>
+        {% endif %}
+        <p>
+            <em>
+                {{ job.summary | safe if job.summary }}
+            </em>
+        </p>
+        {% if job.image_path %}
+            <img src="{{ url_for('home.get_image', path=job.image_path) }}" alt="{{ job.title }}" />
+        {% endif %}
+        {{ job.content | md2html | safe }}
+        <aside>
+            <h2>{{ job.company or "(Société inconnue)" }}</h2>
+            <dl>
+                <dt>Adresse</dt>
+                <dd>{{ job.location }}</dd>
+                <dt>Personne à contacter</dt>
+                <dd>{{ job.contact_info }}</dd>
+                {% if job.phone %}
+                    <dt>Téléphone</dt>
+                    <dd><a href="tel:{{ job.phone }}">{{ job.phone }}</a></dd>
+                {% endif %}
+                {% if job.email %}
+                    <dt>Adresse e-mail</dt>
+                    <dd><a href="mailto:{{ job.email }}">{{ job.email }}</a></dd>
+                {% endif %}
+            </dl>
+        </aside>
+    </article>
+{% endblock main %}

@@ -1,0 +1,18 @@
+{% extends 'admin/master.html' %}
+{% block body %}
+    {{ super() }}
+    <div class="row-fluid">
+        {% include "_parts/flashes.jinja2" %}
+        <div>
+            {% if current_user.is_authenticated %}
+                <div class="col-md-4 text-center mx-3">
+                    <a class="btn btn-primary" href="{{ url_for("moderation.moderate_view", type="jobs") }}"><i class="icon-arrow-left icon-white"></i>Moderate Jobs</a>
+                </div>
+                <div class="col-xs-12 col-md-4 text-center mx-3">
+                    <a class="btn btn-primary" href="{{ url_for("moderation.moderate_view", type="news") }}"><i class="icon-arrow-left icon-white"></i>Moderate News</a>
+                </div>
+            {% endif %}
+        </div>
+
+    </div>
+{% endblock body %}
