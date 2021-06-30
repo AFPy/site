@@ -115,7 +115,7 @@ if __name__ == "__main__":
                         title=post.get("title", "(untitled)"),
                         summary=post.get("summary"),
                         content=html2text(post.get("content", "")),
-                        company=post.get("company"),
+                        company=post.get("company", "(unknown)"),
                         email=post.get("email"),
                         phone=post.get("phone", "(no phone)" if post.get("email") is None else None),
                         location=post.get("address"),
