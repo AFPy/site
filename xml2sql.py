@@ -84,55 +84,52 @@ if __name__ == "__main__":
     for category in CATEGORIES:
         for state in STATES:
             for post in get_posts(category, state):
-                try:
-                    timestamp = post.get(FIELD_TIMESTAMP)
-                    if post.get(FIELD_IMAGE):
-                        image = POSTS_DIR / post.get(FIELD_IMAGE)
-                        name, ext = os.path.splitext(post.get(FIELD_IMAGE))
-                        post["image"] = f"{category}.{timestamp}{ext}"
-                        shutil.copy(str(image), str(IMAGE_DIR / post["image"]))
-                    if category == "actualites":
-                        new_post = NewsEntry.create(
-                            title=post.get("title"),
-                            summary=post.get("summary"),
-                            content=html2text(post.get("content")),
-                            author="Admin",
-                            author_email=post.get("email"),
-                            image_path=post.get("image"),
-                            dt_published=parse(post.get("published")).replace(tzinfo=None)
-                            if state == "published"
-                            else None,
-                            dt_submitted=parse(post.get("published")).replace(tzinfo=None),
-                            dt_updated=parse(post.get("published")).replace(tzinfo=None),
-                            state=state,
-                            approved_by=admin_1 if state == "published" or state == "rejected" else None,
-                        )
-                        Slug.create(url=f"/posts/actualites/{post.get(FIELD_TIMESTAMP)}", newsentry=new_post)
-                        post_id = post.get("id")
-                        if post_id:
-                            Slug.create(url=post_id.split("afpy.org")[-1], newsentry=new_post)
-                    else:
-                        new_job = JobPost.create(
-                            title=post.get("title"),
-                            summary=post.get("summary"),
-                            content=html2text(post.get("content")),
-                            company=post.get("company"),
-                            email=post.get("email"),
-                            phone=post.get("phone"),
-                            location=post.get("address"),
-                            contact_info=post.get("contact"),
-                            dt_published=parse(post.get("published")).replace(tzinfo=None)
-                            if state == "published"
-                            else None,
-                            dt_submitted=parse(post.get("published")).replace(tzinfo=None),
-                            dt_updated=parse(post.get("published")).replace(tzinfo=None),
-                            state=state,
-                            approved_by=admin_1 if state == "published" or state == "rejected" else None,
-                            image_path=post.get("image"),
-                        )
-                        Slug.create(url=f"/posts/emplois/{post.get(FIELD_TIMESTAMP)}", jobpost=new_job)
-                        post_id = post.get("id")
-                        if post_id:
-                            Slug.create(url=post_id.split("afpy.org")[-1], jobpost=new_job)
-                except Exception as ex:
-                    print(f"[{post.get(FIELD_TIMESTAMP)}] {ex}")
+                timestamp = post.get(FIELD_TIMESTAMP)
+                if post.get(FIELD_IMAGE):
+                    image = POSTS_DIR / post.get(FIELD_IMAGE)
+                    name, ext = os.path.splitext(post.get(FIELD_IMAGE))
+                    post["image"] = f"{category}.{timestamp}{ext}"
+                    shutil.copy(str(image), str(IMAGE_DIR / post["image"]))
+                if category == "actualites":
+                    new_post = NewsEntry.create(
+                        title=post.get("title"),
+                        summary=post.get("summary"),
+                        content=html2text(post.get("content"), ""),
+                        author="Admin",
+                        author_email=post.get("email"),
+                        image_path=post.get("image"),
+                        dt_published=parse(post.get("published")).replace(tzinfo=None)
+                        if state == "published"
+                        else None,
+                        dt_submitted=parse(post.get("published")).replace(tzinfo=None),
+                        dt_updated=parse(post.get("published")).replace(tzinfo=None),
+                        state=state,
+                        approved_by=admin_1 if state == "published" or state == "rejected" else None,
+                    )
+                    Slug.create(url=f"/posts/actualites/{post.get(FIELD_TIMESTAMP)}", newsentry=new_post)
+                    post_id = post.get("id")
+                    if post_id:
+                        Slug.create(url=post_id.split("afpy.org")[-1], newsentry=new_post)
+                else:
+                    new_job = JobPost.create(
+                        title=post.get("title"),
+                        summary=post.get("summary"),
+                        content=html2text(post.get("content")),
+                        company=post.get("company"),
+                        email=post.get("email"),
+                        phone=post.get("phone"),
+                        location=post.get("address"),
+                        contact_info=post.get("contact"),
+                        dt_published=parse(post.get("published")).replace(tzinfo=None)
+                        if state == "published"
+                        else None,
+                        dt_submitted=parse(post.get("published")).replace(tzinfo=None),
+                        dt_updated=parse(post.get("published")).replace(tzinfo=None),
+                        state=state,
+                        approved_by=admin_1 if state == "published" or state == "rejected" else None,
+                        image_path=post.get("image"),
+                    )
+                    Slug.create(url=f"/posts/emplois/{post.get(FIELD_TIMESTAMP)}", jobpost=new_job)
+                    post_id = post.get("id")
+                    if post_id:
+                        Slug.create(url=post_id.split("afpy.org")[-1], jobpost=new_job)
