@@ -118,7 +118,7 @@ if __name__ == "__main__":
                         company=post.get("company", "(unknown)"),
                         email=post.get("email"),
                         phone=post.get("phone", "(no phone)" if post.get("email") is None else None),
-                        location=post.get("address"),
+                        location=post.get("address", "(no addr)"),
                         contact_info=post.get("contact"),
                         dt_published=parse(post.get("published")).replace(tzinfo=None)
                         if state == "published"
