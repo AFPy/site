@@ -112,7 +112,7 @@ if __name__ == "__main__":
                         Slug.create(url=post_id.split("afpy.org")[-1], newsentry=new_post)
                 else:
                     new_job = JobPost.create(
-                        title=post.get("title"),
+                        title=post.get("title", "(untitled)"),
                         summary=post.get("summary"),
                         content=html2text(post.get("content")),
                         company=post.get("company"),
