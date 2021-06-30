@@ -9,7 +9,7 @@ from flask import url_for
 
 from afpy.models.JobPost import JobPost
 from afpy.models.NewsEntry import NewsEntry
-from afpy.static import AFPY_ROOT
+from afpy import config
 
 
 rss_bp = Blueprint("rss", __name__)
@@ -42,7 +42,7 @@ def feed_rss(type):
 @rss_bp.route("/planet/rss.xml")
 def planet_rss():
     entries = []
-    with open(f"{AFPY_ROOT}/afpy/data/data.json", "r") as handle:
+    with open(f"{config.AFPY_ROOT}/afpy/data/data.json", "r") as handle:
         planet_items = json.load(handle)["planet"]
     for name, url in planet_items.items():
         for entry in feedparser.parse(url).entries:

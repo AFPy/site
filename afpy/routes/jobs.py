@@ -9,8 +9,8 @@ from werkzeug.utils import secure_filename
 
 from afpy.forms.JobPost import JobPostForm
 from afpy.models.JobPost import JobPost
-from afpy.static import IMAGES_PATH
-from afpy.static import NEWS_PER_PAGE
+from afpy import config
+
 
 jobs_bp = Blueprint("jobs", __name__)
 
@@ -27,12 +27,12 @@ def jobs_render(post_id: int):
 @jobs_bp.route("/emplois/page/<int:current_page>")
 def jobs_page(current_page: int = 1):
     submitted = request.args.get("submitted", False)
-    total_pages = (JobPost.select().where(JobPost.state == "published").count() // NEWS_PER_PAGE) + 1
+    total_pages = (JobPost.select().where(JobPost.state == "published").count() // config.NEWS_PER_PAGE) + 1
     jobs = (
         JobPost.select()
         .where(JobPost.state == "published")
         .order_by(JobPost.dt_submitted.desc())
-        .paginate(current_page, NEWS_PER_PAGE)
+        .paginate(current_page, config.NEWS_PER_PAGE)
     )
     return render_template(
         "pages/jobs.html",
@@ -72,7 +72,7 @@ def new_job():
         if form.image.data:
             extension = secure_filename(form.image.data.filename).split(".")[-1].lower()
             filename = f"emplois.{new_job.id}.{extension}"
-            filepath = f"{IMAGES_PATH}/{filename}"
+            filepath = f"{config.IMAGES_PATH}/{filename}"
             request.files[form.image.name].save(filepath)
             new_job.image_path = filename
             new_job.save()

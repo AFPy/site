@@ -7,7 +7,11 @@ Site Web de l'AFPy.
 
 Commencez par un `make install`
 
-Ensuite, `mv .env.template .env` en remplacant les valeurs nécéssaires
+Ensuite, `mv .env.template .env` en remplacant les valeurs
+nécéssaires.
+
+Créez le répertoire des images: `images` à la racine du projet (ou
+ailleurs, configuré via `IMAGE_PATHS` dans le `.env`).
 
 Puis un `make serve` suffit pour tester localement sans article.
 

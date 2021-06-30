@@ -9,9 +9,7 @@ from flask import send_from_directory
 from peewee import DoesNotExist
 
 from afpy.models.NewsEntry import NewsEntry
-from afpy.static import AFPY_ROOT
-from afpy.static import IMAGES_PATH
-from afpy.static import NEWS_PER_PAGE
+from afpy import config
 
 home_bp = Blueprint("home", __name__)
 
@@ -24,7 +22,7 @@ def home_page():
 
 @home_bp.route("/communaute")
 def community_page():
-    with open(f"{AFPY_ROOT}/afpy/data/data.json", "r") as handle:
+    with open(f"{config.AFPY_ROOT}/afpy/data/data.json", "r") as handle:
         meetups = json.load(handle)["meetups"]
     return render_template("pages/communaute.html", body_id="communaute", meetups=meetups)
 
@@ -42,7 +40,7 @@ def discussion_page():
 @home_bp.route("/docs/<name>")
 def render_rest(name):
     try:
-        with open(f"{AFPY_ROOT}/afpy/templates/rest/{name}.rst") as fd:
+        with open(f"{config.AFPY_ROOT}/afpy/templates/rest/{name}.rst") as fd:
             parts = publish_parts(
                 source=fd.read(), writer=html5_polyglot.Writer(), settings_overrides={"initial_header_level": 2}
             )
@@ -62,8 +60,8 @@ def post_render(post_id: int):
 
 @home_bp.route("/posts/page/<int:current_page>")
 def posts_page(current_page: int = 1):
-    total_pages = (NewsEntry.select().where(NewsEntry.state == "published").count() // NEWS_PER_PAGE) + 1
-    posts = NewsEntry.select().where(NewsEntry.state == "published").paginate(current_page, NEWS_PER_PAGE)
+    total_pages = (NewsEntry.select().where(NewsEntry.state == "published").count() // config.NEWS_PER_PAGE) + 1
+    posts = NewsEntry.select().where(NewsEntry.state == "published").paginate(current_page, config.NEWS_PER_PAGE)
     return render_template(
         "pages/posts.html",
         body_id="posts",
@@ -76,4 +74,4 @@ def posts_page(current_page: int = 1):
 
 @home_bp.route("/post_image/<path:path>")
 def get_image(path):
-    return send_from_directory(IMAGES_PATH, path)
+    return send_from_directory(config.IMAGES_PATH, path)

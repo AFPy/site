@@ -2,7 +2,6 @@ import email
 import os
 import os.path as op
 
-from dotenv import load_dotenv
 from flask import abort
 from flask import Flask
 from flask import render_template
@@ -13,31 +12,17 @@ from flask_pagedown import PageDown
 from peewee import DoesNotExist
 from peewee import SqliteDatabase
 
-from afpy.static import AFPY_ROOT
+from afpy import config
 from afpy.utils import markdown_to_html
 
-dotenv_path = os.path.join(AFPY_ROOT, ".env")
-load_dotenv(dotenv_path)
-
-REQUIRED_ENV_VARS = ["FLASK_DEBUG", "FLASK_HOST", "FLASK_SECRET_KEY", "DB_NAME"]
-
-for item in REQUIRED_ENV_VARS:
-    if item not in os.environ:
-        raise EnvironmentError(f"{item} is not set in the server's environment or .env file. It is required.")
-
-from afpy.static import FLASK_SECRET_KEY, DB_NAME
-
-database = SqliteDatabase(database=DB_NAME)
+database = SqliteDatabase(database=config.DB_NAME)
 
 application = Flask(__name__)
 
 pagedown = PageDown(application)
 
-
-application.debug = os.getenv("FLASK_DEBUG") in ("true", "1")
-
-application.secret_key = FLASK_SECRET_KEY
-application.config.update(FLASK_SECRET_KEY=FLASK_SECRET_KEY)
+application.debug = config.FLASK_DEBUG
+application.secret_key = config.FLASK_SECRET_KEY
 application.config["FLASK_ADMIN_SWATCH"] = "lux"
 
 
@@ -93,8 +78,7 @@ admin.add_view(AdminUser_Admin(AdminUser, category="Models"))
 admin.add_view(NewsEntry_Admin(NewsEntry, category="Models"))
 admin.add_view(JobPost_Admin(JobPost, category="Models"))
 admin.add_view(SlugAdmin(Slug, category="Models"))
-images_path = op.join(AFPY_ROOT, "images")
-admin.add_view(CustomFileAdmin(images_path, "/images/", name="Images Files"))
+admin.add_view(CustomFileAdmin(config.IMAGES_PATH, "/images/", name="Images Files"))
 admin.add_view(NewAdminView(name="New Admin", endpoint="register_admin"))
 admin.add_view(ChangePasswordView(name="Change password", endpoint="change_password"))
 admin.add_view(ModerateView(name="Moderate", endpoint="moderation"))
