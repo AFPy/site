@@ -115,11 +115,11 @@ if __name__ == "__main__":
                         title=post.get("title", "(untitled)"),
                         summary=post.get("summary"),
                         content=html2text(post.get("content", "")),
-                        company=post.get("company", "(unknown)"),
+                        company=post.get("company", ""),
                         email=post.get("email"),
-                        phone=post.get("phone", "(no phone)" if post.get("email") is None else None),
-                        location=post.get("address", "(no addr)"),
-                        contact_info=post.get("contact"),
+                        phone=post.get("phone", "" if post.get("email") is None else None),
+                        location=post.get("address", ""),
+                        contact_info=post.get("contact", ""),
                         dt_published=parse(post.get("published")).replace(tzinfo=None)
                         if state == "published"
                         else None,
