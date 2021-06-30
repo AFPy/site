@@ -111,13 +111,17 @@ if __name__ == "__main__":
                     if post_id:
                         Slug.create(url=post_id.split("afpy.org")[-1], newsentry=new_post)
                 else:
+                    email = post.get("email", "")
+                    phone = post.get("phone", "")
+                    if not email and not phone:
+                        phone = "(no phone)"
                     new_job = JobPost.create(
                         title=post.get("title", "(untitled)"),
                         summary=post.get("summary"),
                         content=html2text(post.get("content", "")),
                         company=post.get("company", ""),
-                        email=post.get("email"),
-                        phone=post.get("phone", "(no phone)" if not post.get("email") else None),
+                        email=email,
+                        phone=phone,
                         location=post.get("address", ""),
                         contact_info=post.get("contact", ""),
                         dt_published=parse(post.get("published")).replace(tzinfo=None)
