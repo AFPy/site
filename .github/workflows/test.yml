@@ -1,0 +1,31 @@
+---
+
+name: Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build_ubuntu:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.7  # As on deb.afpy.org
+      - uses: actions/cache@v2
+        with:
+          path: |
+            venv
+          key: ${{ hashFiles('requirements.txt') }}-${{ hashFiles('requirements-dev.txt') }}
+      - name: Test
+        run: |
+          python --version
+          make install
+          make test
