@@ -114,7 +114,7 @@ if __name__ == "__main__":
                     new_job = JobPost.create(
                         title=post.get("title", "(untitled)"),
                         summary=post.get("summary"),
-                        content=html2text(post.get("content")),
+                        content=html2text(post.get("content", "")),
                         company=post.get("company"),
                         email=post.get("email"),
                         phone=post.get("phone"),
