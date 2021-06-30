@@ -94,7 +94,7 @@ if __name__ == "__main__":
                     new_post = NewsEntry.create(
                         title=post.get("title"),
                         summary=post.get("summary"),
-                        content=html2text(post.get("content"), ""),
+                        content=html2text(post.get("content", "")),
                         author="Admin",
                         author_email=post.get("email"),
                         image_path=post.get("image"),
