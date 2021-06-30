@@ -92,7 +92,7 @@ if __name__ == "__main__":
                     shutil.copy(str(image), str(IMAGE_DIR / post["image"]))
                 if category == "actualites":
                     new_post = NewsEntry.create(
-                        title=post.get("title"),
+                        title=post.get("title", "(untitled)"),
                         summary=post.get("summary"),
                         content=html2text(post.get("content", "")),
                         author="Admin",
