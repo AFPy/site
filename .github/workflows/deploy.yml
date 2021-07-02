@@ -1,3 +1,5 @@
+---
+
 name: Publish
 
 on:
@@ -23,5 +25,5 @@ jobs:
           rsync -a ./ afpy-org@deb.afpy.org:/home/afpy-org/src/
           ssh afpy-org@deb.afpy.org /home/afpy-org/venv/bin/python -m pip install --upgrade setuptools wheel pip
           ssh afpy-org@deb.afpy.org /home/afpy-org/venv/bin/python -m pip install -r /home/afpy-org/src/requirements.txt
-          ssh afpy-org@deb.afpy.org /home/afpy-org/venv/bin/python -m pip install sentry
+          ssh afpy-org@deb.afpy.org /home/afpy-org/venv/bin/python -m pip install sentry-sdk[flask]
           ssh afpy-org@deb.afpy.org sudo systemctl restart afpy-org.service
