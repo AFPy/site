@@ -12,6 +12,6 @@ WTForms==2.3.3
 feedparser==6.0.2
 xmltodict==0.12.0
 flask-pagedown==0.3.0
-markdown2==2.3.10
+markdown2==2.4.0
 bleach==3.2.1
 html2text==2020.1.16
