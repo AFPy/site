@@ -1,0 +1,38 @@
+{% extends '_parts/base.jinja2' %}
+
+{% block header %}
+    <h1>{{ title }}</h1>
+{% endblock header %}
+
+{% block main %}
+    <aside>
+        Vous pouvez <a href="{{ url_for('posts.new_post') }}">créer un article</a> qui
+        sera mis en ligne après acceptation de l'un des modérateurs.
+    </aside>
+    {% if submitted %}
+        <aside>Merci ! Votre offre d'emploi apparaîtra après validation par un des administrateurs.</aside>
+    {% endif %}
+    {% for post in posts %}
+        <article>
+            <h2>{{ post.title }}</h2>
+            <time pubdate datetime="{{ post.dt_published }}">
+                {{ post.dt_published.strftime('%d/%m/%Y') }}
+            </time>
+            {% if post.image_path %}
+                <img src="{{ url_for('home.get_image', path=post.image_path) }}" alt="{{ post.title }}" />
+            {% endif %}
+            {{ post.summary | safe if post.summary }}
+            <p><a href="{{ post|slug_url }}">Lire la suite…</a></p>
+        </article>
+    {% endfor %}
+
+    <aside>
+        {% if current_page != 1 %}
+            <a href="{{ url_for('posts.posts_page', current_page=(current_page - 1)) }}">Précedente</a>
+        {% endif %}
+        Page {{ current_page }}/{{ total_pages }}
+        {% if current_page != total_pages %}
+            <a href="{{ url_for('posts.posts_page', current_page=(current_page + 1)) }}">Suivante</a>
+        {% endif %}
+    </aside>
+{% endblock main %}

@@ -1,0 +1,17 @@
+{% block html_footer %}
+    <footer class="wrapper menu menu--footer">
+        {% set navigation_bar = [
+        (url_for('home.render_rest', name='contact'), 'Contact'),
+        (url_for('home.render_rest', name='charte'), 'Charte'),
+        (url_for('home.render_rest', name='legal'), 'Mentions légales'),
+        (url_for('home.render_rest', name='rss'), 'Flux RSS'),
+        ('https://twitter.com/asso_python_fr', 'Twitter'),
+        (url_for('admin.index', name='Admin'), 'Admin'),
+      ] -%}
+        <ul class="menu__list">
+            {% for href, caption in navigation_bar %}
+                <li class="menu__item"><a href="{{ href|e }}">{{ caption|e }}</a></li>
+            {% endfor %}
+        </ul>
+    </footer>
+{% endblock %}

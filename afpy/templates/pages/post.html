@@ -1,0 +1,33 @@
+{% extends '_parts/base.jinja2' %}
+
+{% block header %}
+    <h1>{{ post.title }}</h1>
+{% endblock header %}
+
+{% block main %}
+    {% if preview %}
+        <a href="{{ url_for("moderation.moderate_view", type="news") }}">Retour à l'interface d'administration</a>
+        {#        <p><a class="btn btn-warning" href="http://127.0.0.1:5000/admin/jobpost/edit/?id={{ post.id }}" role="button">Edit</a></p>#}
+    {% endif %}
+
+    <article>
+        {% if preview %}
+            <time pubdate datetime="">
+                Pas publié
+            </time>
+        {% else %}
+            <time pubdate datetime="{{ post.dt_published }}">
+                Posté le {{ post.dt_published.strftime('%d/%m/%Y') }} à {{ post.dt_published.strftime('%H:%M:%S') }}
+            </time>
+        {% endif %}
+        <p>
+            <em>
+                {{ post.summary | safe if post.summary }}
+            </em>
+        </p>
+        {% if post.image_path %}
+            <img src="{{ url_for('home.get_image', path=post.image_path) }}" alt="{{ post.title }}" />
+        {% endif %}
+        {{ post.content | md2html | safe }}
+    </article>
+{% endblock main %}
