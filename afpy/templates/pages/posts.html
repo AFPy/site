@@ -9,9 +9,6 @@
         Vous pouvez <a href="{{ url_for('posts.new_post') }}">créer un article</a> qui
         sera mis en ligne après acceptation de l'un des modérateurs.
     </aside>
-    {% if submitted %}
-        <aside>Merci ! Votre offre d'emploi apparaîtra après validation par un des administrateurs.</aside>
-    {% endif %}
     {% for post in posts %}
         <article>
             <h2>{{ post.title }}</h2>
