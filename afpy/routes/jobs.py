@@ -1,5 +1,6 @@
 from flask import abort
 from flask import Blueprint
+from flask import flash
 from flask import redirect
 from flask import render_template
 from flask import request
@@ -26,7 +27,6 @@ def jobs_render(post_id: int):
 
 @jobs_bp.route("/emplois/page/<int:current_page>")
 def jobs_page(current_page: int = 1):
-    submitted = request.args.get("submitted", False)
     total_pages = (JobPost.select().where(JobPost.state == "published").count() // config.NEWS_PER_PAGE) + 1
     jobs = (
         JobPost.select()
@@ -41,7 +41,6 @@ def jobs_page(current_page: int = 1):
         title="Offres d'emploi",
         current_page=current_page,
         total_pages=total_pages,
-        submitted=submitted,
     )
 
 
@@ -68,6 +67,7 @@ def new_job():
             phone=phone,
             summary=summary,
         )
+        flash("Merci ! Votre offre d'emploi apparaîtra après validation par un des administrateurs.", "success")
 
         if form.image.data:
             extension = secure_filename(form.image.data.filename).split(".")[-1].lower()

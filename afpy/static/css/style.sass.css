@@ -171,6 +171,14 @@ aside {
   padding: 1em 2em;
   width: 80%; }
 
+.success {
+  color: lightgreen;
+}
+
+.warning {
+  color: salmon;
+}
+
 footer ul {
   display: flex;
   justify-content: center;
