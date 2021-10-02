@@ -24,6 +24,7 @@ def jobs_render(post_id: int):
     return render_template("pages/job.html", body_id="emplois", job=job, name=job.title)
 
 
+@jobs_bp.route("/emplois")
 @jobs_bp.route("/emplois/page/<int:current_page>")
 def jobs_page(current_page: int = 1):
     submitted = request.args.get("submitted", False)
