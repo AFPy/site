@@ -8,6 +8,7 @@ from flask import render_template
 from flask import send_from_directory
 from peewee import DoesNotExist
 
+from afpy.models.JobPost import JobPost
 from afpy.models.NewsEntry import NewsEntry
 from afpy import config
 
@@ -47,6 +48,18 @@ def render_rest(name):
     except FileNotFoundError:
         abort(404)
     return render_template("pages/rst.html", body_id=name, html=parts["body"], title=parts["title"])
+
+
+@home_bp.route("/status")
+def status():
+    return {
+        "actualites": {
+            "waiting": NewsEntry.select().where(NewsEntry.state == "waiting").count(),
+        },
+        "emplois": {
+            "waiting": JobPost.select().where(JobPost.state == "waiting").count(),
+        },
+    }
 
 
 @home_bp.route("/posts/<int:post_id>")
