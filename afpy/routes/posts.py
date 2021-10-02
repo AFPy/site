@@ -23,6 +23,7 @@ def post_render(post_id: int):
     return render_template("pages/post.html", body_id="actualites", post=post, name=post.title)
 
 
+@posts_bp.route("/actualites")
 @posts_bp.route("/actualites/page/<int:current_page>")
 def posts_page(current_page: int = 1):
     submitted = request.args.get("submitted", False)

@@ -3,8 +3,8 @@
         {% set navigation_bar = [
         (url_for('home.home_page'), 'index', 'Accueil'),
         (url_for('home.render_rest', name='a-propos'), 'a-propos', 'Qui sommes-nous ?'),
-        (url_for('posts.posts_page', current_page='1'), 'actualites', 'Actualités'),
-        (url_for('jobs.jobs_page', current_page='1'), 'emplois', 'Offres d\'emplois'),
+        (url_for('posts.posts_page'), 'actualites', 'Actualités'),
+        (url_for('jobs.jobs_page'), 'emplois', 'Offres d\'emplois'),
         (url_for('home.community_page'), 'communaute', 'Communauté'),
         ('https://discuss.afpy.org', 'discussion', 'Discussion'),
         ('https://www.afpy.org/discord', 'discord', 'Discord'),
