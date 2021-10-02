@@ -5,13 +5,10 @@
 {% endblock header %}
 
 {% block main %}
-        <aside>
-            Vous pouvez <a href="{{ url_for('jobs.new_job') }}">créer une nouvelle offre</a> qui
-            sera mis en ligne après acceptation de l'un des modérateurs.
-        </aside>
-    {% if submitted %}
-        <aside>Merci ! Votre offre d'emploi apparaîtra après validation par un des administrateurs.</aside>
-    {% endif %}
+    <aside>
+        Vous pouvez <a href="{{ url_for('jobs.new_job') }}">créer une nouvelle offre</a> qui
+        sera mis en ligne après acceptation de l'un des modérateurs.
+    </aside>
     {% for job in jobs %}
         <article>
             <h2>{{ job.title }}</h2>
