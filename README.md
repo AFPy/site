@@ -11,7 +11,7 @@ Ensuite, `mv .env.template .env` en remplacant les valeurs
 nécéssaires.
 
 Créez le répertoire des images: `images` à la racine du projet (ou
-ailleurs, configuré via `IMAGE_PATHS` dans le `.env`).
+ailleurs, configuré via `IMAGES_PATH` dans le `.env`).
 
 Puis un `make serve` suffit pour tester localement sans article.
 
