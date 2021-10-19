@@ -33,9 +33,9 @@ def adhere_page():
     return render_template("pages/adhesions.html", body_id="adhesions")
 
 
-@home_bp.route("/discussion")
-def discussion_page():
-    return render_template("pages/discussion.html", body_id="irc")
+@home_bp.route("/irc")
+def irc_page():
+    return render_template("pages/irc.html", body_id="irc")
 
 
 @home_bp.route("/docs/<name>")
