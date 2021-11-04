@@ -18,15 +18,12 @@
                         {% if item.summary %}
                             <p>{{ item.summary }}</p>
                         {% endif %}
-                        {% if type == "jobs" %}
-                            <p><a class="btn btn-secondary" href="{{ url_for("moderation.preview_item", type="jobs", id=item.id) }}" role="button">Preview</a></p>
-                            <p><a class="btn btn-warning" href="{{ url_for("jobpost.edit_view", id=item.id) }}" role="button">Edit</a></p>
-                            <p><a class="btn btn-success" href="{{ url_for("moderation.moderate_action", id=item.id, type="jobs", action="approve") }}" role="button">Approve</a> <a class="btn btn-danger" href="{{ url_for("moderation.moderate_action", id=item.id, type="jobs", action="reject") }}" role="button">Reject</a></p>
-                        {% else %}
-                            <p><a class="btn btn-secondary" href="{{ url_for("moderation.preview_item", type="news", id=item.id) }}" role="button">Preview</a></p>
-                            <p><a class="btn btn-warning" href="{{ url_for("newsentry.edit_view", id=item.id) }}" role="button">Edit</a></p>
-                            <p><a class="btn btn-success" href="{{ url_for("moderation.moderate_action", id=item.id, type="news", action="approve") }}" role="button">Approve</a> <a class="btn btn-danger" href="{{ url_for("moderation.moderate_action", id=item.id, type="news", action="reject") }}" role="button">Reject</a></p>
-                        {% endif %}
+                        <p><a class="btn btn-secondary" href="{{ url_for(".preview_item", id=item.id) }}" role="button">Preview</a></p>
+                        <p>
+                          <a class="btn btn-warning" href="{{ url_for(edit_view, id=item.id) }}" role="button">Edit</a>
+                          <a class="btn btn-success" href="{{ url_for(".moderate_action", id=item.id, action="approve") }}" role="button">Approve</a>
+                          <a class="btn btn-danger" href="{{ url_for(".moderate_action", id=item.id, action="reject") }}" role="button">Reject</a>
+                        </p>
                     </div>
                 {% endfor %}
             {% endif %}

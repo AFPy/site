@@ -100,6 +100,8 @@ class JobPost(BaseModel):
 
 class JobPost_Admin(ModelView):
     model_class = JobPost
+    column_list = ("state", "title", "dt_published")
+    column_default_sort = ("id", True)
 
     def is_accessible(self):
         return current_user.is_authenticated

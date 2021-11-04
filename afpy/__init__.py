@@ -23,7 +23,7 @@ pagedown = PageDown(application)
 
 application.debug = config.FLASK_DEBUG
 application.secret_key = config.FLASK_SECRET_KEY
-application.config["FLASK_ADMIN_SWATCH"] = "lux"
+application.config["FLASK_ADMIN_SWATCH"] = "darkly"
 
 
 # Initializes the login manager used for the admin
@@ -62,7 +62,14 @@ from afpy.models.JobPost import JobPost, JobPost_Admin
 from afpy.models.Slug import Slug, SlugAdmin
 
 
-from afpy.routes.admin import AdminIndexView, NewAdminView, ChangePasswordView, ModerateView, CustomFileAdmin
+from afpy.routes.admin import (
+    AdminIndexView,
+    NewAdminView,
+    ChangePasswordView,
+    JobsModerateView,
+    NewsModerateView,
+    CustomFileAdmin,
+)
 
 # Creates the Admin manager
 admin = Admin(
@@ -74,14 +81,15 @@ admin = Admin(
 )
 
 # Registers the views for each table
-admin.add_view(AdminUser_Admin(AdminUser, category="Models"))
-admin.add_view(NewsEntry_Admin(NewsEntry, category="Models"))
-admin.add_view(JobPost_Admin(JobPost, category="Models"))
-admin.add_view(SlugAdmin(Slug, category="Models"))
+admin.add_view(JobsModerateView(name="Moderate Jobs", endpoint="jobs_moderation", category="Moderate"))
+admin.add_view(NewsModerateView(name="Moderate News", endpoint="news_moderation", category="Moderate"))
+admin.add_view(NewsEntry_Admin(NewsEntry))
+admin.add_view(JobPost_Admin(JobPost))
+admin.add_view(SlugAdmin(Slug))
 admin.add_view(CustomFileAdmin(config.IMAGES_PATH, "/images/", name="Images Files"))
-admin.add_view(NewAdminView(name="New Admin", endpoint="register_admin"))
-admin.add_view(ChangePasswordView(name="Change password", endpoint="change_password"))
-admin.add_view(ModerateView(name="Moderate", endpoint="moderation"))
+admin.add_view(NewAdminView(name="New Admin", endpoint="register_admin", category="Admin"))
+admin.add_view(ChangePasswordView(name="Change password", endpoint="change_password", category="Admin"))
+admin.add_view(AdminUser_Admin(AdminUser, category="Admin"))
 
 
 @application.template_filter("rfc822_datetime")
