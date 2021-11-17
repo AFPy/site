@@ -18,6 +18,7 @@
             {% if job.image_path %}
                 <img src="{{ url_for('home.get_image', path=job.image_path) }}" alt="{{ job.title }}" />
             {% endif %}
+            {% if job.summary %}{{ job.summary |safe }}{% else %}{{ job.content|truncate(50)|safe }}{% endif %}
             {{ job.summary | safe if job.summary }}
             <p><a href="{{ job|slug_url }}">Lire la suite…</a></p>
         </article>
