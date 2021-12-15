@@ -6,18 +6,20 @@
 
 {% block main %}
     <h2>AFPy</h2>
-    <p>
-        Créée en décembre 2004, l'AFPy (Association Francophone Python) a pour but de promouvoir le langage Python, que ce soit auprès d'un public averti ou débutant.
-        Pour ce faire, des <a href="{{ url_for('home.community_page') }}">évènements</a> sont organisés régulièrement au niveau local et d'autres évènements à un niveau plus général.
+    <p>L'AFPy promeut le langage Python que ce soit auprès d'un public averti ou débutant.</p>
+    <p>Les projets de l'AFPy :
+      <ul>
+        <li>L'organisation annuelle de la <a href="https://pycon.fr">PyConFr</a>.</li>
+        <li>La traduction de <a href="https://docs.python.org/fr">la documentation de Python en français</a> (Licence CC0).</li>
+        <li>La création d'un outil d'apprentissage et d'enseignement de Python : <a href="https://hackinscience.org">HackInScience</a> (Licence MIT).</li>
+        <li>L'organisation d'<a href="https://discuss.afpy.org/c/meetups/12">évènements locaux ou en ligne.</a></li>
+      </ul>
     </p>
 
     <h2>Adhérer</h2>
-    <p>
-        Il est possible de soutenir le développement de l'AFPy en cotisant ou en effectuant un don.
+    <p>Il est possible de soutenir les projets de l'AFPy
+      <a href="{{ url_for('home.adhere_page') }}">en cotisant ou en effectuant un don</a>.
     </p>
-    <form action="{{ url_for('home.adhere_page') }}">
-        <input type="submit" value="S'inscrire" class="button" />
-    </form>
 
     <h2>Actualités</h2>
     <section id="index-news">

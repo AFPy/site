@@ -92,52 +92,28 @@ class ChangePasswordView(admin.BaseView):
         return self.render("admin/change_password.html", form=form)
 
 
-class ModerateView(admin.BaseView):
+class _ModerateView(admin.BaseView):
+    model = None
+
     @expose("/", methods=["GET"])
-    def home_moderation(self):
+    def moderate_view(self):
         if not current_user.is_authenticated:
             return redirect(url_for("admin.index"))
-        return self.render("admin/moderation_home.html")
+        items = self.model.select().where(self.model.state == "waiting").order_by(self.model.dt_submitted.desc())
+        return self.render("admin/moderate_view.html", items=items, edit_view=self.edit_view)
 
-    @expose("/<type>", methods=["GET"])
-    def moderate_view(self, type):
+    @expose("/preview/<id>", methods=["GET"])
+    def preview_item(self, id):
         if not current_user.is_authenticated:
             return redirect(url_for("admin.index"))
-        if type == "jobs":
-            jobs = JobPost.select().where(JobPost.state == "waiting").order_by(JobPost.dt_submitted.desc())
-            return self.render("admin/moderate_view.html", items=jobs, type=type)
-        elif type == "news":
-            news = NewsEntry.select().where(NewsEntry.state == "waiting").order_by(NewsEntry.dt_submitted.desc())
-            return self.render("admin/moderate_view.html", items=news, type=type)
-        else:
-            flash("Wrong type")
-            return redirect(url_for("admin.index"))
+        item = self.model.get_by_id(id)
+        return self.render("pages/post.html", post=item, preview=True)
 
-    @expose("/preview/<type>/<id>", methods=["GET"])
-    def preview_item(self, type, id):
+    @expose("/moderate/action/<id>/<action>", methods=["GET"])
+    def moderate_action(self, id, action):
         if not current_user.is_authenticated:
             return redirect(url_for("admin.index"))
-        if type == "jobs":
-            job = JobPost.get_by_id(id)
-            return self.render("pages/job.html", job=job, preview=True)
-        elif type == "news":
-            news = NewsEntry.get_by_id(id)
-            return self.render("pages/post.html", post=news, preview=True)
-        else:
-            flash("Wrong type")
-            return redirect(url_for("admin.index"))
-
-    @expose("/moderate/action/<id>/<type>/<action>", methods=["GET"])
-    def moderate_action(self, id, type, action):
-        if not current_user.is_authenticated:
-            return redirect(url_for("admin.index"))
-        if type == "jobs":
-            item = JobPost.get_by_id(id)
-        elif type == "news":
-            item = NewsEntry.get_by_id(id)
-        else:
-            flash("Wrong type")
-            return redirect(url_for("admin.index"))
+        item = self.model.get_by_id(id)
         if action == "approve":
             item.state = "published"
             item.approved_by = current_user.id
@@ -150,7 +126,17 @@ class ModerateView(admin.BaseView):
         else:
             flash("Wrong action type")
             return redirect(url_for("admin.index"))
-        return redirect(url_for(".moderate_view", type=type))
+        return redirect(url_for(".moderate_view"))
+
+
+class JobsModerateView(_ModerateView):
+    model = JobPost
+    edit_view = "jobpost.edit_view"
+
+
+class NewsModerateView(_ModerateView):
+    model = NewsEntry
+    edit_view = "newsentry.edit_view"
 
 
 class CustomFileAdmin(FileAdmin):
