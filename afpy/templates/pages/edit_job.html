@@ -1,61 +1,23 @@
 {% extends '_parts/base.jinja2' %}
 
 {% block header %}
-    <h1>
-        {% if post %}
-            Modification d'un job
-        {% else %}
-            Création d'un job
-        {% endif %}
-    </h1>
+    <h1>Création d'un job</h1>
 {% endblock header %}
 
 {% block main %}
 
-
     <article>
-        <form method="POST" action="{{ url_for("jobs.new_job") }}" enctype="multipart/form-data">
-            {{ form.hidden_tag() }}
-            {% for field, errors in form.errors.items() %}
-                <div class="alert alert-error">
-                    {{ form[field].label }}: {{ ', '.join(errors) }}
-                </div>
-            {% endfor %}
-            <label>{{ form.title.label }}
-                {{ form.title(size=40) }}
-            </label>
-            <label>{{ form.summary.label }}
-                {{ form.summary(size=100) }}
-            </label>
-            <label>{{ form.content.label }}
-                <div class="pagedown-row">
-                    <div class="pagedown-column">
-                        {{ form.content(only_input=True, rows=30) }}
-                    </div>
-                    <div class="pagedown-column" style="margin-left: 40px;">
-                        Prévisualisation:
-                        {{ form.content(only_preview=True) }}
-                    </div>
-                </div>            </label>
-            <label>{{ form.company.label }}
-                {{ form.company(size=40) }}
-            </label>
-            <label>{{ form.location.label }}
-                {{ form.location(size=40) }}
-            </label>
-            <label>{{ form.contact_info.label }}
-                {{ form.contact_info(size=40) }}
-            </label>
-            <label>{{ form.email.label }}
-                {{ form.email(size=40) }}
-            </label>
-            <label>{{ form.phone.label }}
-                {{ form.phone(size=40) }}
-            </label>
-            <label>{{ form.image.label }}
-                {{ form.image }}
-            </label>
-            <input type="submit" name="submit" value="Enregistrer" />
-        </form>
+      <h2>Pour plus de visibilité, la job board de l'AFPy bouge ici : <a href="https://discuss.afpy.org/c/emplois/14">https://discuss.afpy.org/c/emplois</a> !</h2>
+      <p>
+        Pour créer une offre d'emploi là bas, deux solutions :<br/>
+        <ul>
+          <li>Envoyer un email à jobs at afpy point org, le titre de votre offre en sujet, le message de votre offre en corps de message, c'est tout.</li>
+          <li>Publier l'offre directement sur <a href="https://discuss.afpy.org">là bas</a>, dans la catégorie « <a href="https://discuss.afpy.org/c/emplois/14">Offres d'emploi</a> » en cliquant sur le bouton « Créer un sujet »</li>
+        </ul>
+      </p>
+      <h2>C'est quoi https://discuss.afpy.org?</h2>
+      <p>
+        C'est une instance de <a href="https://discourse.org">Discourse</a>, un forum <a href="https://github.com/discourse/discourse">open source</a> qu'on héberge en france chez <a href="https://www.gandi.net/fr">Gandi</a>.
+      </p>
     </article>
 {% endblock main %}

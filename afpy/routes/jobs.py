@@ -45,37 +45,6 @@ def jobs_page(current_page: int = 1):
     )
 
 
-@jobs_bp.route("/emplois/new", methods=["GET", "POST"])
+@jobs_bp.route("/emplois/new", methods=["GET"])
 def new_job():
-    form = JobPostForm()
-    if form.validate_on_submit():
-        title = form.title.data
-        content = form.content.data
-        company = form.company.data
-        location = form.location.data
-        contact_info = form.contact_info.data
-        email = form.email.data
-        phone = form.phone.data
-        summary = form.summary.data
-
-        new_job = JobPost.create(
-            title=title,
-            content=content,
-            company=company,
-            location=location,
-            contact_info=contact_info,
-            email=email,
-            phone=phone,
-            summary=summary,
-        )
-        flash("Merci ! Votre offre d'emploi apparaîtra après validation par un des administrateurs.", "success")
-
-        if form.image.data:
-            extension = secure_filename(form.image.data.filename).split(".")[-1].lower()
-            filename = f"emplois.{new_job.id}.{extension}"
-            filepath = f"{config.IMAGES_PATH}/{filename}"
-            request.files[form.image.name].save(filepath)
-            new_job.image_path = filename
-            new_job.save()
-        return redirect(url_for("jobs.jobs_page", current_page=1))
-    return render_template("pages/edit_job.html", form=form, post=None, body_id="edit-post")
+    return render_template("pages/edit_job.html")
