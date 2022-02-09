@@ -15,7 +15,7 @@ et de ses applications.
 Bureau 2022
 ===========
 
-Les membres du bureau 2020 sont :
+Les membres du bureau 2022 sont :
 
 - Président : Marc Debureaux (president@afpy.org)
 - Vice président : Jules Lasne
