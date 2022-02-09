@@ -12,20 +12,14 @@ vulgarisation auprès d’un public francophone du langage de programmation pyth
 et de ses applications.
 
 
-Bureau 2020
+Bureau 2022
 ===========
 
 Les membres du bureau 2020 sont :
 
-Président (president@afpy.org)
-  Marc Debureaux
-Vice-Président
-  Jules Lasne
-Secrétaire (secretaire@afpy.org)
-  Lucie Anglade
-Vice-Secrétaire
-  Antoine Rozo
-Trésorier (tresorerie@afpy.org)
-  Guillaume Ayoub
-Vice-Trésorier
-  Pierre Bousquié
+- Président : Marc Debureaux (president@afpy.org)
+- Vice président : Jules Lasne
+- Trésorier : Pierre Bousquié (tresorier@afpy.org)
+- Vice Trésorier : Thomas Bouchet
+- Secrétaire : Antoine Rozo (secretaire@afpy.org)
+- Vice secrétaire : Jean Lapostolle
