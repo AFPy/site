@@ -7,10 +7,13 @@ Flux de l'AFPy
 ==============
 
 Vous pouvez suivre les informations de l'AFPy en vous abonnant aux flux
-suivants :
+de notre Discourse :
 
-- `Actualités </feed/actualites/rss.xml>`_
-- `Offres d'emploi </feed/emplois/rss.xml>`_
+- Tout les posts : https://discuss.afpy.org/latest.rss
+- `Actualités de l'asso <https://discuss.afpy.org/c/association.rss>`_
+- `Offres d'emploi <https://discuss.afpy.org/c/emplois.rss>`_
+
+Vous pouvez aussi suivre n'importe quelle autre catégorie en forgeant la bonne URL.
 
 
 Flux généralistes
@@ -20,4 +23,4 @@ Vous pouvez également vous abonner à ce flux qui agrège les informations vena
 de divers sites en français sur Python. Ce flux reprend également les articles
 de l'AFPy.
 
-- `Planet AFPy </planet/rss.xml>`_
+- `Planet AFPy <https://planet.afpy.org/atom.xml>`_
