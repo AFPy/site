@@ -6,8 +6,14 @@
 
 {% block main %}
     <aside>
-        Vous pouvez <a href="{{ url_for('jobs.new_job') }}">créer une nouvelle offre</a> qui
-        sera mis en ligne après acceptation de l'un des modérateurs.
+      <h2>Pour plus de visibilité, la job board de l'AFPy bouge ici : <a href="https://discuss.afpy.org/c/emplois/14">https://discuss.afpy.org/c/emplois</a> !</h2>
+      <p>
+        Pour créer une offre d'emploi là bas, deux solutions :<br/>
+        <ul>
+          <li>Envoyer un email à jobs at afpy point org, le titre de votre offre en sujet, le message de votre offre en corps de message, c'est tout.</li>
+          <li>Publier l'offre directement <a href="https://discuss.afpy.org">sur le forum</a>, dans la catégorie « <a href="https://discuss.afpy.org/c/emplois/14">Offres d'emploi</a> » en cliquant sur le bouton « Créer un sujet »</li>
+        </ul>
+      </p>
     </aside>
     {% for job in jobs %}
         <article>
