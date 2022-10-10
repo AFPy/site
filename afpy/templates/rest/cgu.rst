@@ -132,7 +132,7 @@ compte.  Vous comprenez et acceptez que l’association AFPy ne puisse
    responsable de tous dommages directs, indirects, ou fortuits,
    comprenant les dommages pour perte de profits, de clientèle,
    d’accès, de données ou d’autres pertes intangibles (même si l’AFPy
-   est informé de la possibilité de tels dommages) et qui
+   est informée de la possibilité de tels dommages) et qui
    résulteraient de :
 
    - l’utilisation ou de l’impossibilité d’utiliser le service ;
