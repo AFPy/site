@@ -91,7 +91,7 @@ Conditions du service
    est fourni tel quel.
 
 2. Vous ne devez pas modifier un autre site afin de signifier
-   faussement qu’il est associé avec ce service l’AFPy.
+   faussement qu’il est associé avec ce service de l’AFPy.
 
 3. Les comptes ne peuvent être créés et utilisés que par des
    humain·e·s. Les comptes créés par les robots ou autres méthodes
