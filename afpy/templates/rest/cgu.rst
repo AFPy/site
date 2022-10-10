@@ -1,6 +1,8 @@
 Conditions genérales d’utilisation des services de l'AFPy
 =========================================================
 
+*Version du 10 octobre 2022.*
+
 En utilisant les services de l'AFPy, vous acceptez d’être lié⋅e par les
 conditions suivantes (largement inspirées des Conditions Générales
 d’Utilisation des services en ligne Framasoft et de l'April).
@@ -8,7 +10,7 @@ d’Utilisation des services en ligne Framasoft et de l'April).
 L’AFPy se réserve le droit de modifier ces conditions en fonction des
 mises à jour des services objets des présentes conditions générales. Si
 vous souhaitez être avertis de ces changements, vous pouvez vous
-inscrire sur notre `discourse <https://discuss.afpy.org>`_.
+inscrire sur notre `forum <https://discuss.afpy.org>`_.
 
 La version « courte »
 ---------------------
@@ -21,8 +23,9 @@ On est sympathiques
 '''''''''''''''''''
 
 Votre contenu vous appartient (et nous vous encourageons à le publier
-sous licence libre). Cela signifie que personne d’autre que vous ne
-peut décider de son utilisation.
+sous licence libre, d'aileurs notre forge `n'héberge que des projets
+sous licence libre <Licence libre_>`_). Cela signifie que personne
+d’autre que vous ne peut décider de son utilisation.
 
 L’AFPy n’exploitera pas vos données personnelles, sauf parfois à des
 fins de statistiques internes (anonymisées).
