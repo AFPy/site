@@ -9,7 +9,7 @@ d’Utilisation des services en ligne Framasoft et de l’April).
 
 L’AFPy se réserve le droit de modifier ces conditions en fonction des
 mises à jour des services objets des présentes conditions générales. Si
-vous souhaitez être avertis de ces changements, vous pouvez vous
+vous souhaitez être averti·e de ces changements, vous pouvez vous
 inscrire sur notre `forum <https://discuss.afpy.org>`_.
 
 La version « courte »
