@@ -3,9 +3,11 @@ Conditions générales d’utilisation des services de l’AFPy
 
 *Version du 10 octobre 2022.*
 
-En utilisant les services de l’AFPy, vous acceptez d’être lié·e par les
-conditions suivantes (largement inspirées des Conditions Générales
-d’Utilisation des services en ligne Framasoft et de l’April).
+En utilisant les services de l’AFPy, vous acceptez d’être lié·e par
+les conditions suivantes (largement inspirées des Conditions Générales
+d’Utilisation des services en ligne `Framasoft
+<https://framasoft.org/fr/cgu/>`_ et de l’`April
+<https://www.chapril.org/cgu.html>`_).
 
 L’AFPy se réserve le droit de modifier ces conditions en fonction des
 mises à jour des services objets des présentes conditions générales. Si
