@@ -125,7 +125,7 @@ compte.  Vous comprenez et acceptez que l’association AFPy ne puisse
 3. L’AFPy ne garantit pas que
 
    - le service répondra à vos besoins spécifiques,
-   - le service sera ininterrompu ou exempte de bugs,
+   - le service sera ininterrompu ou exempt de bugs,
    - que les erreurs dans le service seront corrigées.
 
 4. Vous comprenez et acceptez que l’AFPy ne puisse être tenue
