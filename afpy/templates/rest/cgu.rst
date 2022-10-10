@@ -1,12 +1,12 @@
 Conditions genérales d’utilisation des services de l'AFPy
 =========================================================
 
-En utilisant les services de l'AFPy, vous acceptez d’être lié par les
+En utilisant les services de l'AFPy, vous acceptez d’être lié⋅e par les
 conditions suivantes (largement inspirées des Conditions Générales
 d’Utilisation des services en ligne Framasoft et de l'April).
 
 L’AFPy se réserve le droit de modifier ces conditions en fonction des
-mises à jour des services objet des présentes conditions générales. Si
+mises à jour des services objets des présentes conditions générales. Si
 vous souhaitez être avertis de ces changements, vous pouvez vous
 inscrire sur notre `discourse <https://discuss.afpy.org>`_.
 
