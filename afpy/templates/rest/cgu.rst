@@ -260,6 +260,12 @@ contactant directement `un membre du bureau
 
 - Ces données ne sont ni vendues, ni transmises à des tiers.
 
+- Étant donné que les services de l'AFPy sont hébergés en France, les
+  données que vous y publiez doivent être en accord avec les lois
+  françaises et européennes tels que décrites par la Loi Informatique
+  et Libertés et/ou le Règlement Général sur la Protection des Données
+  personnelles (RGPD).
+
 
 Conditions particulières d’utilisation du service git.afpy.org
 --------------------------------------------------------------
