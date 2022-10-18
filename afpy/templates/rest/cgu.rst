@@ -71,7 +71,7 @@ publiant des contenus qui nous posent problème, vos contenus, voire
 votre compte, pourront être supprimés sans avertissement ni
 négociation. L’AFPy reste seul juge de cette notion « d’abus » dans le
 but de fournir le meilleur service possible à l’ensemble des
-utilisateurs et utilisatrices. Si cela vous parait anti-démocratique,
+utilisateur·ices. Si cela vous parait anti-démocratique,
 anti-libriste, anti-liberté-d’expression, merci de vous référer à la
 clause précédente.
 
@@ -152,7 +152,8 @@ compte.  Vous comprenez et acceptez que l’association AFPy ne puisse
    précédentes des Conditions Générales d’Utilisation).
 
 6. Les questions sur les conditions de service doivent être envoyées
-   via ce formulaire de contact.
+   au comité directeur par email
+   `comite-directeur@afpy.org <mailto:comite-directeur@afpy.org>`_.
 
 
 Modifications du service
@@ -195,20 +196,21 @@ Droit d’auteur sur le contenu
 Édition et partage de données
 '''''''''''''''''''''''''''''
 
-- Les fichiers que vous créez avec le service peuvent être – si vous
-  le souhaitez – lus, copiés, utilisés et redistribués par des gens
-  que vous connaissez ou non.
+1. Les fichiers que vous créez avec le service peuvent être – si vous
+   le souhaitez – lus, copiés, utilisés et redistribués par des gens
+   que vous connaissez ou non.
 
-- En rendant publiques vos données, vous reconnaissez et acceptez que
-  toute personne utilisant ce site web puisse les consulter sans
-  restrictions.
+2. En rendant publiques vos données, vous reconnaissez et acceptez que
+   toute personne utilisant ce site web puisse les consulter sans
+   restriction.
 
-- Mais le service peut également vous proposer la possibilité
-  d’autoriser l’accès et le travail collaboratif sur ses documents de
-  manière restreinte à un·e ou plusieurs autres utilisateur·ices.
+3. Mais le service peut également vous proposer la possibilité
+   d’autoriser l’accès et le travail collaboratif sur ses documents de
+   manière restreinte à un·e ou plusieurs autres utilisateur·ices.
 
-- L’AFPy ne peut être tenue responsable de tout problème résultant du
-  partage ou de la publication de données entre utilisateur·ices.
+4. L’AFPy ne peut être tenue responsable de tout problème résultant du
+   partage ou de la publication de données entre utilisateur·ices.
+
 
 Résiliation
 '''''''''''
@@ -235,7 +237,7 @@ concernant. L’utilisateur·ice a la possibilité d’exercer ce droit en
 contactant directement `un membre du bureau
 <https://www.afpy.org/docs/contact>`_.
 
-- Pour utiliser certains services l’AFPy, vous devez créer un
+- Pour utiliser certains services de l’AFPy, vous devez créer un
   compte. L’AFPy demande certaines informations personnelles : une
   adresse e-mail valide et un mot de passe qui est utilisé pour
   protéger votre compte contre tout accès non autorisé. Les champs
@@ -253,7 +255,7 @@ contactant directement `un membre du bureau
   URL de référence).
 
 - Nous utilisons ces informations en interne pour vous améliorer
-  l’interface utilisateur·ice des services l’AFPy et maintenir une
+  l’interface utilisateur·ice des services de l’AFPy et maintenir une
   expérience utilisateur·ice cohérente et fiable.
 
 - Ces données ne sont ni vendues, ni transmises à des tiers.
@@ -288,11 +290,11 @@ une procédure d’accompagnement sera mise en place.
 Usage raisonnable
 '''''''''''''''''
 
-Les utilisatrices et utilisateurs du service git.afpy.org s’engagent à
+Les utilisateur·ices du service git.afpy.org s’engagent à
 faire un usage raisonnable du service, en termes de nombre de requêtes
 horaires, de taille de dépôts, de nombre de comptes, de nombre de
 dépôts et de tout autre critère qui pourrait porter atteinte au bon
-fonctionnement de l’AFPy.
+fonctionnement des services de l’AFPy.
 
 Suppression de compte et/ou de dépôt
 ''''''''''''''''''''''''''''''''''''
