@@ -5,7 +5,8 @@
 {% endblock header %}
 
 {% block main %}
+    {% set helloasso_url = "https://www.helloasso.com/associations/afpy/adhesions/adhesion-2023-a-l-afpy" %}
     <h2>Adhérez à l'AFPy</h2>
-    <iframe id="haWidget" src="https://www.helloasso.com/associations/afpy/adhesions/adhesion-2023-a-l-afpy/widget"></iframe>
-    <p>Si le widget ne fonctionne pas, essayez cette page : https://www.helloasso.com/associations/afpy/adhesions/adhesion-2023-a-l-afpy</p>
+    <iframe id="haWidget" src="{{ helloasso_url }}/widget"></iframe>
+    <p>Si le widget ne fonctionne pas, essayez cette page : <a href="{{ helloasso_url }}">{{ helloasso_url }}</a></p>
 {% endblock main %}
