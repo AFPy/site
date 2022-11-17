@@ -5,6 +5,7 @@
         <title>AFPY - Le site web de l'Association Francophone Python</title>
         <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/style.sass.css') }}" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-        {{ pagedown.include_pagedown() }}
+        <script type="text/javascript" src="{{ url_for('static', filename='js/Markdown.Converter.min.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/Markdown.Sanitizer.min.js') }}"></script>
     </head>
 {% endblock %}
